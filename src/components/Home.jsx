@@ -1,11 +1,12 @@
 import React from 'react'
 import Header from './Header'
+import CompanyDashboard from './CompanyDashboard'
 
 const Home = () => {
   return (
    <>
      <Header/>
-     <div>Home</div>
+     <CompanyDashboard/>
    </>
   )
 }

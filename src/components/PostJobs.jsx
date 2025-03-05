@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import Header from "./Header";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { postJob } from "../utils/addPostjobSlice";
 
 const PostJobs = () => {
+  const dispatch =useDispatch();
+  const navigate =useNavigate()
   const [formData, setFormData] = useState({
     jobTitle: "",
     location: "",
@@ -19,6 +24,8 @@ const PostJobs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(postJob(formData));
+    navigate("/jobopening")
     //console.log("Job Posted:", formData);
   };
 
@@ -131,11 +138,11 @@ const PostJobs = () => {
           />
         </div>
         <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-        >
-          Post Job
-        </button>
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          >
+            Post Job
+          </button>
       </form>
     </div>
     </>

@@ -14,7 +14,7 @@ function Header() {
   ];
 
   return (
-    <header className="bg-[#48596f] text-white p-4">
+    <header className="bg-[#48596f] text-white p-8 py-3">
       <div className="container flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <img
@@ -39,9 +39,9 @@ function Header() {
                 </Link>
               </li>
             ))}
-            <li>
-              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center cursor-pointer">
-                <span className="text-white font-medium">JD</span>
+            <li className="cursor-pointer flex items-center">
+              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
+                <span className="text-white font-medium">HR</span>
               </div>
             </li>
           </ul>

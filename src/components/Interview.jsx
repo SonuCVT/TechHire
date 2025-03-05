@@ -13,7 +13,7 @@ const Interview = () => {
       {/* Layout Container */}
       <div className="flex">
         {/* Sidebar Placeholder (Implement Sidebar Here Later) */}
-        <div className="w-64 bg-gray-100 min-h-screen"></div>
+        <div className="w-64  min-h-screen"></div>
 
         {/* Main Content */}
         <div className="flex-1 p-8">

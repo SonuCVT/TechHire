@@ -6,6 +6,7 @@ import Assessments from "./components/Assessments";
 import Interview from "./components/Interview";
 import AddInterview from "./components/AddInterview";
 import AddnewAssessments from "./components/AddnewAssessments";
+import JobOpening from "./components/JobOpening";
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
       path:"/addassessment",
       element:<AddnewAssessments/>
     },
+    {
+      path:"/jobopening",
+      element:<JobOpening/>
+    }
   ]);
 
   return (
