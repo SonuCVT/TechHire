@@ -30,7 +30,7 @@ const AnalyticsChart = () => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+    <div className="bg-white shadow-md rounded-lg p-6 mb-4">
       <h2 className="text-xl font-bold mb-4">Recruitment Analytics</h2>
       <div className="w-full h-96">
         <Line data={data} options={options} />

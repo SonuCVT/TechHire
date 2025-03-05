@@ -30,7 +30,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 min-h-screen p-4">
+    <div className="w-64 bg-white border-r border-gray-200 min-h-screen p-4 ml-4 mt-5">
       {/* Company Logo and Name */}
       <div className="flex items-center space-x-3 mb-8 p-2">
         <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">

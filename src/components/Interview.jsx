@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Sidebar from "./Sidebar";
 
 const Interview = () => {
   const interviews = useSelector((state) => state.addinterview.interview);
@@ -11,9 +12,9 @@ const Interview = () => {
       <Header />
 
       {/* Layout Container */}
-      <div className="flex">
-        {/* Sidebar Placeholder (Implement Sidebar Here Later) */}
-        <div className="w-64  min-h-screen"></div>
+      <div className="flex min-h-screen bg-gray-100">
+        {/* Sidebar */}
+        <Sidebar />
 
         {/* Main Content */}
         <div className="flex-1 p-8">
@@ -32,13 +33,17 @@ const Interview = () => {
           <div className="mt-6 grid grid-cols-2 gap-6">
             {interviews.length > 0 ? (
               interviews.map((interview, index) => (
-                <div key={index} className="bg-white shadow-md rounded-lg border w-full">
+                <div
+                  key={index}
+                  className="bg-white shadow-md rounded-lg border w-full hover:shadow-lg transition"
+                >
                   {/* Header */}
-                  <div className="flex justify-between items-center px-6 py-3 border-b">
+                  <div className="flex justify-between items-center px-6 py-3 border-b bg-gray-50">
                     <h2 className="text-lg font-semibold text-gray-800">Interview</h2>
                     <p className="text-gray-600 text-sm">
-                      Scheduled For - <span className="font-medium">{interview.candidateName}</span> 
-                      ({interview.dateOfInterview})
+                      Scheduled For -{" "}
+                      <span className="font-medium">{interview.candidateName}</span> (
+                      {interview.dateOfInterview})
                     </p>
                   </div>
 
@@ -46,7 +51,9 @@ const Interview = () => {
                   <div className="p-6">
                     <div className="flex justify-between items-center">
                       <div>
-                        <h3 className="text-lg font-bold">{interview.interviewType || "Technical Test"}</h3>
+                        <h3 className="text-lg font-bold">
+                          {interview.interviewType || "Technical Test"}
+                        </h3>
                         <p className="text-gray-700">
                           {interview.dateOfInterview}, {interview.timeOfInterview}
                         </p>

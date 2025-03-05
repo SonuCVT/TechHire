@@ -3,10 +3,11 @@ import Header from "./Header";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { postJob } from "../utils/addPostjobSlice";
+import Sidebar from "./Sidebar"; // Import Sidebar component
 
 const PostJobs = () => {
-  const dispatch =useDispatch();
-  const navigate =useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     jobTitle: "",
     location: "",
@@ -25,15 +26,20 @@ const PostJobs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postJob(formData));
-    navigate("/jobopening")
-    //console.log("Job Posted:", formData);
+    navigate("/jobopening");
   };
 
   return (
     <>
-    <Header/>
-    <div className="p-6 bg-white rounded-xl shadow-md w-full max-w-3xl mx-auto">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+      <Header />
+      <div className="flex min-h-screen bg-gray-100">
+        {/* Sidebar */}
+        <Sidebar />
+
+  {/* Main Content - Increased Width */}
+  <div className="flex-1 p-10 -m-3">
+    <div className="bg-white rounded-xl shadow-md w-full max-w-5xl mx-auto p-8">
+      <h2 className="text-3xl font-semibold text-gray-700 mb-6 text-center">
         Post Your Job Here
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -44,38 +50,40 @@ const PostJobs = () => {
             name="jobTitle"
             value={formData.jobTitle}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
             placeholder="Enter Job Title"
             required
           />
         </div>
-        <div>
-          <label className="block text-gray-600 font-medium">Location:</label>
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-            placeholder="Enter Job Location"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-gray-600 font-medium">Experience Level:</label>
-          <input
-            type="text"
-            name="experienceLevel"
-            value={formData.experienceLevel}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-            placeholder="Enter Experience Level"
-            required
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-gray-600 font-medium">Location:</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+              placeholder="Enter Job Location"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-600 font-medium">Experience Level:</label>
+            <input
+              type="text"
+              name="experienceLevel"
+              value={formData.experienceLevel}
+              onChange={handleChange}
+              className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+              placeholder="Enter Experience Level"
+              required
+            />
+          </div>
         </div>
         <div>
           <label className="block text-gray-600 font-medium">Job Type:</label>
-          <div className="flex space-x-4">
+          <div className="flex space-x-6">
             {["Full-time", "Part-time", "Contract", "Internship"].map((type) => (
               <label key={type} className="flex items-center space-x-2">
                 <input
@@ -98,7 +106,7 @@ const PostJobs = () => {
             name="salaryRange"
             value={formData.salaryRange}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
             placeholder="Enter Salary Range"
             required
           />
@@ -109,8 +117,9 @@ const PostJobs = () => {
             name="jobDescription"
             value={formData.jobDescription}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
             placeholder="Enter Job Description"
+            rows="4"
             required
           ></textarea>
         </div>
@@ -121,7 +130,7 @@ const PostJobs = () => {
             name="skills"
             value={formData.skills}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
             placeholder="Enter Required Skills"
             required
           />
@@ -133,18 +142,20 @@ const PostJobs = () => {
             name="deadline"
             value={formData.deadline}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
             required
           />
         </div>
         <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Post Job
-          </button>
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition"
+        >
+          Post Job
+        </button>
       </form>
     </div>
+  </div>
+</div>
     </>
   );
 };

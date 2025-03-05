@@ -12,7 +12,7 @@ const CandidatePipeline = () => {
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
       <h2 className="text-xl font-bold mb-4">Candidate Pipeline</h2>
-      <div className="grid grid-cols-5 gap-6 text-center">
+      <div className="grid grid-cols-5 gap-4 text-center">
         {stages.map((stage, index) => (
           <div key={index} className="p-4 bg-gray-100 rounded-lg shadow-sm">
             <div className={`text-2xl font-bold ${stage.color} mb-2`}>
