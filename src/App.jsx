@@ -7,7 +7,10 @@ import Interview from "./components/Interview";
 import AddInterview from "./components/AddInterview";
 import AddnewAssessments from "./components/AddnewAssessments";
 import JobOpening from "./components/JobOpening";
-
+import Login from "./components/LoginPage";
+import Signup from "./components/Signup";
+import UserProfile from "./components/UserProfile";
+import Companies from "./components/Companies";
 
 function App() {
 
@@ -43,7 +46,23 @@ function App() {
     {
       path:"/jobopening",
       element:<JobOpening/>
-    }
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/signup",
+      element: <Signup />,
+    },
+    {
+      path: "/user-profile",
+      element: <UserProfile />,
+    },
+    {
+      path: "/companies",
+      element: <Companies />,
+    },
   ]);
 
   return (

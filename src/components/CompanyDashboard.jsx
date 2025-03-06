@@ -1,22 +1,47 @@
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Stats from '../cards/Stats';
-import AnalyticsChart from '../cards/AnalyticsChart';
-import CandidatePipeline from '../cards/CandidatePipeline';
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
+import Stats from "../cards/Stats";
+import AnalyticsChart from "../cards/AnalyticsChart";
+import CandidatePipeline from "../cards/CandidatePipeline";
+import Header from "./CompanyDashboardHeader";
 
-const CompanyDashboard=()=> {
+const CompanyDashboard = () => {
   //const [activeTab, setActiveTab] = useState('Home');
 
   const statsData = [
-    { title: "Active Jobs", value: "24", change: "+12%", period: "month", color: "text-purple-600" },
-    { title: "Total Applications", value: "842", change: "+8%", period: "month", color: "text-blue-600" },
-    { title: "Interviews Scheduled", value: "38", change: "+6%", period: "month", color: "text-green-600" },
-    { title: "Time to Hire", value: "18d", change: "faster than avg", period: "", color: "text-orange-500" }
+    {
+      title: "Active Jobs",
+      value: "24",
+      change: "+12%",
+      period: "month",
+      color: "text-purple-600",
+    },
+    {
+      title: "Total Applications",
+      value: "842",
+      change: "+8%",
+      period: "month",
+      color: "text-blue-600",
+    },
+    {
+      title: "Interviews Scheduled",
+      value: "38",
+      change: "+6%",
+      period: "month",
+      color: "text-green-600",
+    },
+    {
+      title: "Time to Hire",
+      value: "18d",
+      change: "faster than avg",
+      period: "",
+      color: "text-orange-500",
+    },
   ];
 
   const handleCompanyProfile = () => {
     console.log("Company Profile");
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -44,6 +69,6 @@ const CompanyDashboard=()=> {
       </div>
     </div>
   );
-}
+};
 
 export default CompanyDashboard;
