@@ -11,6 +11,7 @@ const PostJobs = () => {
   const [formData, setFormData] = useState({
     jobTitle: "",
     location: "",
+    companyName:"",
     experienceLevel: "",
     jobType: "",
     salaryRange: "",
@@ -25,7 +26,18 @@ const PostJobs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postJob(formData));
+    const newJob = {
+      id: Date.now(), // Unique ID for each job
+      title: formData.jobTitle,
+      company:formData.companyName , 
+      location: formData.location,
+      type: formData.jobType.toUpperCase(), // Ensure consistency
+      salary: formData.salaryRange,
+      jobDescription:formData.jobDescription,
+      skills:formData.skills,
+      deadline:formData.deadline
+    };
+    dispatch(postJob(newJob));
     navigate("/jobopening");
   };
 
@@ -43,19 +55,35 @@ const PostJobs = () => {
               Post Your Job Here
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-gray-600 font-medium">
-                  Job Title:
-                </label>
-                <input
-                  type="text"
-                  name="jobTitle"
-                  value={formData.jobTitle}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-                  placeholder="Enter Job Title"
-                  required
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-600 font-medium">
+                    Job Title:
+                  </label>
+                  <input
+                    type="text"
+                    name="jobTitle"
+                    value={formData.jobTitle}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                    placeholder="Enter Job Title"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-600 font-medium">
+                    Company Name:
+                  </label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    value={formData.companyName}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                    placeholder="Enter Company Name"
+                    required
+                  />
+               </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
