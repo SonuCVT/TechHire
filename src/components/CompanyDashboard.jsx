@@ -3,7 +3,6 @@ import Sidebar from "./Sidebar";
 import Stats from "../cards/Stats";
 import AnalyticsChart from "../cards/AnalyticsChart";
 import CandidatePipeline from "../cards/CandidatePipeline";
-import Header from "./CompanyDashboardHeader";
 
 const CompanyDashboard = () => {
   //const [activeTab, setActiveTab] = useState('Home');

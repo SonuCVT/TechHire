@@ -103,9 +103,24 @@ const SignUpPage = () => {
 
           <form onSubmit={handleSignUp}>
             <div className="mb-4">
+              \
+              <label className="block text-gray-600 font-medium">
+                Enter Your Full Name :
+              </label>
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder="full name"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-600 font-medium">
+                Enter Your Email :
+              </label>
+              <input
+                type="email"
+                placeholder="email"
                 className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
                   emailError ? "border-red-500" : "focus:ring-blue-500"
                 }`}
@@ -119,9 +134,12 @@ const SignUpPage = () => {
 
             <div className="mb-4 relative">
               <div className="relative w-full">
+                <label className="block text-gray-600 font-medium">
+                  Enter Your Password :
+                </label>
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="password"
                   className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
                     passwordError ? "border-red-500" : "focus:ring-blue-500"
                   }`}
@@ -147,9 +165,12 @@ const SignUpPage = () => {
 
             <div className="mb-4 relative">
               <div className="relative w-full">
+                <label className="block text-gray-600 font-medium">
+                  Repeat Your Password:
+                </label>
                 <input
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="Repeat Password"
+                  placeholder="Repeat password"
                   className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
                     confirmPasswordError
                       ? "border-red-500"

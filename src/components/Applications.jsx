@@ -48,9 +48,10 @@ const applicationsData = [
 const Applications = () => {
   const [search, setSearch] = useState("");
 
-  const filteredApplications = applicationsData.filter((app) =>
-    app.name.toLowerCase().includes(search.toLowerCase()) ||
-    app.appliedFor.toLowerCase().includes(search.toLowerCase())
+  const filteredApplications = applicationsData.filter(
+    (app) =>
+      app.name.toLowerCase().includes(search.toLowerCase()) ||
+      app.appliedFor.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -63,28 +64,28 @@ const Applications = () => {
         {/* Main Content */}
         <div className="flex-1 p-6">
           {/* Search Bar */}
-          <div className="flex items-center bg-white p-3 rounded-full shadow-md w-full max-w-2xl mx-auto mb-6 border border-gray-300">
+          <div className="flex items-center bg-white p-2 px-3 rounded-full shadow-md w-full mb-6 border border-gray-300">
             <input
               type="text"
               placeholder="Search by name or anything"
-              className="w-full p-2 outline-none text-gray-700"
+              className="w-full outline-none text-gray-700"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button className="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition">
+            <button className="bg-[#48596f] text-white px-6 py-1 cursor-pointer rounded-full hover:bg-[#2b3c52] cursor-pointer transition">
               Search
             </button>
           </div>
 
           {/* Applications List */}
-          <div className="max-w-4xl mx-auto space-y-4">
+          <div className="w-full grid grid-cols-2 gap-3">
             {filteredApplications.map((app) => (
               <div
                 key={app.id}
-                className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 flex justify-between items-center"
+                className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 flex justify-between items-end"
               >
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 flex items-center space-x-2">
+                  <h3 className="text-xl font-semibold text-gray-900 flex items-start flex-col space-x-2">
                     <span className="text-gray-700">{app.name}</span>
                     <span className="text-sm text-gray-500">{app.role}</span>
                   </h3>
@@ -107,7 +108,7 @@ const Applications = () => {
                 </div>
                 <div className="text-right">
                   <p className="text-gray-500">Applied on {app.appliedDate}</p>
-                  <button className="bg-green-500 text-white px-6 py-2 rounded-full mt-2 hover:bg-green-600 transition">
+                  <button className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-[#48596f] hover:bg-[#2b3c52] transition">
                     View More
                   </button>
                 </div>

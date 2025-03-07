@@ -55,9 +55,12 @@ const LoginPage = () => {
           <h2 className="text-3xl font-semibold mb-6 custom-h2">Log In</h2>
           <form>
             <div className="mb-4">
+              <label className="block text-gray-600 font-medium">
+                Enter Your Email :
+              </label>
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder="Please enter your email address"
                 className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
                   emailError ? "border-red-500" : "focus:ring-blue-500"
                 }`}
@@ -78,9 +81,12 @@ const LoginPage = () => {
 
             <div className="mb-4 relative">
               <div className="relative">
+                <label className="block text-gray-600 font-medium">
+                  Enter Your Password :
+                </label>
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="Please enter your password"
                   className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     passwordError ? "border-red-500" : "focus:ring-blue-500"
                   }`}
@@ -99,7 +105,7 @@ const LoginPage = () => {
                 <button
                   type="button"
                   c
-                  className="absolute inset-y-0 right-3 flex items-center text-gray-600 hover:text-gray-900 focus:outline-none"
+                  className="absolute top-[0px] right-3 flex items-center text-gray-600 hover:text-gray-900 focus:outline-none"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (

@@ -15,7 +15,7 @@ function Header() {
 
   return (
     <header className="bg-[#48596f] text-white p-8 py-3">
-      <div className="container flex justify-between items-center">
+      <div className=" flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <img
             src={TechHireLogo}

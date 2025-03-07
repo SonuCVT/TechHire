@@ -1,23 +1,15 @@
 import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import TechHireLogo from "./../assets/images/techhire_logo.svg";
-import { Link } from "react-router-dom";
 
 const UserDashboardHeader = () => {
-  const [activeTab, setActiveTab] = useState("Home");
+  const location = useLocation();
 
   const navItems = [
-    { name: "Home", active: activeTab === "Home", link: "/user-dashboard" },
-    { name: "Jobs", active: activeTab === "Jobs", link: "/jobs" },
-    {
-      name: "Companies",
-      active: activeTab === "Companies",
-      link: "/companies",
-    },
-    {
-      name: "Contact Us",
-      active: activeTab === "Contact Us",
-      link: "/contact-us",
-    },
+    { name: "Home", link: "/user-dashboard" },
+    { name: "Jobs", link: "/jobs" },
+    { name: "Companies", link: "/companies" },
+    { name: "Contact Us", link: "/contact-us" },
   ];
 
   return (
@@ -33,14 +25,15 @@ const UserDashboardHeader = () => {
         <nav>
           <ul className="flex space-x-6 items-center">
             {navItems.map((item) => (
-              <li
-                key={item.name}
-                className={`cursor-pointer py-2 px-1 ${
-                  item.active ? "text-white border-b-2 border-blue-400" : ""
-                }`}
-                onClick={() => setActiveTab(item.name)}
-              >
-                <Link to={item.link} className="text-white">
+              <li key={item.name}>
+                <Link
+                  to={item.link}
+                  className={`cursor-pointer py-2 px-1 transition-all ${
+                    location.pathname === item.link
+                      ? "border-b-2 border-blue-400 text-blue-300"
+                      : "hover:text-blue-200"
+                  }`}
+                >
                   {item.name}
                 </Link>
               </li>

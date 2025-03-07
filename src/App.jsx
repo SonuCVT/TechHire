@@ -11,6 +11,8 @@ import Login from "./components/LoginPage";
 import Signup from "./components/Signup";
 import UserProfile from "./components/UserProfile";
 import Companies from "./components/Companies";
+import CompanyCardProfile from "./components/CompanyCardProfile";
+import JobsManagement from "./components/JobsManagement";
 
 function App() {
 
@@ -62,6 +64,14 @@ function App() {
     {
       path: "/companies",
       element: <Companies />,
+    },
+    {
+      path: "/company-card-profile",
+      element: <CompanyCardProfile />,
+    },
+    {
+      path: "/jobs-management",
+      element: <JobsManagement />,
     },
   ]);
 
