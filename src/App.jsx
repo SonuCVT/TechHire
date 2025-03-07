@@ -17,39 +17,38 @@ import CandidateStatus from "./components/CandidateStatus";
 import AddTeamMember from "./components/AddTeamMember";
 
 function App() {
-
   const userouter = createBrowserRouter([
     {
       path: "/",
-      element: <Home/>,
+      element: <Home />,
     },
     {
       path: "/jobposting",
-      element: <PostJobs/>,
+      element: <PostJobs />,
     },
     {
       path: "/applications",
-      element: <Applications/>,
+      element: <Applications />,
     },
     {
-      path:"/assessments",
-      element:<Assessments/>
+      path: "/assessments",
+      element: <Assessments />,
     },
     {
-      path:"/interviews",
-      element:<Interview/>
+      path: "/interviews",
+      element: <Interview />,
     },
     {
-      path:"/addinterview",
-      element:<AddInterview/>
+      path: "/addinterview",
+      element: <AddInterview />,
     },
     {
-      path:"/addassessment",
-      element:<AddnewAssessments/>
+      path: "/addassessment",
+      element: <AddnewAssessments />,
     },
     {
-      path:"/jobopening",
-      element:<JobOpening/>
+      path: "/jobopening",
+      element: <JobOpening />,
     },
     {
       path: "/login",
@@ -86,11 +85,11 @@ function App() {
 
   return (
     <>
-    <div className="App">
-      <RouterProvider router={userouter} />
-    </div>
+      <div className="App">
+        <RouterProvider router={userouter} />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

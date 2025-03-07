@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 
 const jobsPerPage = 15; // Jobs per page
 
@@ -183,6 +184,12 @@ const jobsLists = [
 ];
 
 const JobsManagement = () => {
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/update-job`;
+    navigate(path);
+  };
+
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -277,7 +284,10 @@ const JobsManagement = () => {
 
                 {/* Buttons */}
                 <div className="mt-4 flex justify-between">
-                  <button className="text-white px-4 py-1 cursor-pointer rounded-full bg-[#48596f] hover:bg-[#2b3c52] transition">
+                  <button
+                    className="text-white px-4 py-1 cursor-pointer rounded-full bg-[#48596f] hover:bg-[#2b3c52] transition"
+                    onClick={routeChange}
+                  >
                     Update
                   </button>
                   <button
