@@ -13,6 +13,8 @@ import UserProfile from "./components/UserProfile";
 import Companies from "./components/Companies";
 import CompanyCardProfile from "./components/CompanyCardProfile";
 import JobsManagement from "./components/JobsManagement";
+import CandidateStatus from "./components/CandidateStatus";
+import AddTeamMember from "./components/AddTeamMember";
 
 function App() {
 
@@ -73,6 +75,13 @@ function App() {
       path: "/jobs-management",
       element: <JobsManagement />,
     },
+    {
+      path:"/candidates",
+      element:<CandidateStatus/>
+    },{
+      path:"/addteammember",
+      element:<AddTeamMember/>
+    }
   ]);
 
   return (

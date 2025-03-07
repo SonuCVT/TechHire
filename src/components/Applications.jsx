@@ -72,7 +72,7 @@ const Applications = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button className="bg-[#48596f] text-white px-6 py-1 cursor-pointer rounded-full hover:bg-[#2b3c52] cursor-pointer transition">
+            <button className="bg-[#48596f] text-white px-6 py-1 cursor-pointer rounded-full hover:bg-[#2b3c52] transition">
               Search
             </button>
           </div>

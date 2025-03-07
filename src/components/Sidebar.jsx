@@ -11,7 +11,7 @@ import {
   PlusCircle,
   User
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
