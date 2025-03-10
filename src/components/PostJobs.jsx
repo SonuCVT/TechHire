@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { postJob } from "../utils/addPostjobSlice";
 import Sidebar from "./Sidebar"; // Import Sidebar component
+import CompanyProfile from "./CompanyProfile";
 
 const PostJobs = () => {
   const dispatch = useDispatch();

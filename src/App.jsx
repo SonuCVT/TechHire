@@ -16,6 +16,7 @@ import JobsManagement from "./components/JobsManagement";
 import CandidateStatus from "./components/CandidateStatus";
 import AddTeamMember from "./components/AddTeamMember";
 import UpdateJob from "./components/UpdateJob";
+import CompanyProfile from "./components/CompanyProfile";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -86,6 +87,10 @@ function App() {
     {
       path: "/addteammember",
       element: <AddTeamMember />,
+    },
+    {
+      path: "/company-profile",
+      element: <CompanyProfile/>,
     },
   ]);
 
