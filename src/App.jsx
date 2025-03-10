@@ -17,6 +17,7 @@ import CandidateStatus from "./components/CandidateStatus";
 import AddTeamMember from "./components/AddTeamMember";
 import UpdateJob from "./components/UpdateJob";
 import CompanyProfile from "./components/CompanyProfile";
+import UserDashboard from "./components/UserDashboard";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -91,6 +92,10 @@ function App() {
     {
       path: "/company-profile",
       element: <CompanyProfile/>,
+    },
+    {
+      path: "/user-dashboard",
+      element: <UserDashboard/>,
     },
   ]);
 
