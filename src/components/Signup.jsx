@@ -4,9 +4,12 @@ import microsoftLogo from "./../assets/images/microsoft_logo.jpg";
 import signupIllustration from "./../assets/images/signup-illustration.svg";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const SignUpPage = () => {
   const [email, setEmail] = useState("");
+  const [name,setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("candidate");
@@ -16,6 +19,7 @@ const SignUpPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const navigate = useNavigate();
+  const dispatch =useDispatch()
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -53,10 +57,15 @@ const SignUpPage = () => {
     }
 
     if (isValid) {
-      console.log("Email:", email);
-      console.log("Role:", role);
-      console.log("Password:", password);
-      navigate("/");
+      // console.log("Email:", email);
+      // console.log("Role:", role);
+      // console.log("Password:", password);
+      dispatch(addUser({
+        name:name,
+        email:email,
+        role:role,
+
+      }))
       alert("Signup successful!!");
     }
   };
@@ -103,14 +112,15 @@ const SignUpPage = () => {
 
           <form onSubmit={handleSignUp}>
             <div className="mb-4">
-              \
               <label className="block text-gray-600 font-medium">
                 Enter Your Full Name :
               </label>
               <input
-                type="email"
+                type="text"
                 placeholder="full name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 
