@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import googleLogo from "./../assets/images/google_G.png";
 import microsoftLogo from "./../assets/images/microsoft_logo.jpg";
-import { useState } from "react";
+import signupIllustration from "./../assets/images/signup-illustration.svg";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -57,19 +56,26 @@ const Signup = () => {
       console.log("Email:", email);
       console.log("Role:", role);
       console.log("Password:", password);
-      navigate("/login");
+      navigate("/");
       alert("Signup successful!!");
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-[url('/public/login_page_bg.jpg')] bg-cover bg-center">
-      <div className="flex shadow-lg rounded-lg overflow-hidden w-full max-w-xl bg-[#ffffff99] backdrop-blur-xs">
-        <div className="w-full p-8 flex flex-col justify-center">
-          <h2 className="text-3xl font-semibold mb-6 text-center uppercase tracking-[1px]">
-            Sign Up
-          </h2>
+    <div className="flex h-screen items-center justify-center bg-gray-100">
+      <div className="flex bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-7xl">
+        {/* Left Section - Illustration */}
+        <div className="w-1/2 bg-blue-50 flex items-center justify-center">
+          <img
+            src={signupIllustration}
+            alt="Signup Illustration"
+            className="w-full"
+          />
+        </div>
 
+        {/* Right Section - Sign Up Form */}
+        <div className="w-1/2 flex flex-col justify-center p-8">
+          <h2 className="text-3xl font-semibold mb-6">Sign Up</h2>
           <div className="mb-4 flex items-center gap-4">
             <div className="">
               <label className="mr-4">
@@ -101,7 +107,7 @@ const Signup = () => {
                 Full Name :
               </label>
               <input
-                type="text"
+                type="email"
                 placeholder="Enter your full name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
               />
@@ -194,12 +200,11 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md w-full cursor-pointer"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md w-full"
             >
               Sign Up
             </button>
           </form>
-
           <div className="flex items-center my-4">
             <div className="flex-grow border-t border-gray-300"></div>
             <span className="mx-3 text-gray-500">or</span>
@@ -229,4 +234,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUpPage;

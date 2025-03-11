@@ -1,12 +1,12 @@
-import React from "react";
+import "./../assets/css/global.css";
+import React, { useState } from "react";
 import googleLogo from "./../assets/images/google_G.png";
 import microsoftLogo from "./../assets/images/microsoft_logo.jpg";
-import { useState } from "react";
+import signupIllustration from "./../assets/images/signup-illustration.svg";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
+const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -57,19 +57,58 @@ const Signup = () => {
       console.log("Email:", email);
       console.log("Role:", role);
       console.log("Password:", password);
-      navigate("/login");
+      navigate("/");
       alert("Signup successful!!");
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-[url('/public/login_page_bg.jpg')] bg-cover bg-center">
-      <div className="flex shadow-lg rounded-lg overflow-hidden w-full max-w-xl bg-[#ffffff99] backdrop-blur-xs">
-        <div className="w-full p-8 flex flex-col justify-center">
-          <h2 className="text-3xl font-semibold mb-6 text-center uppercase tracking-[1px]">
-            Sign Up
-          </h2>
+    <div className="flex h-screen">
+      {/* Left Section: Animated Background */}
+      <div className="w-2/3 relative flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 overflow-hidden">
+        {/* Floating Animated Elements */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-50">
+          {/* Large Floating Circles */}
+          <div className="absolute w-32 h-32 bg-white bg-opacity-10 rounded-full top-10 left-20 animate-pulse"></div>
+          <div className="absolute w-24 h-24 bg-white bg-opacity-10 rounded-full top-1/2 left-1/4 animate-bounce"></div>
+          <div className="absolute w-20 h-20 bg-white bg-opacity-10 rounded-full bottom-16 right-16 animate-spin-slow"></div>
 
+          {/* Smaller Floating Dots */}
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={i}
+              className={`absolute w-4 h-4 bg-white bg-opacity-20 rounded-full animate-float`}
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                animationDuration: `${3 + Math.random() * 5}s`,
+              }}
+            ></div>
+          ))}
+
+          {/* Rotating Rings */}
+          <div className="absolute w-24 h-24 border border-white rounded-full top-14 left-1/3 animate-rotate-circle"></div>
+          <div className="absolute w-16 h-16 border border-white rounded-full bottom-12 right-1/4 animate-spin-fast"></div>
+
+          {/* Pulsating Waves */}
+          <div className="absolute w-28 h-28 bg-white bg-opacity-5 rounded-full top-28 right-32 animate-wave"></div>
+          <div className="absolute w-32 h-32 bg-white bg-opacity-5 rounded-full bottom-32 left-24 animate-wave"></div>
+
+          {/* Floating Squares */}
+          <div className="absolute w-14 h-14 bg-indigo-400 bg-opacity-30 rounded-lg top-1/4 left-10 animate-float"></div>
+          <div className="absolute w-12 h-12 bg-blue-300 bg-opacity-30 rounded-lg bottom-24 right-12 animate-float-reverse"></div>
+          <div className="absolute w-10 h-10 bg-white bg-opacity-20 rounded-lg top-1/3 right-1/4 animate-float"></div>
+        </div>
+
+        {/* Welcome Text */}
+        <h1 className="text-4xl font-bold text-white z-10 text-center">
+          Sign Up
+        </h1>
+      </div>
+
+      {/* Right Section: Signup Form */}
+      <div className="w-1/3 flex flex-col justify-center p-8 relative">
+        <div className="absolute left-[-70%] right-[50%] bg-[#fff] p-[30px] translate-[50%, 50%]">
           <div className="mb-4 flex items-center gap-4">
             <div className="">
               <label className="mr-4">
@@ -101,7 +140,7 @@ const Signup = () => {
                 Full Name :
               </label>
               <input
-                type="text"
+                type="email"
                 placeholder="Enter your full name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
               />
@@ -194,7 +233,7 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md w-full cursor-pointer"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md w-full"
             >
               Sign Up
             </button>
@@ -229,4 +268,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;

@@ -1,0 +1,109 @@
+@keyframes moveShapes {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinFast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-15px) translateX(10px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+@keyframes floatReverse {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(15px) translateX(-10px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+@keyframes rotateCircle {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.6;
+  }
+}
+
+.animated-bg {
+  position: relative;
+  animation: gradientAnimation 8s infinite alternate;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+  }
+  100% {
+    background: linear-gradient(135deg, #4338ca, #6366f1);
+  }
+}
+
+/* Apply Animations */
+.animate-spin-slow {
+  animation: spinSlow 10s linear infinite;
+}
+.animate-spin-fast {
+  animation: spinFast 5s linear infinite;
+}
+.animate-float {
+  animation: float 6s infinite ease-in-out;
+}
+.animate-float-reverse {
+  animation: floatReverse 6s infinite ease-in-out;
+}
+.animate-rotate-circle {
+  animation: rotateCircle 8s infinite linear;
+}
+.animate-wave {
+  animation: wave 4s infinite ease-in-out;
+}

@@ -1,7 +1,22 @@
 import React, { useState } from "react";
-import { Search, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  LayoutGrid,
+  Bell,
+  Briefcase,
+  Calendar,
+  Settings,
+  LogOut,
+  Search,
+  MapPin,
+  Eye,
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  SlidersHorizontal,
+} from "lucide-react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import JobFilter from "./JobFilter";
 import { useNavigate } from "react-router-dom";
 
 const jobsPerPage = 15; // Jobs per page
@@ -176,31 +191,16 @@ const JobsManagement = () => {
     navigate(path);
   };
 
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
   const [filters, setFilters] = useState({
-    type: "",
     title: "",
     company: "",
     location: "",
-    salary: 2000000,
+    salaryRange: 2000000,
   });
-
-  // Filtering jobs based on selected filters
-  const filteredJobs = jobsLists.filter((job) => {
-    return (
-      (filters.type === "" || job.type === filters.type) &&
-      (filters.title === "" || job.title.includes(filters.title)) &&
-      (filters.company === "" || job.company.includes(filters.company)) &&
-      (filters.location === "" || job.location.includes(filters.location)) &&
-      (filters.salary === "" || job.salary.includes(filters.salary))
-    );
-  });
-
-  // Update filter state when selecting from dropdowns
-  const handleFilterChange = (key, value) => {
-    setFilters({ ...filters, [key]: value });
-  };
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filteredJobs, setFilteredJobs] = useState(jobsLists);
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const startIndex = (currentPage - 1) * jobsPerPage;
@@ -225,7 +225,7 @@ const JobsManagement = () => {
 
         {/* Main Content */}
         <main className="flex-1 bg-gray-50 p-6">
-          {/* Search & Filter Button */}
+          {/* Search Bar */}
           <div className="mb-6">
             <div className="flex gap-4">
               <div className="flex-1 flex bg-white rounded-lg shadow-sm">
@@ -235,87 +235,21 @@ const JobsManagement = () => {
                     type="text"
                     placeholder="Search by title, company, or keywords"
                     className="w-full py-3 focus:outline-none"
-                    onChange={(e) =>
-                      handleFilterChange("title", e.target.value)
-                    }
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 </div>
               </div>
-
-              {/* Dropdown Filters */}
-              <div className="flex gap-4">
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) => handleFilterChange("type", e.target.value)}
-                >
-                  <option value="">Job Type</option>
-                  <option value="FULL-TIME">Full-Time</option>
-                  <option value="PART-TIME">Part-Time</option>
-                  <option value="INTERNSHIP">Internship</option>
-                </select>
-
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) =>
-                    handleFilterChange("location", e.target.value)
-                  }
-                >
-                  <option value="">Location</option>
-                  <option value="Bangalore">Bangalore</option>
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Pune">Pune</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Mumbai">Mumbai</option>
-                </select>
-
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) =>
-                    handleFilterChange("company", e.target.value)
-                  }
-                >
-                  <option value="">Company</option>
-                  <option value="Google">Google</option>
-                  <option value="Microsoft">Microsoft</option>
-                  <option value="Amazon">Amazon</option>
-                  <option value="Flipkart">Flipkart</option>
-                  <option value="Netflix">Netflix</option>
-                </select>
-
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) => handleFilterChange("salary", e.target.value)}
-                >
-                  <option value="">Salary</option>
-                  <option value="₹5,00,000">₹5,00,000</option>
-                  <option value="₹9,00,000">₹9,00,000</option>
-                  <option value="₹10,00,000">₹10,00,000</option>
-                  <option value="₹12,00,000">₹12,00,000</option>
-                  <option value="₹15,00,000">₹15,00,000</option>
-                </select>
-
-                {/* Reset Filters Button */}
-                <button
-                  className="bg-gray-200 px-4 py-2 rounded"
-                  onClick={() =>
-                    setFilters({
-                      type: "",
-                      title: "",
-                      company: "",
-                      location: "",
-                      salary: "",
-                    })
-                  }
-                >
-                  Reset
-                </button>
-              </div>
+              <button className="px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Find Job
+              </button>
+              <JobFilter jobs={jobsLists} setFilteredJobs={setFilteredJobs} />
             </div>
           </div>
-
+          co
           {/* Jobs */}
           <div className="grid grid-cols-3 gap-5">
-            {jobsLists.map((job) => (
+            {currentJobs.map((job) => (
               <div key={job.id} className="bg-white rounded-lg shadow-sm p-4">
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4">
@@ -376,7 +310,6 @@ const JobsManagement = () => {
               </div>
             ))}
           </div>
-
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-6 flex justify-center">
