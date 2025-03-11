@@ -22,7 +22,7 @@ import CompanySetting from "./components/CompanySetting";
 import CompanyNotifications from "./components/CompanyNotifications";
 import UserNotifications from "./components/UserNotifications";
 import Jobs from "./components/Jobs";
-
+import AuthGuard from "./utils/authgaurd";
 function App() {
   const userouter = createBrowserRouter([
     {
