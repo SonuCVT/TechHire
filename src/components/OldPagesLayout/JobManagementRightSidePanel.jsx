@@ -1,68 +1,206 @@
 import React, { useState } from "react";
-import { Search, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  LayoutGrid,
+  Bell,
+  Briefcase,
+  Calendar,
+  Settings,
+  LogOut,
+  Search,
+  MapPin,
+  Eye,
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  SlidersHorizontal,
+} from "lucide-react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import JobFilter from "./JobFilter";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteJob } from "../utils/addPostjobSlice";
 
 const jobsPerPage = 15; // Jobs per page
 
-// const jobsLists = [
-//   {
-//     id: 1,
-//     title: "Technical Support Specialist",
-//     company: "Google Inc.",
-//     location: "Bangalore, India",
-//     type: "PART-TIME",
-//     salary: "₹6,00,000 - ₹9,00,000",
-//   },
-//   {
-//     id: 2,
-//     title: "Senior UX Designer",
-//     company: "Microsoft",
-//     location: "Hyderabad, India",
-//     type: "FULL-TIME",
-//     salary: "₹12,00,000 - ₹18,00,000",
-//   },
-
-//];
+const jobsLists = [
+  {
+    id: 1,
+    title: "Technical Support Specialist",
+    company: "Google Inc.",
+    location: "Bangalore, India",
+    type: "PART-TIME",
+    salary: "₹6,00,000 - ₹9,00,000",
+  },
+  {
+    id: 2,
+    title: "Senior UX Designer",
+    company: "Microsoft",
+    location: "Hyderabad, India",
+    type: "FULL-TIME",
+    salary: "₹12,00,000 - ₹18,00,000",
+  },
+  {
+    id: 3,
+    title: "Junior Graphic Designer",
+    company: "Adobe",
+    location: "Mumbai, India",
+    type: "INTERNSHIP",
+    salary: "₹3,00,000 - ₹5,00,000",
+  },
+  {
+    id: 4,
+    title: "Interaction Designer",
+    company: "Amazon",
+    location: "Chennai, India",
+    type: "PART-TIME",
+    salary: "₹7,00,000 - ₹10,00,000",
+  },
+  {
+    id: 5,
+    title: "Software Engineer",
+    company: "TCS",
+    location: "Pune, India",
+    type: "FULL-TIME",
+    salary: "₹10,00,000 - ₹15,00,000",
+  },
+  {
+    id: 6,
+    title: "Visual Designer",
+    company: "Meta",
+    location: "Delhi, India",
+    type: "FULL-TIME",
+    salary: "₹8,50,000 - ₹13,00,000",
+  },
+  {
+    id: 7,
+    title: "UI/UX Designer",
+    company: "Netflix",
+    location: "Bangalore, India",
+    type: "FULL-TIME",
+    salary: "₹9,00,000 - ₹14,00,000",
+  },
+  {
+    id: 8,
+    title: "Product Designer",
+    company: "Deloitte",
+    location: "Gurgaon, India",
+    type: "FULL-TIME",
+    salary: "₹11,00,000 - ₹16,00,000",
+  },
+  {
+    id: 9,
+    title: "Cloud Engineer",
+    company: "IBM",
+    location: "Hyderabad, India",
+    type: "FULL-TIME",
+    salary: "₹14,00,000 - ₹18,00,000",
+  },
+  {
+    id: 10,
+    title: "Backend Developer",
+    company: "Spotify",
+    location: "Bangalore, India",
+    type: "FULL-TIME",
+    salary: "₹12,00,000 - ₹17,00,000",
+  },
+  {
+    id: 11,
+    title: "Data Scientist",
+    company: "Flipkart",
+    location: "Bangalore, India",
+    type: "FULL-TIME",
+    salary: "₹15,00,000 - ₹22,00,000",
+  },
+  {
+    id: 12,
+    title: "Mobile App Developer",
+    company: "Ola Cabs",
+    location: "Mumbai, India",
+    type: "FULL-TIME",
+    salary: "₹10,00,000 - ₹14,00,000",
+  },
+  {
+    id: 13,
+    title: "Full Stack Developer",
+    company: "Zomato",
+    location: "Delhi, India",
+    type: "FULL-TIME",
+    salary: "₹12,00,000 - ₹16,00,000",
+  },
+  {
+    id: 14,
+    title: "DevOps Engineer",
+    company: "Wipro",
+    location: "Pune, India",
+    type: "FULL-TIME",
+    salary: "₹13,00,000 - ₹20,00,000",
+  },
+  {
+    id: 15,
+    title: "Product Manager",
+    company: "Samsung",
+    location: "Gurgaon, India",
+    type: "FULL-TIME",
+    salary: "₹20,00,000 - ₹30,00,000",
+  },
+  {
+    id: 16,
+    title: "Marketing Specialist",
+    company: "Twitter",
+    location: "Bangalore, India",
+    type: "PART-TIME",
+    salary: "₹5,00,000 - ₹7,00,000",
+  },
+  {
+    id: 17,
+    title: "Cybersecurity Analyst",
+    company: "Cisco",
+    location: "Chennai, India",
+    type: "FULL-TIME",
+    salary: "₹14,00,000 - ₹19,00,000",
+  },
+  {
+    id: 18,
+    title: "HR Manager",
+    company: "Infosys",
+    location: "Pune, India",
+    type: "FULL-TIME",
+    salary: "₹10,00,000 - ₹15,00,000",
+  },
+  {
+    id: 19,
+    title: "AI Researcher",
+    company: "NVIDIA",
+    location: "Hyderabad, India",
+    type: "FULL-TIME",
+    salary: "₹20,00,000 - ₹25,00,000",
+  },
+  {
+    id: 20,
+    title: "Frontend Developer",
+    company: "Accenture",
+    location: "Chennai, India",
+    type: "FULL-TIME",
+    salary: "₹9,00,000 - ₹13,00,000",
+  },
+];
 
 const JobsManagement = () => {
   let navigate = useNavigate();
-  const dispatch = useDispatch();
-  const jobsLists = useSelector((state) => state.addpostjob.jobs);
-
   const routeChange = () => {
     let path = `/update-job`;
     navigate(path);
   };
 
+  const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
   const [filters, setFilters] = useState({
-    type: "",
     title: "",
     company: "",
     location: "",
-    salary: 2000000,
+    salaryRange: 2000000,
   });
-
-  // Filtering jobs based on selected filters
-  const filteredJobs = jobsLists.filter((job) => {
-    return (
-      (filters.type === "" || job.type === filters.type) &&
-      (filters.title === "" || job.title.includes(filters.title)) &&
-      (filters.company === "" || job.company.includes(filters.company)) &&
-      (filters.location === "" || job.location.includes(filters.location)) &&
-      (filters.salary === "" || job.salary.includes(filters.salary))
-    );
-  });
-
-  // Update filter state when selecting from dropdowns
-  const handleFilterChange = (key, value) => {
-    setFilters({ ...filters, [key]: value });
-  };
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filteredJobs, setFilteredJobs] = useState(jobsLists);
 
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
   const startIndex = (currentPage - 1) * jobsPerPage;
@@ -76,10 +214,6 @@ const JobsManagement = () => {
   };
   const goToPage = (page) => setCurrentPage(page);
 
-  const handleDelete = (jobId) => {
-    dispatch(deleteJob(jobId));
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
@@ -91,7 +225,7 @@ const JobsManagement = () => {
 
         {/* Main Content */}
         <main className="flex-1 bg-gray-50 p-6">
-          {/* Search & Filter Button */}
+          {/* Search Bar */}
           <div className="mb-6">
             <div className="flex gap-4">
               <div className="flex-1 flex bg-white rounded-lg shadow-sm">
@@ -101,87 +235,21 @@ const JobsManagement = () => {
                     type="text"
                     placeholder="Search by title, company, or keywords"
                     className="w-full py-3 focus:outline-none"
-                    onChange={(e) =>
-                      handleFilterChange("title", e.target.value)
-                    }
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 </div>
               </div>
-
-              {/* Dropdown Filters */}
-              <div className="flex gap-4">
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) => handleFilterChange("type", e.target.value)}
-                >
-                  <option value="">Job Type</option>
-                  <option value="FULL-TIME">Full-Time</option>
-                  <option value="PART-TIME">Part-Time</option>
-                  <option value="INTERNSHIP">Internship</option>
-                </select>
-
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) =>
-                    handleFilterChange("location", e.target.value)
-                  }
-                >
-                  <option value="">Location</option>
-                  <option value="Bangalore">Bangalore</option>
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Pune">Pune</option>
-                  <option value="Delhi">Delhi</option>
-                  <option value="Mumbai">Mumbai</option>
-                </select>
-
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) =>
-                    handleFilterChange("company", e.target.value)
-                  }
-                >
-                  <option value="">Company</option>
-                  <option value="Google">Google</option>
-                  <option value="Microsoft">Microsoft</option>
-                  <option value="Amazon">Amazon</option>
-                  <option value="Flipkart">Flipkart</option>
-                  <option value="Netflix">Netflix</option>
-                </select>
-
-                <select
-                  className="p-2 bg-white shadow rounded"
-                  onChange={(e) => handleFilterChange("salary", e.target.value)}
-                >
-                  <option value="">Salary</option>
-                  <option value="₹5,00,000">₹5,00,000</option>
-                  <option value="₹9,00,000">₹9,00,000</option>
-                  <option value="₹10,00,000">₹10,00,000</option>
-                  <option value="₹12,00,000">₹12,00,000</option>
-                  <option value="₹15,00,000">₹15,00,000</option>
-                </select>
-
-                {/* Reset Filters Button */}
-                <button
-                  className="bg-gray-200 px-4 py-2 rounded"
-                  onClick={() =>
-                    setFilters({
-                      type: "",
-                      title: "",
-                      company: "",
-                      location: "",
-                      salary: "",
-                    })
-                  }
-                >
-                  Reset
-                </button>
-              </div>
+              <button className="px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Find Job
+              </button>
+              <JobFilter jobs={jobsLists} setFilteredJobs={setFilteredJobs} />
             </div>
           </div>
-
+          co
           {/* Jobs */}
           <div className="grid grid-cols-3 gap-5">
-            {jobsLists.map((job) => (
+            {currentJobs.map((job) => (
               <div key={job.id} className="bg-white rounded-lg shadow-sm p-4">
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4">
@@ -233,7 +301,7 @@ const JobsManagement = () => {
                     Update
                   </button>
                   <button
-                    className="text-white px-4 py-1 cursor-pointer rounded-full bg-red-600 hover:bg-red-800 transition"
+                    className="text-white px-4 py-1 cursor-pointer rounded-full bg-[#2b3c52] hover:bg-[#48596f] transition"
                     onClick={() => handleDelete(job.id)}
                   >
                     Delete
@@ -242,7 +310,6 @@ const JobsManagement = () => {
               </div>
             ))}
           </div>
-
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-6 flex justify-center">

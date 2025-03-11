@@ -1,6 +1,7 @@
 import React from "react";
 import googleLogo from "./../assets/images/google_G.png";
 import microsoftLogo from "./../assets/images/microsoft_logo.jpg";
+import loginPageBg from "./../assets/images/login_page_bg.jpg";
 import loginIllustrationImage from "./../assets/images/login-illustration.png";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
@@ -48,14 +49,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="flex bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-7xl">
-        {/* Left Section - Login Form */}
-        <div className="w-2/5 p-8 flex flex-col justify-center">
-          <h2 className="text-3xl font-semibold mb-6 custom-h2">Log In</h2>
+    <div className="flex h-screen items-center justify-center bg-[url('/public/login_page_bg.jpg')] bg-cover bg-center">
+      {/* <div className="flex h-screen items-center justify-center bg-linear-to-r/oklab from-indigo-500 to-teal-400"> */}
+      {/* <div className="flex h-screen items-center justify-center bg-linear-to-r from-cyan-500 to-blue-500"> */}
+      <div className="flex shadow-lg rounded-lg overflow-hidden w-full max-w-xl bg-[#ffffff99] backdrop-blur-xs">
+        <div className="w-full p-8 flex flex-col justify-center">
+          <h2 className="text-3xl font-semibold mb-6 text-center uppercase tracking-[1px]">
+            Log In
+          </h2>
           <form>
             <div className="mb-4">
-              <label className="block text-gray-600 font-medium">
+              <label className="block text-gray-600 font-medium mb-1">
                 Enter Your Email :
               </label>
               <input
@@ -79,41 +83,43 @@ const LoginPage = () => {
               )}
             </div>
 
-            <div className="mb-4 relative">
+            <div className="mb-4">
               <div className="relative">
-                <label className="block text-gray-600 font-medium">
+                <label className="block text-gray-600 font-medium mb-1">
                   Enter Your Password :
                 </label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Please enter your password"
-                  className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                    passwordError ? "border-red-500" : "focus:ring-blue-500"
-                  }`}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={() => {
-                    if (!validatePassword(password)) {
-                      setPasswordError(
-                        "Password must be at least 8 characters long"
-                      );
-                    } else {
-                      setPasswordError("");
-                    }
-                  }}
-                />
-                <button
-                  type="button"
-                  c
-                  className="absolute top-[0px] right-3 flex items-center text-gray-600 hover:text-gray-900 focus:outline-none"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOffIcon size={20} />
-                  ) : (
-                    <EyeIcon size={20} />
-                  )}
-                </button>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Please enter your password"
+                    className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      passwordError ? "border-red-500" : "focus:ring-blue-500"
+                    }`}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onBlur={() => {
+                      if (!validatePassword(password)) {
+                        setPasswordError(
+                          "Password must be at least 8 characters long"
+                        );
+                      } else {
+                        setPasswordError("");
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    c
+                    className="absolute top-[10px] right-[10px] flex items-center text-gray-600 hover:text-gray-900 focus:outline-none"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOffIcon size={20} />
+                    ) : (
+                      <EyeIcon size={20} />
+                    )}
+                  </button>
+                </div>
               </div>
               {passwordError && (
                 <p className="text-red-500 text-sm mt-1">{passwordError}</p>
@@ -122,14 +128,14 @@ const LoginPage = () => {
 
             <div className="flex justify-between items-center mb-4">
               <button
-                className="bg-blue-600 text-white px-4 py-2 rounded-md w-full"
+                className="bg-[#48596f] cursor-pointer text-white px-4 py-2 rounded-md w-full"
                 onClick={handleLogin}
               >
                 Log In
               </button>
             </div>
             <div className="text-right mb-4">
-              <a href="#" className="text-blue-500 text-sm">
+              <a href="#" className="text-[#48596f] text-sm">
                 Forgot password?
               </a>
             </div>
@@ -161,19 +167,10 @@ const LoginPage = () => {
 
           <p className="text-sm mt-4 text-center">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-500">
+            <Link to="/signup" className="text-[#48596f]">
               Sign Up
             </Link>
           </p>
-        </div>
-
-        {/* Right Section - Illustration */}
-        <div className="w-3/5 flex items-center justify-center">
-          <img
-            src={loginIllustrationImage}
-            alt="Login Illustration"
-            className="w-full"
-          />
         </div>
       </div>
     </div>
