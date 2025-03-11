@@ -9,15 +9,16 @@ import {
   Settings,
   UserCircle,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const sidebarItems = [
-    { icon: <LayoutDashboard size={18} />, label: "Dashboard", active: true },
-    { icon: <BellRing size={18} />, label: "Notification", active: false },
-    { icon: <Briefcase size={18} />, label: "Jobs", active: false },
-    { icon: <Users size={18} />, label: "Jobs Applied", active: false },
-    { icon: <ClipboardCheck size={18} />, label: "Schedule", active: false },
-    { icon: <Settings size={18} />, label: "Settings", active: false },
+    { icon: <LayoutDashboard size={18} />, label: "Dashboard", active: true ,link:"/candidate-dashboard"},
+    { icon: <BellRing size={18} />, label: "Notification", active: false ,link:"/user-notification"},
+    { icon: <Briefcase size={18} />, label: "Jobs", active: false,link:"/jobopening" },
+    { icon: <Users size={18} />, label: "Jobs Applied", active: false,link:"/job-applied" },
+    { icon: <ClipboardCheck size={18} />, label: "Schedule", active: false ,link:"/scheduled"},
+    { icon: <Settings size={18} />, label: "Settings", active: false,link:"/settings" },
   ];
 
   return (
@@ -35,8 +36,8 @@ const Sidebar = () => {
         <ul className="space-y-2">
           {sidebarItems.map((item, index) => (
             <li key={index}>
-              <a
-                href="#"
+              <Link
+                to={item.link}
                 className={`flex items-center space-x-3 p-2 rounded-md ${
                   item.active
                     ? "bg-blue-50 text-blue-600"
@@ -51,7 +52,7 @@ const Sidebar = () => {
                   {item.icon}
                 </div>
                 <span>{item.label}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

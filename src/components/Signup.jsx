@@ -66,6 +66,11 @@ const Signup = () => {
         email:email,
         role:role,
       }))
+      if(role==="hr"){
+         navigate("/hr-dashboard")
+      }else{
+        navigate("/candidate-dashboard")
+      }
       setName("");
       setEmail("");
       setConfirmPassword("");
