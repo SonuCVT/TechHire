@@ -38,10 +38,10 @@ const CandidateStatus = () => {
                         <p className="text-sm text-gray-600">{candidate.position}</p>
                         <p className="text-xs text-gray-500">Applied: {candidate.appliedDate}</p>
                         <div className="mt-3 flex gap-2">
-                          <button className="text-sm px-3 py-1 bg-red-100 text-red-600 rounded-md">
+                          <button className="text-sm px-3 py-1 bg-red-100 text-red-600 cursor-pointer rounded-md">
                             Contact Info
                           </button>
-                          <button className="text-sm px-3 py-1 bg-blue-100 text-blue-600 rounded-md">
+                          <button className="text-sm px-3 py-1 bg-blue-100 text-blue-600 cursor-pointer rounded-md">
                             View Resume
                           </button>
                         </div>

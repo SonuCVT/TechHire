@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./Sidebar";
 import Stats from "../cards/Stats";
 import AnalyticsChart from "../cards/AnalyticsChart";
@@ -16,7 +16,7 @@ const CompanyDashboard = () => {
       color: "text-purple-600",
     },
     {
-      title: "Total Applications",
+      title: "Totanpm dev runl Applications",
       value: "842",
       change: "+8%",
       period: "month",
@@ -38,9 +38,6 @@ const CompanyDashboard = () => {
     },
   ];
 
-  const handleCompanyProfile = () => {
-    console.log("Company Profile");
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">

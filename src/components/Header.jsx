@@ -17,11 +17,13 @@ function Header() {
     <header className="bg-[#48596f] text-white p-8 py-3">
       <div className=" flex justify-between items-center">
         <div className="flex items-center space-x-2">
+          
           <img
             src={TechHireLogo}
             alt="TechHire Logo"
             className="h-[60px] w-auto"
           />
+          
         </div>
         <nav>
           <ul className="flex space-x-6 items-center">
@@ -41,7 +43,7 @@ function Header() {
             ))}
             <li className="cursor-pointer flex items-center">
               <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                <span className="text-white font-medium">HR</span>
+                <Link to="/company-profile"><span className="text-white font-medium">HR</span></Link>
               </div>
             </li>
           </ul>

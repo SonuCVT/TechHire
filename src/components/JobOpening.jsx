@@ -5,6 +5,7 @@ import { FaAndroid, FaPython, FaDatabase, FaFigma, FaCode, FaJava, FaBeer } from
 
 const JobOpening = () => {
   const jobs = useSelector((state) => state.addpostjob.jobs);
+  //console.log(jobs)
 
   const [filters, setFilters] = useState({
     category: '',
@@ -30,18 +31,22 @@ const JobOpening = () => {
   ];
 
   // Count job openings per category
-  const jobCounts = jobCategories.reduce((acc, category) => {
-    acc[category.name] = jobs.filter(job => job.jobTitle.toLowerCase().includes(category.name.toLowerCase())).length;
-    return acc;
-  }, {});
+const jobCounts = jobCategories.reduce((acc, category) => {
+  acc[category.name] = jobs.filter(
+    (job) => job.title && job.title.toLowerCase().includes(category.name.toLowerCase())
+  ).length;
+  return acc;
+}, {});
 
-  // Get filtered jobs
-  const filteredJobs = jobs.filter((job) => {
-    return (
-      (!filters.category || job.jobTitle.toLowerCase().includes(filters.category.toLowerCase())) &&
-      (!filters.location || job.location.toLowerCase().includes(filters.location.toLowerCase()))
-    );
-  });
+// Get filtered jobs
+const filteredJobs = jobs.filter((job) => {
+  return (
+    job.title &&  // Ensure jobTitle exists
+    (!filters.category || job.title.toLowerCase().includes(filters.category.toLowerCase())) &&
+    (!filters.location || job.location?.toLowerCase().includes(filters.location.toLowerCase()))
+  );
+});
+
 
   return (
     <>
@@ -140,7 +145,7 @@ const JobOpening = () => {
             {filteredJobs.length > 0 ? (
               filteredJobs.map((job, index) => (
                 <div key={index} className="p-4 border rounded-lg shadow-md mb-4">
-                  <h3 className="text-xl font-semibold">{job.jobTitle}</h3>
+                  <h3 className="text-xl font-semibold">{job.title}</h3>
                   <p><strong>Company:</strong> {job.company}</p>
                   <p><strong>Location:</strong> {job.location}</p>
                   <p><strong>Description:</strong> {job.jobDescription}</p>
