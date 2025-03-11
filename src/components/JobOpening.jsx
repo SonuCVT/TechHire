@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import Header from './Header';
+//import Header from './Header';
 import { useSelector } from 'react-redux';
 import { FaAndroid, FaPython, FaDatabase, FaFigma, FaCode, FaJava, FaBeer } from 'react-icons/fa';
+import UserDashboardHeader from './UserDashboardHeader';
 
 const JobOpening = () => {
   const jobs = useSelector((state) => state.addpostjob.jobs);
@@ -50,7 +51,7 @@ const filteredJobs = jobs.filter((job) => {
 
   return (
     <>
-      <Header />
+      <UserDashboardHeader />
       <div className="p-6">
         {/* Hero Section (Unchanged) */}
         <div className="relative bg-blue-100 p-12 text-center rounded-lg">

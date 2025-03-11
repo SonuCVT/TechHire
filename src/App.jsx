@@ -27,38 +27,6 @@ function App() {
   const userouter = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/jobposting",
-      element: <PostJobs />,
-    },
-    {
-      path: "/applications",
-      element: <Applications />,
-    },
-    {
-      path: "/assessments",
-      element: <Assessments />,
-    },
-    {
-      path: "/interviews",
-      element: <Interview />,
-    },
-    {
-      path: "/addinterview",
-      element: <AddInterview />,
-    },
-    {
-      path: "/addassessment",
-      element: <AddnewAssessments />,
-    },
-    {
-      path: "/jobopening",
-      element: <JobOpening />,
-    },
-    {
-      path: "/login",
       element: <Login />,
     },
     {
@@ -66,32 +34,132 @@ function App() {
       element: <Signup />,
     },
     {
+      path: "/hr-dashboard",
+      element: (
+        <AuthGuard>
+          <Home /> {/* HR Dashboard */}
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/candidate-dashboard",
+      element: (
+        <AuthGuard>
+          <UserDashboard /> {/* Candidate Dashboard */}
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/jobposting",
+      element: (
+        <AuthGuard>
+          <PostJobs />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/applications",
+      element: (
+        <AuthGuard>
+          <Applications />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/assessments",
+      element: (
+        <AuthGuard>
+          <Assessments />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/interviews",
+      element: (
+        <AuthGuard>
+          <Interview />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/addinterview",
+      element: (
+        <AuthGuard>
+          <AddInterview />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/addassessment",
+      element: (
+        <AuthGuard>
+          <AddnewAssessments />
+        </AuthGuard>
+      ),
+    },
+    {
+      path: "/jobopening",
+      element: (
+        <AuthGuard>
+          <JobOpening />
+        </AuthGuard>
+      ),
+    },
+    {
       path: "/user-profile",
-      element: <UserProfile />,
+      element: (
+        <AuthGuard>
+          <UserProfile />
+        </AuthGuard>
+      ),
     },
     {
       path: "/companies",
-      element: <Companies />,
+      element: (
+        <AuthGuard>
+          <Companies />
+        </AuthGuard>
+      ),
     },
     {
       path: "/company-card-profile",
-      element: <CompanyCardProfile />,
+      element: (
+        <AuthGuard>
+          <CompanyCardProfile />
+        </AuthGuard>
+      ),
     },
     {
       path: "/jobs-management",
-      element: <JobsManagement />,
+      element: (
+        <AuthGuard>
+          <JobsManagement />
+        </AuthGuard>
+      ),
     },
     {
       path: "/update-job",
-      element: <UpdateJob />,
+      element: (
+        <AuthGuard>
+          <UpdateJob />
+        </AuthGuard>
+      ),
     },
     {
       path: "/candidates",
-      element: <CandidateStatus />,
+      element: (
+        <AuthGuard>
+          <CandidateStatus />
+        </AuthGuard>
+      ),
     },
     {
       path: "/addteammember",
-      element: <AddTeamMember />,
+      element: (
+        <AuthGuard>
+          <AddTeamMember />
+        </AuthGuard>
+      ),
     },
     {
       path: "/company-profile",

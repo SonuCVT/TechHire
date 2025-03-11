@@ -22,7 +22,7 @@ const Sidebar = () => {
       icon: <LayoutDashboard size={18} />,
       label: "Dashboard",
       active: true,
-      link: "/",
+      link: "/hr-dashboard",
     },
     {
       icon: <BellRing size={18} />,

@@ -5,9 +5,12 @@ import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
+  const [name,setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("candidate");
@@ -17,6 +20,7 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const navigate = useNavigate();
+  const dispatch =useDispatch()
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -54,10 +58,23 @@ const Signup = () => {
     }
 
     if (isValid) {
-      console.log("Email:", email);
-      console.log("Role:", role);
-      console.log("Password:", password);
-      navigate("/login");
+      // console.log("Email:", email);
+      // console.log("Role:", role);
+      // console.log("Password:", password);
+      dispatch(addUser({
+        name:name,
+        email:email,
+        role:role,
+      }))
+      if(role==="hr"){
+         navigate("/hr-dashboard")
+      }else{
+        navigate("/candidate-dashboard")
+      }
+      setName("");
+      setEmail("");
+      setConfirmPassword("");
+      setPassword("");
       alert("Signup successful!!");
     }
   };
@@ -104,6 +121,8 @@ const Signup = () => {
                 type="text"
                 placeholder="Enter your full name"
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
 

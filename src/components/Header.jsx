@@ -6,7 +6,7 @@ function Header() {
   const location = useLocation();
 
   const navItems = [
-    { name: "Home", link: "/" },
+    { name: "Home", link: "/hr-dashboard" },
     { name: "Jobs Postings", link: "/jobposting" },
     { name: "Applications", link: "/applications" },
     { name: "Assessments", link: "/assessments" },
