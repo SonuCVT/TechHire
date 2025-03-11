@@ -24,6 +24,7 @@ import UserNotifications from "./components/UserNotifications";
 import Jobs from "./components/JobsApplied";
 import AuthGuard from "./utils/authgaurd";
 import UserInterviewSection from "./components/UserInterviewSection";
+import HelpSupport from "./components/HelpSupport";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -190,6 +191,10 @@ function App() {
     {
       path: "/jobs-applied",
       element: <Jobs />,
+    },
+    {
+      path: "/help-support",
+      element: <HelpSupport/>,
     },
   ]);
 
