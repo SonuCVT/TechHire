@@ -19,6 +19,7 @@ import UpdateJob from "./components/UpdateJob";
 import CompanyProfile from "./components/CompanyProfile";
 import UserDashboard from "./components/UserDashboard";
 import CompanySetting from "./components/CompanySetting";
+import UserInterviewSchedule from "./components/UserInterviewSchedule";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -101,6 +102,10 @@ function App() {
     {
       path: "/company-setting",
       element: <CompanySetting/>,
+    },
+    {
+      path: "/user-interview",
+      element: <UserInterviewSchedule/>
     }
   ]);
 
