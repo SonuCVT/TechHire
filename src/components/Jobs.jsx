@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Search, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import { useNavigate } from "react-router-dom";
+import Header from "./UserDashboardHeader";
+import Sidebar from "./UserDashboardSidebar";
 
 const jobsPerPage = 9;
 
@@ -12,7 +11,7 @@ const jobsLists = [
     title: "Technical Support Specialist",
     company: "Google Inc.",
     location: "Bangalore, India",
-    type: "PART-TIME",
+    status: "Under Review",
     salary: "₹6,00,000 - ₹9,00,000",
   },
   {
@@ -20,7 +19,7 @@ const jobsLists = [
     title: "Senior UX Designer",
     company: "Microsoft",
     location: "Hyderabad, India",
-    type: "FULL-TIME",
+    status: "Pending",
     salary: "₹12,00,000 - ₹18,00,000",
   },
   {
@@ -28,7 +27,7 @@ const jobsLists = [
     title: "Junior Graphic Designer",
     company: "Adobe",
     location: "Mumbai, India",
-    type: "INTERNSHIP",
+    status: "Rejected",
     salary: "₹3,50,000 - ₹5,00,000",
   },
   {
@@ -36,7 +35,7 @@ const jobsLists = [
     title: "Interaction Designer",
     company: "Amazon",
     location: "Chennai, India",
-    type: "PART-TIME",
+    status: "Pending",
     salary: "₹7,00,000 - ₹10,00,000",
   },
   {
@@ -44,7 +43,7 @@ const jobsLists = [
     title: "Software Engineer",
     company: "TCS",
     location: "Pune, India",
-    type: "FULL-TIME",
+    status: "Rejected",
     salary: "₹2,00,000 - ₹3,50,000",
   },
   {
@@ -52,7 +51,7 @@ const jobsLists = [
     title: "Visual Designer",
     company: "Meta",
     location: "Delhi, India",
-    type: "FULL-TIME",
+    status: "Under Review",
     salary: "₹8,50,000 - ₹13,00,000",
   },
   {
@@ -60,7 +59,7 @@ const jobsLists = [
     title: "UI/UX Designer",
     company: "Netflix",
     location: "Bangalore, India",
-    type: "FULL-TIME",
+    status: "Under Review",
     salary: "₹9,00,000 - ₹14,00,000",
   },
   {
@@ -68,7 +67,7 @@ const jobsLists = [
     title: "Product Designer",
     company: "Deloitte",
     location: "Gurgaon, India",
-    type: "FULL-TIME",
+    status: "Pending",
     salary: "₹11,00,000 - ₹16,00,000",
   },
   {
@@ -76,7 +75,7 @@ const jobsLists = [
     title: "Cloud Engineer",
     company: "IBM",
     location: "Hyderabad, India",
-    type: "FULL-TIME",
+    status: "Rejected",
     salary: "₹14,00,000 - ₹18,00,000",
   },
   {
@@ -84,7 +83,7 @@ const jobsLists = [
     title: "Backend Developer",
     company: "Spotify",
     location: "Bangalore, India",
-    type: "FULL-TIME",
+    status: "Under Review",
     salary: "₹12,00,000 - ₹17,00,000",
   },
   {
@@ -92,7 +91,7 @@ const jobsLists = [
     title: "Data Scientist",
     company: "Flipkart",
     location: "Bangalore, India",
-    type: "FULL-TIME",
+    status: "Pending",
     salary: "₹15,00,000 - ₹22,00,000",
   },
   {
@@ -100,7 +99,7 @@ const jobsLists = [
     title: "Mobile App Developer",
     company: "Ola Cabs",
     location: "Mumbai, India",
-    type: "FULL-TIME",
+    status: "Rejected",
     salary: "₹10,00,000 - ₹14,00,000",
   },
   {
@@ -108,7 +107,7 @@ const jobsLists = [
     title: "Full Stack Developer",
     company: "Zomato",
     location: "Delhi, India",
-    type: "FULL-TIME",
+    status: "Under Review",
     salary: "₹12,00,000 - ₹16,00,000",
   },
   {
@@ -116,7 +115,7 @@ const jobsLists = [
     title: "DevOps Engineer",
     company: "Wipro",
     location: "Pune, India",
-    type: "FULL-TIME",
+    status: "Pending",
     salary: "₹13,00,000 - ₹20,00,000",
   },
   {
@@ -124,7 +123,7 @@ const jobsLists = [
     title: "Product Manager",
     company: "Samsung",
     location: "Gurgaon, India",
-    type: "FULL-TIME",
+    status: "Rejected",
     salary: "₹20,00,000 - ₹30,00,000",
   },
   {
@@ -132,40 +131,8 @@ const jobsLists = [
     title: "Marketing Specialist",
     company: "Twitter",
     location: "Bangalore, India",
-    type: "PART-TIME",
+    status: "Under Review",
     salary: "₹5,00,000 - ₹7,00,000",
-  },
-  {
-    id: 17,
-    title: "Cybersecurity Analyst",
-    company: "Cisco",
-    location: "Chennai, India",
-    type: "FULL-TIME",
-    salary: "₹14,00,000 - ₹19,00,000",
-  },
-  {
-    id: 18,
-    title: "HR Manager",
-    company: "Infosys",
-    location: "Pune, India",
-    type: "FULL-TIME",
-    salary: "₹10,00,000 - ₹15,00,000",
-  },
-  {
-    id: 19,
-    title: "AI Researcher",
-    company: "NVIDIA",
-    location: "Hyderabad, India",
-    type: "FULL-TIME",
-    salary: "₹20,00,000 - ₹25,00,000",
-  },
-  {
-    id: 20,
-    title: "Frontend Developer",
-    company: "Accenture",
-    location: "Chennai, India",
-    type: "FULL-TIME",
-    salary: "₹9,00,000 - ₹13,00,000",
   },
 ];
 
@@ -177,18 +144,14 @@ const salaryRanges = [
 ];
 
 const JobsManagement = () => {
-  let navigate = useNavigate();
-  const routeChange = () => {
-    let path = `/update-job`;
-    navigate(path);
-  };
+  const routeChange = () => navigate(`/update-job`);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
-    type: "",
     title: "",
     company: "",
     location: "",
+    status: "",
     salary: null,
   });
 
@@ -201,7 +164,7 @@ const JobsManagement = () => {
     const jobSalary = parseSalary(job.salary);
 
     return (
-      (filters.type === "" || job.type === filters.type) &&
+      (filters.status === "" || job.status === filters.status) &&
       (filters.title === "" ||
         job.title.toLowerCase().includes(filters.title.toLowerCase())) &&
       (filters.company === "" ||
@@ -242,15 +205,17 @@ const JobsManagement = () => {
               }
             />
 
-            {/* Job Type Filter */}
+            {/* Job Status Filter */}
             <select
               className="p-2 border rounded"
-              onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, status: e.target.value })
+              }
             >
-              <option value="">Job Type</option>
-              <option value="FULL-TIME">Full-Time</option>
-              <option value="PART-TIME">Part-Time</option>
-              <option value="INTERNSHIP">Internship</option>
+              <option value="">Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Under Review">Under Review</option>
+              <option value="Rejected">Rejected</option>
             </select>
 
             {/* Location Filter */}
@@ -290,10 +255,10 @@ const JobsManagement = () => {
               className="bg-gray-200 px-4 py-2 rounded cursor-pointer"
               onClick={() =>
                 setFilters({
-                  type: "",
                   title: "",
                   company: "",
                   location: "",
+                  status: "",
                   salary: null,
                 })
               }
@@ -304,7 +269,10 @@ const JobsManagement = () => {
 
           <div className="grid grid-cols-3 gap-5">
             {currentJobs.map((job) => (
-              <div key={job.id} className="bg-white rounded-lg shadow-sm p-4">
+              <div
+                key={job.id}
+                className="bg-white rounded-lg shadow-sm p-4 flex items-start justify-between"
+              >
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4">
                     <div>
@@ -320,48 +288,32 @@ const JobsManagement = () => {
                   </div>
                 </div>
 
-                {/* Job Types */}
-                <div className="mt-4 flex items-center justify-between">
+                {/* Job Status */}
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span
                       className={`
                       px-3 py-1 rounded-full text-xs font-medium
                       ${
-                        job.type === "FULL-TIME"
-                          ? "bg-green-100 text-green-800"
+                        job.status === "Rejected"
+                          ? "bg-[#e41616] text-[#fff]"
                           : ""
                       }
                       ${
-                        job.type === "PART-TIME"
-                          ? "bg-blue-100 text-blue-800"
+                        job.status === "Under Review"
+                          ? "bg-[#48596f] text-[#fff]"
                           : ""
                       }
                       ${
-                        job.type === "INTERNSHIP"
-                          ? "bg-purple-100 text-purple-800"
+                        job.status === "Pending"
+                          ? "bg-[#2b992d] text-[#fff]"
                           : ""
                       }
                     `}
                     >
-                      {job.type}
+                      {job.status}
                     </span>
                   </div>
-                </div>
-
-                {/* Buttons For Update & Delete Job List Card */}
-                <div className="mt-4 flex justify-between">
-                  <button
-                    className="text-white px-4 py-1 cursor-pointer rounded-full bg-[#48596f] hover:bg-[#2b3c52] transition"
-                    onClick={routeChange}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="text-white px-4 py-1 cursor-pointer rounded-full bg-[#2b3c52] hover:bg-[#48596f] transition"
-                    onClick={() => handleDelete(job.id)}
-                  >
-                    Delete
-                  </button>
                 </div>
               </div>
             ))}

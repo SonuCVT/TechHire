@@ -6,8 +6,8 @@ const UserDashboardHeader = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: "Home", link: "/user-dashboard" },
-    { name: "Jobs", link: "/jobs" },
+    { name: "Home", link: "/candidate-dashboard" },
+    { name: "Jobs", link: "/jobopening" },
     { name: "Companies", link: "/companies" },
     { name: "Contact Us", link: "/contact-us" },
   ];

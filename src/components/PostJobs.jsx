@@ -39,7 +39,7 @@ const PostJobs = () => {
       deadline:formData.deadline
     };
     dispatch(postJob(newJob));
-    navigate("/jobopening");
+    navigate("/hr-dashboard");
   };
 
   return (
