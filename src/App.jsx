@@ -25,6 +25,7 @@ import Jobs from "./components/JobsApplied";
 import AuthGuard from "./utils/authgaurd";
 import UserInterviewSection from "./components/UserInterviewSection";
 import HelpSupport from "./components/HelpSupport";
+import UserSetting from "./components/UserSetting";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -171,6 +172,10 @@ function App() {
     {
       path: "/user-dashboard",
       element: <UserDashboard />,
+    },
+    {
+      path: "/user-setting",
+      element: <UserSetting/>,
     },
     {
       path: "/company-setting",
