@@ -19,6 +19,9 @@ import UpdateJob from "./components/UpdateJob";
 import CompanyProfile from "./components/CompanyProfile";
 import UserDashboard from "./components/UserDashboard";
 import CompanySetting from "./components/CompanySetting";
+import CompanyNotifications from "./components/CompanyNotifications";
+import UserNotifications from "./components/UserNotifications";
+import Jobs from "./components/Jobs";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -92,16 +95,28 @@ function App() {
     },
     {
       path: "/company-profile",
-      element: <CompanyProfile/>,
+      element: <CompanyProfile />,
     },
     {
       path: "/user-dashboard",
-      element: <UserDashboard/>,
+      element: <UserDashboard />,
     },
     {
       path: "/company-setting",
-      element: <CompanySetting/>,
-    }
+      element: <CompanySetting />,
+    },
+    {
+      path: "/company-notifications",
+      element: <CompanyNotifications />,
+    },
+    {
+      path: "/user-notifications",
+      element: <UserNotifications />,
+    },
+    {
+      path: "/jobs",
+      element: <Jobs />,
+    },
   ]);
 
   return (

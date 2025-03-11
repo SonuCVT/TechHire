@@ -9,10 +9,10 @@ import {
   Settings,
   UserCircle,
   PlusCircle,
-  User
-} from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+  User,
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const Sidebar = () => {
       icon: <BellRing size={18} />,
       label: "Notification",
       active: false,
-      link: "/notification",
+      link: "/company-notifications",
     },
     {
       icon: <Briefcase size={18} />,
@@ -62,9 +62,7 @@ const Sidebar = () => {
     },
   ];
 
-
-
-  const teamMembers = useSelector((state)=>state.addmember.member)
+  const teamMembers = useSelector((state) => state.addmember.member);
 
   return (
     <div className="w-64 bg-white border-r border-gray-200 min-h-screen p-4 ml-4 mt-5">
@@ -110,13 +108,13 @@ const Sidebar = () => {
           <PlusCircle size={20} className='text-gray-600 hover:text-indigo-800'/>
         </h3> */}
         <Link to="/addteammember">
-            <li className="flex items-center justify-between p-2 rounded-md text-gray-700 hover:bg-gray-100 cursor-pointer">
-                            <div className="flex items-center gap-4">
-                                <User size={20} className="text-gray-500" />
-                                Team Members
-                            </div>
-                            <PlusCircle size={20} className="hover:text-indigo-600" />
-            </li>
+          <li className="flex items-center justify-between p-2 rounded-md text-gray-700 hover:bg-gray-100 cursor-pointer">
+            <div className="flex items-center gap-4">
+              <User size={20} className="text-gray-500" />
+              Team Members
+            </div>
+            <PlusCircle size={20} className="hover:text-indigo-600" />
+          </li>
         </Link>
         <ul className="space-y-3">
           {teamMembers.map((member, index) => (

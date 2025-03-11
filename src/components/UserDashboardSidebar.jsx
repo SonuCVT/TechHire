@@ -3,21 +3,43 @@ import {
   LayoutDashboard,
   BellRing,
   Briefcase,
-  Users,
-  ClipboardCheck,
   MessageSquare,
   Settings,
-  UserCircle,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const sidebarItems = [
-    { icon: <LayoutDashboard size={18} />, label: "Dashboard", active: true },
-    { icon: <BellRing size={18} />, label: "Notification", active: false },
-    { icon: <Briefcase size={18} />, label: "Jobs", active: false },
-    { icon: <Users size={18} />, label: "Jobs Applied", active: false },
-    { icon: <ClipboardCheck size={18} />, label: "Schedule", active: false },
-    { icon: <Settings size={18} />, label: "Settings", active: false },
+    {
+      icon: <LayoutDashboard size={18} />,
+      label: "Dashboard",
+      active: true,
+      link: "/user-dashboard",
+    },
+    {
+      icon: <BellRing size={18} />,
+      label: "Notifications",
+      active: false,
+      link: "/user-notifications",
+    },
+    {
+      icon: <Briefcase size={18} />,
+      label: "Jobs",
+      active: false,
+      link: "/jobs",
+    },
+    {
+      icon: <MessageSquare size={18} />,
+      label: "Schedule",
+      active: false,
+      link: "/interview-schedule",
+    },
+    {
+      icon: <Settings size={18} />,
+      label: "Settings",
+      active: false,
+      link: "/setting",
+    },
   ];
 
   return (
@@ -35,10 +57,10 @@ const Sidebar = () => {
         <ul className="space-y-2">
           {sidebarItems.map((item, index) => (
             <li key={index}>
-              <a
-                href="#"
+              <Link
+                to={item.link}
                 className={`flex items-center space-x-3 p-2 rounded-md ${
-                  item.active
+                  location.pathname === item.link
                     ? "bg-blue-50 text-blue-600"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
@@ -51,7 +73,7 @@ const Sidebar = () => {
                   {item.icon}
                 </div>
                 <span>{item.label}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
