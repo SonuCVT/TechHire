@@ -171,20 +171,12 @@ function App() {
     },
     {
       path: "/company-setting",
-      element: <CompanySetting />,
+      element: <CompanySetting/>,
     },
     {
-      path: "/company-notifications",
-      element: <CompanyNotifications />,
-    },
-    {
-      path: "/user-notifications",
-      element: <UserNotifications />,
-    },
-    {
-      path: "/jobs",
-      element: <Jobs />,
-    },
+      path: "/user-interview",
+      element: <UserInterviewSchedule/>
+    }
   ]);
 
   return (

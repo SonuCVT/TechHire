@@ -1,8 +1,6 @@
 import React from "react";
 import googleLogo from "./../assets/images/google_G.png";
 import microsoftLogo from "./../assets/images/microsoft_logo.jpg";
-import loginPageBg from "./../assets/images/login_page_bg.jpg";
-import loginIllustrationImage from "./../assets/images/login-illustration.png";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Link } from "react-router-dom";
