@@ -58,7 +58,6 @@ const Signup = () => {
     }
 
     if (isValid) {
-<<<<<<< HEAD
       // console.log("Email:", email);
       // console.log("Role:", role);
       // console.log("Password:", password);
@@ -66,14 +65,11 @@ const Signup = () => {
         name:name,
         email:email,
         role:role,
-
       }))
-=======
-      console.log("Email:", email);
-      console.log("Role:", role);
-      console.log("Password:", password);
-      navigate("/login");
->>>>>>> 3827fb5bb115b0f632cdb82c8543bf589233cd35
+      setName("");
+      setEmail("");
+      setConfirmPassword("");
+      setPassword("");
       alert("Signup successful!!");
     }
   };
@@ -118,11 +114,7 @@ const Signup = () => {
               </label>
               <input
                 type="text"
-<<<<<<< HEAD
-                placeholder="full name"
-=======
                 placeholder="Enter your full name"
->>>>>>> 3827fb5bb115b0f632cdb82c8543bf589233cd35
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
