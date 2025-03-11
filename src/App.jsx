@@ -21,7 +21,8 @@ import UserDashboard from "./components/UserDashboard";
 import CompanySetting from "./components/CompanySetting";
 import CompanyNotifications from "./components/CompanyNotifications";
 import UserNotifications from "./components/UserNotifications";
-import Jobs from "./components/Jobs";
+import Jobs from "./components/JobsApplied";
+import AuthGuard from "./utils/autogaurd";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -182,7 +183,7 @@ function App() {
       element: <UserNotifications />,
     },
     {
-      path: "/jobs",
+      path: "/jobs-applied",
       element: <Jobs />,
     },
   ]);

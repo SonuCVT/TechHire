@@ -24,9 +24,9 @@ const Sidebar = () => {
     },
     {
       icon: <Briefcase size={18} />,
-      label: "Jobs",
+      label: "Jobs Applied",
       active: false,
-      link: "/jobs",
+      link: "/jobs-applied",
     },
     {
       icon: <MessageSquare size={18} />,
