@@ -58,7 +58,7 @@ const Sidebar = () => {
       icon: <Settings size={18} />,
       label: "Settings",
       active: false,
-      link: "/setting",
+      link: "/company-setting",
     },
   ];
 

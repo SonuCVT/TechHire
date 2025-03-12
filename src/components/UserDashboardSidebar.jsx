@@ -32,13 +32,13 @@ const Sidebar = () => {
       icon: <MessageSquare size={18} />,
       label: "Schedule",
       active: false,
-      link: "/interview-schedule",
+      link: "/user-interview",
     },
     {
       icon: <Settings size={18} />,
       label: "Settings",
       active: false,
-      link: "/setting",
+      link: "/user-setting",
     },
   ];
 
