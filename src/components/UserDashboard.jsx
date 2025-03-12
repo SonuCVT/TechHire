@@ -1,12 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import UserDashboardHeader from "./UserDashboardHeader";
 import UserDashboardSidebar from "./UserDashboardSidebar";
 import SocialAccount from "../cards/SocialAccount";
 import UserDescription from "../cards/UserDescription";
 import UpcomingActivities from "../cards/UpcomingActivities";
+
 const UserDashboard = () => {
+  const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className={`min-h-screen transition-all ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       {/* Header */}
       <UserDashboardHeader />
       <div className="flex">
@@ -15,34 +19,13 @@ const UserDashboard = () => {
 
         {/* Main Content */}
         <main className="flex-1 p-6">
-          {/* Search Bar */}
-          {/* <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center flex-1">
-              <Search className="text-gray-400 mr-2" />
-              <input 
-                type="text" 
-                placeholder="Search Keyword, jobs, sales" 
-                className="w-full outline-none"
-              />
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="bg-blue-500 text-white px-2 py-1 rounded text-sm">1440</span>
-              <span className="bg-blue-500 text-white px-2 py-1 rounded text-sm">120</span>
-            </div>
-            <div className="flex items-center gap-4 ml-4">
-              <Bell className="text-gray-500" />
-              <MessageSquare className="text-gray-500" />
-            </div>
-          </div>
-        </div> */}
-
           <SocialAccount />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Description Section */}
             <UserDescription />
+
             {/* User Profile Section */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className={`rounded-lg shadow-sm p-6 transition-all ${darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"}`}>
               <div className="flex flex-col items-center">
                 <div className="w-24 h-24 rounded-full bg-blue-500 mb-4 overflow-hidden">
                   <img
@@ -52,26 +35,21 @@ const UserDashboard = () => {
                   />
                 </div>
                 <h3 className="text-xl font-bold">User Name</h3>
-                <p className="text-gray-500 mb-6">Software Engineer</p>
+                <p className={`mb-6 transition ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  Software Engineer
+                </p>
 
-                <div className="flex w-full justify-between mb-6  ">
+                <div className="flex w-full justify-between mb-6">
                   <div className="relative w-20 h-20">
-                    <svg
-                      viewBox="0 0 36 36"
-                      className="w-20 h-20 transform -rotate-90"
-                    >
+                    <svg viewBox="0 0 36 36" className="w-20 h-20 transform -rotate-90">
                       <path
-                        d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
-                        stroke="#eee"
+                        stroke={darkMode ? "#444" : "#eee"}
                         strokeWidth="3"
                       />
                       <path
-                        d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="#6366f1"
                         strokeWidth="3"
@@ -79,7 +57,7 @@ const UserDashboard = () => {
                       />
                     </svg>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                      <span className="text-lg font-bold text-indigo-600">
+                      <span className="text-lg font-bold text-indigo-400">
                         50%
                       </span>
                     </div>
@@ -87,22 +65,15 @@ const UserDashboard = () => {
                   </div>
 
                   <div className="relative w-20 h-20">
-                    <svg
-                      viewBox="0 0 36 36"
-                      className="w-20 h-20 transform -rotate-90"
-                    >
+                    <svg viewBox="0 0 36 36" className="w-20 h-20 transform -rotate-90">
                       <path
-                        d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
-                        stroke="#eee"
+                        stroke={darkMode ? "#444" : "#eee"}
                         strokeWidth="3"
                       />
                       <path
-                        d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                         fill="none"
                         stroke="#10b981"
                         strokeWidth="3"
@@ -110,7 +81,7 @@ const UserDashboard = () => {
                       />
                     </svg>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                      <span className="text-lg font-bold text-emerald-500">
+                      <span className="text-lg font-bold text-emerald-400">
                         50%
                       </span>
                     </div>
@@ -120,39 +91,41 @@ const UserDashboard = () => {
 
                 <div className="w-full">
                   <div className="flex justify-between items-center mb-4">
-                    <h4 className="font-bold">Last Activites</h4>
-                    <a href="#" className="text-indigo-600 text-sm">
+                    <h4 className="font-bold">Last Activities</h4>
+                    <a href="#" className={`text-sm transition ${darkMode ? "text-violet-400" : "text-indigo-600"}`}>
                       See All
                     </a>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="border rounded-lg p-4">
+                    <div className={`border rounded-lg p-4 transition-all ${darkMode ? "border-gray-700 bg-gray-800 text-gray-300" : "border-gray-200 bg-white text-gray-900"}`}>
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
-                          <span className="text-teal-500">✓</span>
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${darkMode ? "bg-gray-700 text-violet-400" : "bg-teal-100 text-teal-500"}`}>
+                          ✓
                         </div>
                         <div>
                           <p>
-                            Your Application has{" "}
-                            <span className="font-bold">accepted</span>
+                            Your Application has <span className="font-bold">accepted</span>
                           </p>
-                          <p className="text-sm text-gray-500">3 Companies</p>
+                          <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+                            3 Companies
+                          </p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="border rounded-lg p-4">
+                    <div className={`border rounded-lg p-4 transition-all ${darkMode ? "border-gray-700 bg-gray-800 text-gray-300" : "border-gray-200 bg-white text-gray-900"}`}>
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
-                          <span className="text-orange-500">✓</span>
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${darkMode ? "bg-gray-700 text-orange-400" : "bg-orange-100 text-orange-500"}`}>
+                          ✓
                         </div>
                         <div>
                           <p>
-                            Your Resume has{" "}
-                            <span className="font-bold">viewed</span>
+                            Your Resume has <span className="font-bold">viewed</span>
                           </p>
-                          <p className="text-sm text-gray-500">3 Companies</p>
+                          <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+                            3 Companies
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -161,7 +134,6 @@ const UserDashboard = () => {
               </div>
             </div>
           </div>
-
           <UpcomingActivities />
         </main>
       </div>

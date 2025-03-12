@@ -1,5 +1,6 @@
 import React from "react";
 import { Plus } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const interviews = [
   {
@@ -45,16 +46,21 @@ const interviews = [
 ];
 
 const InterviewCard = () => {
+  const isDarkMode = useSelector((state) => state.theme.darkMode);
   return (
     <div className="space-y-6 w-3/5">
       {interviews.map((interview, index) => (
         <div
           key={index}
-          className="bg-white rounded-lg shadow-md overflow-hidden"
+          className={`rounded-lg shadow-md overflow-hidden ${
+            isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+          }`}
         >
-          <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+          <div className={`p-4 border-b flex justify-between items-center ${
+              isDarkMode ? "border-gray-700" : "border-gray-200"
+            }`}>
             <h2 className="text-lg font-medium">Interviews</h2>
-            <span className="text-gray-600">{interview.scheduledBy}</span>
+            <span className={`${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>{interview.scheduledBy}</span>
           </div>
           <div className="p-6">
             <div className="flex flex-col md:flex-row justify-between">
@@ -64,12 +70,12 @@ const InterviewCard = () => {
                   <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded">
                     {interview.mode}
                   </span>
-                  <span className="ml-4 text-gray-600 text-sm">
+                  <span className={`ml-4 text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                     {interview.date}, {interview.time}
                   </span>
                 </div>
                 <div className="mt-2">
-                  <span className="text-sm text-gray-500">Meet Link - </span>
+                  <span className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>Meet Link - </span>
                   <a
                     href={interview.meetLink}
                     className="text-sm text-blue-500"
@@ -80,7 +86,7 @@ const InterviewCard = () => {
               </div>
               <div className="grid grid-cols-2 gap-8">
                 <div>
-                  <p className="text-gray-600 mb-2">Assigned Manger</p>
+                  <p className={`mb-2 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>Assigned Manger</p>
                   <div className="flex -space-x-2">
                     {interview.assignedManager.map((avatar, i) => (
                       <div
@@ -97,7 +103,7 @@ const InterviewCard = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-gray-600 mb-2">Interiew Panel</p>
+                  <p className={`mb-2 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>Interiew Panel</p>
                   <div className="flex -space-x-2">
                     {interview.interviewPanel.map((avatar, i) => (
                       <div

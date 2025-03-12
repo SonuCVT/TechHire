@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Search, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "./UserDashboardHeader";
 import Sidebar from "./UserDashboardSidebar";
+import { useSelector } from "react-redux";
 
 const jobsPerPage = 9;
 
@@ -145,7 +146,7 @@ const salaryRanges = [
 
 const JobsManagement = () => {
   const routeChange = () => navigate(`/update-job`);
-
+  const darkTheme = useSelector((state) => state.theme.darkTheme);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     title: "",
@@ -186,7 +187,7 @@ const JobsManagement = () => {
   const prevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className={`min-h-screen flex flex-col ${darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"}`}>
       {/* Header */}
       <Header />
 

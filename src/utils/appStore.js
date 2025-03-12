@@ -4,6 +4,7 @@ import addassessmentReducer from "./addAssessmentSlice"
 import addPostjobReducer from "./addPostjobSlice"
 import addTeamMemberReducer from "./addTeammemberSlice"
 import userReducer from "./userSlice"
+import themeReducer from "./themeSlice"
 const appstore = configureStore(
     {
         reducer:{
@@ -11,7 +12,8 @@ const appstore = configureStore(
             addassessment:addassessmentReducer,
             addpostjob:addPostjobReducer,
             addmember:addTeamMemberReducer,
-            user:userReducer
+            user:userReducer,
+            theme:themeReducer
         }
     }
 )

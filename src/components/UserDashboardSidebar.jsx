@@ -5,46 +5,30 @@ import {
   Briefcase,
   MessageSquare,
   Settings,
+  LogOut,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const location = useLocation();
+  const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
+
   const sidebarItems = [
-    {
-      icon: <LayoutDashboard size={18} />,
-      label: "Dashboard",
-      active: true,
-      link: "/user-dashboard",
-    },
-    {
-      icon: <BellRing size={18} />,
-      label: "Notifications",
-      active: false,
-      link: "/user-notifications",
-    },
-    {
-      icon: <Briefcase size={18} />,
-      label: "Jobs Applied",
-      active: false,
-      link: "/jobs-applied",
-    },
-    {
-      icon: <MessageSquare size={18} />,
-      label: "Schedule",
-      active: false,
-      link: "/user-interview",
-    },
-    {
-      icon: <Settings size={18} />,
-      label: "Settings",
-      active: false,
-      link: "/user-setting",
-    },
+    { icon: <LayoutDashboard size={18} />, label: "Dashboard", link: "/user-dashboard" },
+    { icon: <BellRing size={18} />, label: "Notifications", link: "/user-notifications" },
+    { icon: <Briefcase size={18} />, label: "Jobs Applied", link: "/jobs-applied" },
+    { icon: <MessageSquare size={18} />, label: "Schedule", link: "/user-interview" },
+    { icon: <Settings size={18} />, label: "Settings", link: "/user-setting" },
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 min-h-screen p-4">
-      {/* Company Logo and Name */}
+    <div
+      className={`w-64 min-h-screen p-4 border-r transition-all ${
+        darkMode ? "bg-gray-800 border-gray-700 text-white" : "bg-white border-gray-200 text-gray-900"
+      }`}
+    >
+      {/* User Info */}
       <div className="flex items-center space-x-3 mb-8 p-2">
         <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
           <span className="text-white font-bold">U</span>
@@ -59,19 +43,17 @@ const Sidebar = () => {
             <li key={index}>
               <Link
                 to={item.link}
-                className={`flex items-center space-x-3 p-2 rounded-md ${
+                className={`flex items-center space-x-3 p-2 rounded-lg transition ${
                   location.pathname === item.link
-                    ? "bg-blue-50 text-blue-600"
+                    ? darkMode
+                      ? "bg-gray-700 text-violet-400"
+                      : "bg-blue-50 text-blue-600"
+                    : darkMode
+                    ? "text-gray-300 hover:bg-gray-700"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                <div
-                  className={`${
-                    item.active ? "text-blue-600" : "text-gray-500"
-                  }`}
-                >
-                  {item.icon}
-                </div>
+                {item.icon}
                 <span>{item.label}</span>
               </Link>
             </li>
@@ -79,26 +61,24 @@ const Sidebar = () => {
         </ul>
       </nav>
 
-      <div className="flex flex-col">
-        <button className="flex items-center py-2 px-3 font-bold text-gray-800">
-          LOGOUT
-        </button>
+      {/* Logout Button */}
+      <button className="flex items-center space-x-2 p-2 text-red-500 hover:text-red-600 transition">
+        <LogOut size={18} />
+        <span>Logout</span>
+      </button>
 
-        <div className="mt-6 border-t pt-4">
-          <div className="text-sm font-medium">Complete Profile</div>
-          <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
-            <div
-              className="bg-purple-600 h-1.5 rounded-full"
-              style={{ width: "80%" }}
-            ></div>
-          </div>
-          <div className="text-xs text-gray-500 mt-1">
-            Your Profile is 80% Completed
-          </div>
-          <a href="#" className="text-xs text-purple-600">
-            Complete your profile now
-          </a>
+      {/* Profile Completion */}
+      <div className="mt-6 border-t pt-4">
+        <div className="text-sm font-medium">Complete Profile</div>
+        <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-1.5 mt-2">
+          <div className="bg-violet-600 h-1.5 rounded-full" style={{ width: "80%" }}></div>
         </div>
+        <div className="text-xs text-gray-500 dark:text-gray-300 mt-1">
+          Your Profile is 80% Completed
+        </div>
+        <a href="#" className="text-xs text-violet-600 dark:text-violet-400">
+          Complete your profile now
+        </a>
       </div>
     </div>
   );
