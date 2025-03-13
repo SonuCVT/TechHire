@@ -145,8 +145,8 @@ const salaryRanges = [
 ];
 
 const JobsManagement = () => {
-  const routeChange = () => navigate(`/update-job`);
-  const darkTheme = useSelector((state) => state.theme.darkTheme);
+  const darkTheme = useSelector((state) => state.theme.darkMode);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     title: "",
@@ -187,15 +187,27 @@ const JobsManagement = () => {
   const prevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
   return (
-    <div className={`min-h-screen flex flex-col ${darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"}`}>
+    <div
+      className={`min-h-screen flex flex-col ${
+        darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"
+      }`}
+    >
       {/* Header */}
       <Header />
 
-      <div className="flex flex-1">
+      <div
+        className={`flex flex-1 ${
+          darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"
+        }`}
+      >
         {/* Sidebar */}
         <Sidebar />
 
-        <main className="flex-1 bg-gray-50 p-6">
+        <main
+          className={`flex-1 bg-gray-50 p-6 ${
+            darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"
+          }`}
+        >
           <div className="mb-6 flex gap-4">
             <input
               type="text"
@@ -253,7 +265,11 @@ const JobsManagement = () => {
 
             {/* Reset Button */}
             <button
-              className="bg-gray-200 px-4 py-2 rounded cursor-pointer"
+              className={`px-4 py-2 rounded cursor-pointer ${
+                darkTheme
+                  ? "bg-violet-600 text-white hover:bg-violet-700"
+                  : "bg-gray-200 text-black"
+              }`}
               onClick={() =>
                 setFilters({
                   title: "",
@@ -272,17 +288,33 @@ const JobsManagement = () => {
             {currentJobs.map((job) => (
               <div
                 key={job.id}
-                className="bg-white rounded-lg shadow-sm p-4 flex items-start justify-between"
+                className={`rounded-lg shadow-sm p-4 flex items-start justify-between ${
+                  darkTheme ? "bg-gray-600 text-white" : "bg-white text-black"
+                }`}
               >
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4">
                     <div>
                       <h3 className="text-lg font-medium">{job.title}</h3>
-                      <div className="text-gray-600 text-sm">{job.company}</div>
-                      <div className="flex items-center gap-2 text-gray-500 text-sm mt-2">
+                      <div
+                        className={`text-sm ${
+                          darkTheme ? "text-slate-300" : "text-gray-600"
+                        }`}
+                      >
+                        {job.company}
+                      </div>
+                      <div
+                        className={`flex items-center gap-2 text-sm mt-2 ${
+                          darkTheme ? "text-slate-400" : "text-gray-500"
+                        }`}
+                      >
                         <MapPin size={16} /> {job.location}
                       </div>
-                      <div className="mt-4 text-gray-600 text-sm">
+                      <div
+                        className={`mt-4 text-sm ${
+                          darkTheme ? "text-white" : "text-gray-600"
+                        }`}
+                      >
                         {job.salary.toLocaleString()}
                       </div>
                     </div>
@@ -302,7 +334,7 @@ const JobsManagement = () => {
                       }
                       ${
                         job.status === "Under Review"
-                          ? "bg-[#48596f] text-[#fff]"
+                          ? "bg-[#25364d] text-[#fff]"
                           : ""
                       }
                       ${

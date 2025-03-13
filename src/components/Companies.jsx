@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Header from "./UserDashboardHeader.jsx";
 import Sidebar from "./UserDashboardSidebar.jsx";
@@ -12,6 +12,8 @@ import companyImg5 from "./../assets/images/companies/facebbok.webp";
 import companyImg6 from "./../assets/images/companies/deloitte.jpeg";
 
 const CompaniesPage = () => {
+  const darkTheme = useSelector((state) => state.theme.darkMode);
+
   const companies = [
     {
       id: 1,
@@ -70,7 +72,11 @@ const CompaniesPage = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div
+      className={`min-h-screen flex flex-col ${
+        darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"
+      }`}
+    >
       {/* Header */}
       <Header />
 
@@ -79,7 +85,11 @@ const CompaniesPage = () => {
         <Sidebar />
 
         {/* Main Content */}
-        <main className="flex-1 bg-gray-50 p-6">
+        <main
+          className={`flex-1 p-6 ${
+            darkTheme ? "bg-gray-900 text-white" : "bg-gray-50 text-black"
+          }`}
+        >
           <div className="container mx-auto">
             <h1 className="text-2xl mb-1">Companies Registered With Us</h1>
             <div className="h-0.5 w-32 bg-red-500 mb-8"></div>
@@ -89,7 +99,11 @@ const CompaniesPage = () => {
                 <Link to={company.link} className="text-blue-500">
                   <div
                     key={company.id}
-                    className="bg-white rounded-lg shadow-md overflow-hidden"
+                    className={`rounded-lg shadow-md overflow-hidden ${
+                      darkTheme
+                        ? "bg-gray-600 text-white"
+                        : "bg-white text-black"
+                    }`}
                   >
                     <div className="h-48 overflow-hidden">
                       <img
@@ -106,10 +120,18 @@ const CompaniesPage = () => {
                           className="h-16 bg-white p-2 rounded-md shadow-md"
                         />
                       </div>
-                      <h3 className="text-lg font-medium text-blue-600 mb-2">
+                      <h3
+                        className={`text-lg font-medium mb-2 ${
+                          darkTheme ? "text-slate-100" : "text-gray-600"
+                        }`}
+                      >
                         {company.name} - {company.position}
                       </h3>
-                      <div className="flex justify-between text-gray-600 text-sm mt-4">
+                      <div
+                        className={`flex justify-between text-sm mt-4 ${
+                          darkTheme ? "text-slate-300" : "text-gray-600"
+                        }`}
+                      >
                         <span>{company.location}</span>
                         <span>{company.experience}</span>
                       </div>
