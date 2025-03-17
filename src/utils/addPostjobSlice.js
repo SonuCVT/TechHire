@@ -9,7 +9,7 @@ const jobSlice = createSlice({
   initialState,
   reducers: {
     postJob: (state, action) => {
-      state.jobs.push(action.payload);
+      state.jobs = action.payload
     },
     deleteJob: (state, action) => {
       state.jobs = state.jobs.filter(job => job.id !== action.payload);

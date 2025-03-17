@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaAndroid, FaPython, FaDatabase, FaFigma, FaCode, FaJava, FaBeer } from 'react-icons/fa';
 import UserDashboardHeader from './UserDashboardHeader';
-
+import useFetchJobs from '../hooks/useFetchJobs';
 const JobOpening = () => {
+  useFetchJobs()
   const jobs = useSelector((state) => state.addpostjob.jobs);
   const darkMode = useSelector((state) => state.theme.darkMode);
-
+  
   const [filters, setFilters] = useState({
     category: '',
     location: '',
@@ -24,9 +25,9 @@ const JobOpening = () => {
   const jobCategories = [
     { name: 'Android Developer', icon: <FaAndroid /> },
     { name: 'Python Developer', icon: <FaPython /> },
-    { name: 'Back-end Developer', icon: <FaDatabase /> },
-    { name: 'Software Developer', icon: <FaBeer /> },
-    { name: 'Fullstack Developer', icon: <FaCode /> },
+    { name: 'Backend Developer', icon: <FaDatabase /> },
+    { name: 'Software Engineer', icon: <FaBeer /> },
+    { name: 'Full Stack Developer', icon: <FaCode /> },
     { name: 'Java Developer', icon: <FaJava /> }
   ];
 
@@ -96,9 +97,9 @@ const JobOpening = () => {
                   <h3 className="text-xl font-semibold">{job.title}</h3>
                   <p><strong>Company:</strong> {job.company}</p>
                   <p><strong>Location:</strong> {job.location}</p>
-                  <p><strong>Description:</strong> {job.jobDescription}</p>
+                  <p><strong>Description:</strong> {job.description}</p>
                   <p><strong>Experience:</strong> {job.experienceLevel} years</p>
-                  <p><strong>Salary:</strong> {job.salaryRange} CTC</p>
+                  <p><strong>Salary:</strong> {job.salary} CTC</p>
                   <div className="flex justify-end space-x-2 mt-2">
                     <button className="px-4 py-2 bg-blue-500 text-white rounded">Apply</button>
                   </div>

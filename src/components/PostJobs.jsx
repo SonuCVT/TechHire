@@ -25,22 +25,43 @@ const PostJobs = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const newJob = {
-      id: Date.now(), // Unique ID for each job
       title: formData.jobTitle,
-      company:formData.companyName , 
+      company: formData.companyName,
       location: formData.location,
-      type: formData.jobType.toUpperCase(), // Ensure consistency
+      //experienceLevel: formData.experienceLevel,
+      jobType: formData.jobType,
       salary: formData.salaryRange,
-      jobDescription:formData.jobDescription,
-      skills:formData.skills,
-      deadline:formData.deadline
+      description: formData.jobDescription,
+      //skillsRequired: formData.skills,
+      applicationDeadline: formData.deadline,
     };
-    dispatch(postJob(newJob));
-    navigate("/hr-dashboard");
+  
+    try {
+      const response = await fetch("/api/jobs_posting", { // No need for full URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newJob),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to post job");
+      }
+  
+      //const savedJob = await response.json();
+      //dispatch(postJob(savedJob)); // Save job in Redux after backend confirms it
+  
+      navigate("/hr-dashboard");
+    } catch (error) {
+      console.error("Error posting job:", error);
+    }
   };
+  
 
   return (
     <>
