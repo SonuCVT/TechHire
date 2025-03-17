@@ -139,7 +139,7 @@ const CompanyCardProfile = () => {
                   <span className="font-medium">Type : </span>
                   <span
                     className={`${
-                      darkTheme ? "text-gray-200" : "text-gray-600"
+                      darkTheme ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
                     {companyInfo.type}
@@ -149,7 +149,7 @@ const CompanyCardProfile = () => {
                   <span className="font-medium">Founded : </span>
                   <span
                     className={`${
-                      darkTheme ? "text-gray-200" : "text-gray-600"
+                      darkTheme ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
                     {companyInfo.founded}
@@ -159,7 +159,7 @@ const CompanyCardProfile = () => {
                   <span className="font-medium">Company Size : </span>
                   <span
                     className={`${
-                      darkTheme ? "text-gray-200" : "text-gray-600"
+                      darkTheme ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
                     {companyInfo.size}
@@ -169,7 +169,7 @@ const CompanyCardProfile = () => {
                   <span className="font-medium">Headquarters : </span>
                   <span
                     className={`${
-                      darkTheme ? "text-gray-200" : "text-gray-600"
+                      darkTheme ? "text-gray-300" : "text-gray-600"
                     }`}
                   >
                     {companyInfo.headquarters}

@@ -16,7 +16,7 @@ const CompanyDashboard = () => {
       color: "text-purple-600",
     },
     {
-      title: "Totanpm dev runl Applications",
+      title: "Total Applications",
       value: "842",
       change: "+8%",
       period: "month",
@@ -37,7 +37,6 @@ const CompanyDashboard = () => {
       color: "text-orange-500",
     },
   ];
-
 
   return (
     <div className="min-h-screen bg-gray-100">
