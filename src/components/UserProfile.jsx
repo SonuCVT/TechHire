@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 import Header from "./UserDashboardHeader.jsx";
 import Sidebar from "./UserDashboardSidebar.jsx";
-import userImage from "./../assets/images/user.svg";
-import InterviewCard from "./../cards/InterviewCard.jsx";
+import userImage from "../assets/images/user.svg";
+import InterviewCard from "../cards/InterviewCard.jsx";
 
 const CandidateProfile = () => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state

@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Header from "./UserDashboardHeader.jsx";
 import Sidebar from "./UserDashboardSidebar.jsx";
-import companyLogo from "./../assets/images/company_logo.png";
-import companyImg1 from "./../assets/images/companies/infosys.jpg";
-import companyImg2 from "./../assets/images/companies/tcs.jpg";
-import companyImg3 from "./../assets/images/companies/google.png";
-import companyImg4 from "./../assets/images/companies/microsoft.webp";
-import companyImg5 from "./../assets/images/companies/facebbok.webp";
-import companyImg6 from "./../assets/images/companies/deloitte.jpeg";
+import companyLogo from "../assets/images/company_logo.png";
+import companyImg1 from "../assets/images/companies/infosys.jpg";
+import companyImg2 from "../assets/images/companies/tcs.jpg";
+import companyImg3 from "../assets/images/companies/google.png";
+import companyImg4 from "../assets/images/companies/microsoft.webp";
+import companyImg5 from "../assets/images/companies/facebbok.webp";
+import companyImg6 from "../assets/images/companies/deloitte.jpeg";
 
 const CompaniesPage = () => {
   const darkTheme = useSelector((state) => state.theme.darkMode);

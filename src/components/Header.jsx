@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import TechHireLogo from "./../assets/images/techhire_logo.svg";
+import TechHireLogo from "../assets/images/techhire_logo.svg";
 
 function Header() {
   const location = useLocation();
