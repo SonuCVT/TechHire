@@ -33,8 +33,8 @@ const Assessments = () => {
                   <h2 className="text-xl font-semibold text-gray-900">{assessment.title}</h2>
                   <p className="text-gray-600"><strong>Created By:</strong> {assessment.createdBy}</p>
                   <p className="text-gray-600"><strong>Created On:</strong> {assessment.creationDate}</p>
-                  <p className="text-gray-600"><strong>Due Date:</strong> {assessment.dueDate}</p>
-                  <p className="text-gray-600"><strong>Assigned To:</strong> {assessment.assignedTo}</p>
+                  <p className="text-gray-600"><strong>Due Date:</strong> {assessment.deadline}</p>
+                  <p className="text-gray-600"><strong>Assigned To:</strong> {assessment.assignTo}</p>
                   <p className="text-gray-600"><strong>Status:</strong> {assessment.status}</p>
                   {assessment.attachment && (
                     <p className="text-blue-500">

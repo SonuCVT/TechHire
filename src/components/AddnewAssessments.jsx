@@ -14,10 +14,10 @@ const AddnewAssessments = () => {
     about: "",
     createdBy: "",
     creationDate: "",
-    dueDate: "",
-    assignedTo: "",
+    deadline: "",
+    assignTo: "",
     status: "In Progress",
-    attachment: "",
+    attachments: "",
   });
 
   const handleChange = (e) => {
