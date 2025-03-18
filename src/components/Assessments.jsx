@@ -3,9 +3,10 @@ import Header from './Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import useFetchAssessment from '../hooks/useFetchAssessment';
 
 const Assessments = () => {
-  const dispatch = useDispatch();
+  useFetchAssessment();
   const assessments = useSelector((state) => state.addassessment.assessment);
 
   return (

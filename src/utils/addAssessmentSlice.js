@@ -9,7 +9,7 @@ const addassessmentSlice = createSlice({
     initialState,
     reducers:{
         addAssessment:(state,action) =>{
-            state.assessment.push(action.payload);
+            state.assessment=action.payload;
         },
         
     }

@@ -24,11 +24,32 @@ const AddnewAssessments = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(addAssessment(formData));
-    navigate("/assessments");
+  
+    try {
+      const response = await fetch("/api/assessments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to save assessment");
+      }
+  
+      const data = await response.json();
+
+  
+      // Navigate to assessments page
+      navigate("/assessments");
+    } catch (error) {
+      console.error("Error submitting assessment:", error);
+    }
   };
+  
 
   return (
     <>
