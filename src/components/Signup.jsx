@@ -10,7 +10,7 @@ import { addUser } from "../utils/userSlice";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
-  const [name,setName] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("candidate");
@@ -20,7 +20,7 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const navigate = useNavigate();
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -61,15 +61,17 @@ const Signup = () => {
       // console.log("Email:", email);
       // console.log("Role:", role);
       // console.log("Password:", password);
-      dispatch(addUser({
-        name:name,
-        email:email,
-        role:role,
-      }))
-      if(role==="hr"){
-         navigate("/hr-dashboard")
-      }else{
-        navigate("/candidate-dashboard")
+      dispatch(
+        addUser({
+          name: name,
+          email: email,
+          role: role,
+        })
+      );
+      if (role === "hr") {
+        navigate("/hr-dashboard");
+      } else {
+        navigate("/candidate-dashboard");
       }
       setName("");
       setEmail("");

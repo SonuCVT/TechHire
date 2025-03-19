@@ -15,17 +15,35 @@ const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
 
   const sidebarItems = [
-    { icon: <LayoutDashboard size={18} />, label: "Dashboard", link: "/user-dashboard" },
-    { icon: <BellRing size={18} />, label: "Notifications", link: "/user-notifications" },
-    { icon: <Briefcase size={18} />, label: "Jobs Applied", link: "/jobs-applied" },
-    { icon: <MessageSquare size={18} />, label: "Schedule", link: "/user-interview" },
+    {
+      icon: <LayoutDashboard size={18} />,
+      label: "Dashboard",
+      link: "/user-dashboard",
+    },
+    {
+      icon: <BellRing size={18} />,
+      label: "Notifications",
+      link: "/user-notifications",
+    },
+    {
+      icon: <Briefcase size={18} />,
+      label: "Jobs Applied",
+      link: "/jobs-applied",
+    },
+    {
+      icon: <MessageSquare size={18} />,
+      label: "Schedule",
+      link: "/user-interview",
+    },
     { icon: <Settings size={18} />, label: "Settings", link: "/user-setting" },
   ];
 
   return (
     <div
       className={`w-64 min-h-screen p-4 border-r transition-all ${
-        darkMode ? "bg-gray-800 border-gray-700 text-white" : "bg-white border-gray-200 text-gray-900"
+        darkMode
+          ? "bg-gray-800 border-gray-700 text-white"
+          : "bg-white border-gray-200 text-gray-900"
       }`}
     >
       {/* User Info */}
@@ -62,23 +80,19 @@ const Sidebar = () => {
       </nav>
 
       {/* Logout Button */}
-      <button className="flex items-center space-x-2 p-2 text-red-500 hover:text-red-600 transition">
+      <button className="flex items-center space-x-2 p-2 text-red-500 hover:text-red-600 transition cursor-pointer">
         <LogOut size={18} />
         <span>Logout</span>
       </button>
 
       {/* Profile Completion */}
       <div className="mt-6 border-t pt-4">
-        <div className="text-sm font-medium">Complete Profile</div>
-        <div className="w-full bg-gray-300 dark:bg-gray-600 rounded-full h-1.5 mt-2">
-          <div className="bg-violet-600 h-1.5 rounded-full" style={{ width: "80%" }}></div>
-        </div>
-        <div className="text-xs text-gray-500 dark:text-gray-300 mt-1">
-          Your Profile is 80% Completed
-        </div>
-        <a href="#" className="text-xs text-violet-600 dark:text-violet-400">
+        <Link
+          to="/update-profile"
+          className="text-md text-violet-600 dark:text-violet-400"
+        >
           Complete your profile now
-        </a>
+        </Link>
       </div>
     </div>
   );

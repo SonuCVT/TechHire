@@ -26,6 +26,7 @@ import AuthGuard from "./utils/authgaurd";
 import UserInterviewSection from "./components/UserInterviewSection";
 import HelpSupport from "./components/HelpSupport";
 import UserSetting from "./components/UserSetting";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
   const userouter = createBrowserRouter([
@@ -175,7 +176,7 @@ function App() {
     },
     {
       path: "/user-setting",
-      element: <UserSetting/>,
+      element: <UserSetting />,
     },
     {
       path: "/company-setting",
@@ -191,7 +192,7 @@ function App() {
     },
     {
       path: "/user-interview",
-      element: <UserInterviewSection/>
+      element: <UserInterviewSection />,
     },
     {
       path: "/jobs-applied",
@@ -199,7 +200,11 @@ function App() {
     },
     {
       path: "/help-support",
-      element: <HelpSupport/>,
+      element: <HelpSupport />,
+    },
+    {
+      path: "/update-profile",
+      element: <UpdateProfile />,
     },
   ]);
 
