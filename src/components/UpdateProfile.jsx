@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
+const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
+
 const UpdateProfile = () => {
   // Get user data from Redux
   const user = useSelector((state) => state.user);
@@ -41,12 +44,12 @@ const UpdateProfile = () => {
   
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "techHire"); // Replace with your actual Cloudinary preset
+    formData.append("upload_preset",UPLOAD_PRESET); // Replace with your actual Cloudinary preset
     formData.append("resource_type", "raw"); // Ensure it's treated as a raw file (not an image)
   
     try {
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/dk6aqshq2/raw/upload`, // Use 'raw' in URL
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`, // Use 'raw' in URL
         formData
       );
   
