@@ -1,45 +1,75 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
-  // Get user email from Redux (Assuming user email is stored after signup)
+  // Get user data from Redux
   const user = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
   // Form State
   const [formData, setFormData] = useState({
     name: user.name || "",
-    email: user.email || "", // Pre-filled from signup
-    skills: [],
+    email: user.email || "",
+    skills: [], // Ensuring it's always an array to prevent `.join()` error
     education: "",
     experience: "",
-    resume: null,
+    resumeUrl: "", // Stores Cloudinary URL
     coverLetter: null,
     attachments: [],
   });
 
+  const [uploading, setUploading] = useState(false);
+
   // Handle Input Change
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
     const { name, value } = e.target;
 
-    // Convert comma-separated values into an array for skills
     if (name === "skills") {
       setFormData({
         ...formData,
-        [name]: value.split(",").map((skill) => skill.trim()),
+        [name]: value ? value.split(",").map((skill) => skill.trim()) : [],
       });
     } else {
       setFormData({ ...formData, [name]: value });
     }
   };
 
-  // Handle File Upload
-  const handleFileUpload = (e, field) => {
-    if (field === "attachments") {
-      setFormData({ ...formData, attachments: [...e.target.files] });
-    } else {
-      setFormData({ ...formData, [field]: e.target.files[0] });
+  // Upload File to Cloudinary
+  const uploadToCloudinary = async (file) => {
+    setUploading(true);
+  
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "techHire"); // Replace with your actual Cloudinary preset
+    formData.append("resource_type", "raw"); // Ensure it's treated as a raw file (not an image)
+  
+    try {
+      const response = await axios.post(
+        `https://api.cloudinary.com/v1_1/dk6aqshq2/raw/upload`, // Use 'raw' in URL
+        formData
+      );
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        resumeUrl: response.data.secure_url, // Save Cloudinary URL
+      }));
+  
+      setUploading(false);
+      alert("Resume uploaded successfully!");
+    } catch (error) {
+      console.error("Upload failed:", error);
+      alert("File upload failed!");
+      setUploading(false);
+    }
+  };
+  
+
+  // Handle Resume Upload
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      uploadToCloudinary(file);
     }
   };
 
@@ -48,6 +78,7 @@ const UpdateProfile = () => {
     e.preventDefault();
     console.log("Profile Data:", formData);
     alert("Profile Updated Successfully!");
+    navigate("/user-dashboard")
   };
 
   return (
@@ -56,7 +87,7 @@ const UpdateProfile = () => {
         Complete Your Profile
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name (Pre-filled) */}
+        {/* Full Name */}
         <div>
           <label className="block font-medium">Full Name</label>
           <input
@@ -69,7 +100,7 @@ const UpdateProfile = () => {
           />
         </div>
 
-        {/* Email (Pre-filled) */}
+        {/* Email */}
         <div>
           <label className="font-medium">Email ID</label>
           <input
@@ -87,7 +118,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             name="skills"
-            value={formData.skills.join(", ")} // Display as a comma-separated string
+            value={Array.isArray(formData.skills) ? formData.skills.join(", ") : ""}
             onChange={handleChange}
             placeholder="e.g., React, Node.js, Python"
             className="w-full p-2 border rounded-md focus:outline-blue-500"
@@ -129,10 +160,24 @@ const UpdateProfile = () => {
           <input
             type="file"
             accept=".pdf"
-            onChange={(e) => handleFileUpload(e, "resume")}
+            onChange={handleFileUpload}
             className="w-full p-2 border rounded-md"
             required
           />
+          {uploading && <p className="text-blue-500">Uploading...</p>}
+          {formData.resumeUrl && (
+            <p className="text-green-500">
+              Uploaded Resume:{" "}
+              <a
+                href={formData.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                View Resume
+              </a>
+            </p>
+          )}
         </div>
 
         {/* Cover Letter Upload */}
@@ -141,21 +186,6 @@ const UpdateProfile = () => {
           <input
             type="file"
             accept=".pdf"
-            onChange={(e) => handleFileUpload(e, "coverLetter")}
-            className="w-full p-2 border rounded-md"
-          />
-        </div>
-
-        {/* Multiple Attachments */}
-        <div>
-          <label className="block font-medium">
-            Upload Additional Attachments
-          </label>
-          <input
-            type="file"
-            accept=".pdf,.docx,.jpg,.png"
-            multiple
-            onChange={(e) => handleFileUpload(e, "attachments")}
             className="w-full p-2 border rounded-md"
           />
         </div>
