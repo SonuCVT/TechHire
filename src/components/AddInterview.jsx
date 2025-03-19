@@ -10,12 +10,12 @@ const AddInterview = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    candidateName: "",
+    name: "",
     interviewMode: "",
-    dateOfInterview: "",
-    timeOfInterview: "",
+    dateInterview: "",
+    timeInterview: "",
     assignedManager: "",
-    panelMembers: "",
+    interviewPanelMembers: "",
     meetingLink: "",
   });
 

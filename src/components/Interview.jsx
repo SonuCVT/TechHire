@@ -42,8 +42,8 @@ const Interview = () => {
                     <h2 className="text-lg font-semibold text-gray-800">Interview</h2>
                     <p className="text-gray-600 text-sm">
                       Scheduled For -{" "}
-                      <span className="font-medium">{interview.candidateName}</span> (
-                      {interview.dateOfInterview})
+                      <span className="font-medium">{interview.name}</span> (
+                      {interview.dateInterview})
                     </p>
                   </div>
 
@@ -55,7 +55,7 @@ const Interview = () => {
                           {interview.interviewType || "Technical Test"}
                         </h3>
                         <p className="text-gray-700">
-                          {interview.dateOfInterview}, {interview.timeOfInterview}
+                          {interview.dateInterview}, {interview.timeInterview}
                         </p>
                         <p className="text-gray-500">
                           Meet Link -{" "}
@@ -83,7 +83,7 @@ const Interview = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold">Interview Panel</h4>
-                      <p>{interview.panelMembers}</p>
+                      <p>{interview.interviewPanelMembers}</p>
                     </div>
                   </div>
                 </div>
