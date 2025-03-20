@@ -19,19 +19,24 @@ import InterviewCard from "../cards/InterviewCard.jsx";
 const CandidateProfile = () => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
 
-  const user = useSelector((state) => state.user);
-  const updateUser = useSelector((state) => state.updateuser);
-  console.log(user);
-  console.log(updateUser);
-
   const candidateData = {
-    name: user.name,
-    email: user.email,
-    phone: "" || updateUser?.phoneNumber,
-    address: "" || updateUser?.address,
-    skills: updateUser?.skills || [],
-    education: "" || updateUser?.education,
-    experience: "" || updateUser?.experience,
+    name: "Sumit Desai",
+    phone: "7800181112",
+    location: "Mumbai",
+    profileCompletion: 79,
+    matched: {
+      items: ["Education", "Skills", "Experience"],
+      icon: <CheckCircle className="text-green-500" size={20} />,
+    },
+    against: {
+      items: ["Location", "Salary expectation"],
+      icon: <XCircle className="text-red-500" size={20} />,
+    },
+    skills: "HTML, CSS, Java, JavaScript, React, Spring",
+    education: "2025 Bachelors of Engineering, Mumbai University",
+    experience: "1 Year",
+    salary: "4 Lakhs Current / 8 Lakhs Expected",
+    noticePeriod: "30 Days",
     documents: [
       { name: "Resume", verified: true },
       { name: "Cover Letter", verified: false },
@@ -93,17 +98,42 @@ const CandidateProfile = () => {
                           }`}
                         >
                           <MapPin size={16} className="mr-1" />
-                          <span>{candidateData.address}</span>
-                        </div>
-                        <div
-                          className={`flex items-center ${
-                            darkMode ? "text-gray-300" : "text-gray-600"
-                          }`}
-                        >
-                          <Mail size={16} className="mr-1" />
-                          <span>{candidateData.email}</span>
+                          <span>{candidateData.location}</span>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Profile Completion Bar */}
+                  <div className="mb-8">
+                    <div className="flex justify-between items-center mb-2 relative">
+                      <span
+                        className={`${
+                          darkMode ? "text-gray-300" : "text-gray-700"
+                        }`}
+                      >
+                        Profile completion
+                      </span>
+                      <div className="flex items-center">
+                        <span className="text-sm text-blue-500 absolute bottom-[-40px]">
+                          {candidateData.profileCompletion}%
+                        </span>
+                        <button className="text-blue-500">
+                          <Edit size={16} />
+                          <span className="ml-1">Edit</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div
+                      className={`w-full rounded-full h-2.5 ${
+                        darkMode ? "bg-gray-700" : "bg-gray-200"
+                      }`}
+                    >
+                      <div
+                        className="bg-blue-500 h-2.5 rounded-full"
+                        style={{ width: `${candidateData.profileCompletion}%` }}
+                      ></div>
                     </div>
                   </div>
 
@@ -115,13 +145,7 @@ const CandidateProfile = () => {
                       }`}
                     >
                       <span className="font-medium">Skills</span>
-                      <ul>
-                        <span>
-                          {candidateData.skills.length > 0
-                            ? candidateData.skills.join(", ")
-                            : ""}
-                        </span>
-                      </ul>
+                      <span>{candidateData.skills}</span>
                     </div>
                     <div
                       className={`border-b py-3 flex justify-between ${

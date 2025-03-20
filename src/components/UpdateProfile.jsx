@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { updateUser } from "../utils/updateUserSlice";
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
 const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
@@ -10,10 +11,14 @@ const UpdateProfile = () => {
   // Get user data from Redux
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   // Form State
   const [formData, setFormData] = useState({
     name: user.name || "",
     email: user.email || "",
+    phoneNumber: "",
+    address: "",
     skills: [], // Ensuring it's always an array to prevent `.join()` error
     education: "",
     experience: "",
@@ -28,7 +33,13 @@ const UpdateProfile = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "skills") {
+    if (name === "phoneNumber") {
+      const onlyNumbers = value.replace(/\D/g, "");
+
+      if (onlyNumbers.length <= 10) {
+        setFormData({ ...formData, [name]: onlyNumbers });
+      }
+    } else if (name === "skills") {
       setFormData({
         ...formData,
         [name]: value ? value.split(",").map((skill) => skill.trim()) : [],
@@ -41,23 +52,23 @@ const UpdateProfile = () => {
   // Upload File to Cloudinary
   const uploadToCloudinary = async (file) => {
     setUploading(true);
-  
+
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset",UPLOAD_PRESET); // Replace with your actual Cloudinary preset
-    formData.append("resource_type", "raw"); // Ensure it's treated as a raw file (not an image)
-  
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("resource_type", "raw");
+
     try {
       const response = await axios.post(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`, // Use 'raw' in URL
+        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/raw/upload`,
         formData
       );
-  
+
       setFormData((prevData) => ({
         ...prevData,
-        resumeUrl: response.data.secure_url, // Save Cloudinary URL
+        resumeUrl: response.data.secure_url,
       }));
-  
+
       setUploading(false);
       alert("Resume uploaded successfully!");
     } catch (error) {
@@ -66,7 +77,6 @@ const UpdateProfile = () => {
       setUploading(false);
     }
   };
-  
 
   // Handle Resume Upload
   const handleFileUpload = (e) => {
@@ -79,9 +89,11 @@ const UpdateProfile = () => {
   // Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Profile Data:", formData);
+    // console.log("Profile Data:", formData);
+
+    dispatch(updateUser(formData));
     alert("Profile Updated Successfully!");
-    navigate("/user-dashboard")
+    navigate("/user-dashboard");
   };
 
   return (
@@ -98,6 +110,7 @@ const UpdateProfile = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            placeholder="e.g., John Doe"
             className="w-full p-2 border rounded-md bg-gray-200 focus:outline-blue-500"
             required
           />
@@ -110,8 +123,39 @@ const UpdateProfile = () => {
             type="email"
             name="email"
             value={formData.email}
-            readOnly
+            onChange={handleChange}
+            placeholder="e.g., xyz@gmail.com"
             className="w-full p-2 border rounded-md bg-gray-200 focus:outline-blue-500"
+            required
+          />
+        </div>
+
+        {/* Phone */}
+        <div>
+          <label className="font-medium">Mobile Number</label>
+          <input
+            type="text"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            placeholder="e.g. 9876543210"
+            maxLength={10}
+            className="w-full p-2 border rounded-md focus:outline-blue-500"
+            required
+          />
+        </div>
+
+        {/* Location */}
+        <div>
+          <label className="font-medium">Location</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            placeholder="e.g. Delhi"
+            className="w-full p-2 border rounded-md focus:outline-blue-500"
+            required
           />
         </div>
 
@@ -121,7 +165,9 @@ const UpdateProfile = () => {
           <input
             type="text"
             name="skills"
-            value={Array.isArray(formData.skills) ? formData.skills.join(", ") : ""}
+            value={
+              Array.isArray(formData.skills) ? formData.skills.join(", ") : ""
+            }
             onChange={handleChange}
             placeholder="e.g., React, Node.js, Python"
             className="w-full p-2 border rounded-md focus:outline-blue-500"

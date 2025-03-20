@@ -82,7 +82,7 @@ const Applications = () => {
             {filteredApplications.map((app) => (
               <div
                 key={app.id}
-                className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 flex justify-between items-end"
+                className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 flex justify-between"
               >
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 flex items-start flex-col space-x-2">
@@ -106,11 +106,22 @@ const Applications = () => {
                     </a>
                   </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-gray-500">Applied on {app.appliedDate}</p>
-                  <button className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-[#48596f] hover:bg-[#2b3c52] transition">
-                    View More
-                  </button>
+
+                <div className="flex flex-col justify-between">
+                  <div className="toprow flex gap-3">
+                    <button className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-green-600 hover:bg-[#2b3c52] transition">
+                      Select
+                    </button>
+
+                    <button className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-red-600 hover:bg-[#2b3c52] transition">
+                      Reject
+                    </button>
+                  </div>
+                  <div className="bottomrow text-right">
+                    <p className="text-gray-500">
+                      Applied on {app.appliedDate}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
