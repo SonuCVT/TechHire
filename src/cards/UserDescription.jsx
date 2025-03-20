@@ -21,7 +21,11 @@ const UserDescription = () => {
         listings, monitor application statuses, and receive real-time updates.
       </p>
 
-      <ul className={`list-disc pl-6 space-y-4 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+      <ul
+        className={`list-disc pl-6 space-y-4 ${
+          darkMode ? "text-gray-300" : "text-gray-600"
+        }`}
+      >
         <li>
           For job seekers, the dashboard offers tools to upload resumes, create
           detailed profiles, and receive AI-powered job recommendations based on
@@ -51,7 +55,7 @@ const UserDescription = () => {
         ].map((item, index) => (
           <div
             key={index}
-            className={`p-6 rounded-lg border transition-all cursor-pointer ${
+            className={`p-6 rounded-lg border transition-all ${
               darkMode
                 ? "bg-gray-700 border-gray-600 hover:bg-violet-600 hover:text-white"
                 : "bg-white border-gray-200 hover:bg-indigo-500 hover:text-white"

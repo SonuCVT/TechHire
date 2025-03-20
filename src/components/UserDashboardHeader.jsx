@@ -9,7 +9,7 @@ const UserDashboardHeader = () => {
     { name: "Home", link: "/candidate-dashboard" },
     { name: "Jobs", link: "/jobopening" },
     { name: "Companies", link: "/companies" },
-    { name: "Contact Us", link: "/contact-us" },
+    { name: "Help & Support", link: "/help-support" },
   ];
 
   return (
