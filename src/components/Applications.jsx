@@ -16,17 +16,43 @@ const Applications = () => {
       console.error("Error fetching applications:", error);
     }
   };
+
   useEffect(() => {
-    // Fetch applications from backend
     fetchApplications();
   }, []);
 
-  const filteredApplications = (applications || []).filter(
-    (app) =>
-      (app.name?.toLowerCase() || "").includes(search.toLowerCase()) ||
-      (app.appliedFor?.toLowerCase() || "").includes(search.toLowerCase())
-  );
-  
+  // Shortlist candidate (select)
+  const selected = async (jobAppliedId) => {
+    try {
+      await axios.post(`/api/shortlist/${jobAppliedId}`);
+      alert("Candidate shortlisted successfully!");
+      fetchApplications(); // Refresh applications
+    } catch (error) {
+      console.error("Error shortlisting candidate:", error);
+      alert("Failed to shortlist candidate.");
+    }
+  };
+
+  // Reject candidate (delete)
+  const rejectApplication = async (jobId, candidateId) => {
+    try {
+      await axios.delete(`/api/job_applied/${jobId}/${candidateId}`);
+      alert("Candidate rejected successfully!");
+      fetchApplications(); // Refresh applications
+    } catch (error) {
+      console.error("Error rejecting candidate:", error);
+      alert("Failed to reject candidate.");
+    }
+  };
+
+  // Filter applications where status is "pending"
+  const filteredApplications = applications
+    .filter((app) => app.status === "Pending")
+    .filter(
+      (app) =>
+        (app.name?.toLowerCase() || "").includes(search.toLowerCase()) ||
+        (app.appliedFor?.toLowerCase() || "").includes(search.toLowerCase())
+    );
 
   return (
     <>
@@ -43,9 +69,6 @@ const Applications = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button className="bg-[#48596f] text-white px-6 py-1 cursor-pointer rounded-full hover:bg-[#2b3c52] transition">
-              Search
-            </button>
           </div>
 
           {/* Applications List */}
@@ -57,23 +80,18 @@ const Applications = () => {
                   className="bg-white p-5 rounded-lg shadow-sm border border-gray-200 flex justify-between"
                 >
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 flex items-start flex-col space-x-2">
+                    <h3 className="text-xl font-semibold text-gray-900">
                       <span className="text-gray-700">{app.name}</span>
-                      <span className="text-sm text-gray-500">{app.role}</span>
+                      <span className="text-sm text-gray-500"> {app.role}</span>
                     </h3>
-                    <p className="mt-2 text-gray-600">
+                    <p className="text-gray-600">
                       Applied for: <span className="font-medium">{app.appliedFor}</span>
                     </p>
                     <p className="text-gray-600">Email: {app.email}</p>
                     <p className="text-gray-600">Phone: {app.phoneNumber}</p>
                     <p className="text-blue-500">
                       Resume:{" "}
-                      <a
-                        href={app.resumeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline"
-                      >
+                      <a href={app.resumeUrl} target="_blank" rel="noopener noreferrer" className="underline">
                         View Resume
                       </a>
                     </p>
@@ -81,23 +99,24 @@ const Applications = () => {
 
                   <div className="flex flex-col justify-between">
                     <div className="toprow flex gap-3">
-                      <button className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-green-600 hover:bg-[#2b3c52] transition">
+                      <button 
+                        className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-green-600 hover:bg-[#2b3c52] transition"
+                        onClick={() => selected(app.id)}
+                      >
                         Select
                       </button>
-                      <button className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-red-600 hover:bg-[#2b3c52] transition">
+                      <button
+                        className="text-white px-6 py-1 cursor-pointer rounded-full mt-2 bg-red-600 hover:bg-[#2b3c52] transition"
+                        onClick={() => rejectApplication(app.jobId, app.candidateId)}
+                      >
                         Reject
                       </button>
-                    </div>
-                    <div className="bottomrow text-right">
-                      {/* <p className="text-gray-500">
-                        Applied on {app.appliedDate}
-                      </p> */}
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-center text-gray-500">No applications found</p>
+              <p className="text-center text-gray-500">No pending applications found</p>
             )}
           </div>
         </div>
