@@ -26,7 +26,6 @@ import AuthGuard from "./utils/authgaurd";
 import UserInterviewSection from "./components/UserInterviewSection";
 import HelpSupport from "./components/HelpSupport";
 import UserSetting from "./components/UserSetting";
-import updateProfile from "./components/UpdateProfile";
 import UpdateProfile from "./components/UpdateProfile";
 
 function App() {

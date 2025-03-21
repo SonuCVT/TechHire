@@ -38,45 +38,6 @@ const CompanyProfile = () => {
         {/* Main Content */}
         <div className="flex-1">
           <div className="p-8">
-            {/* Overview Section */}
-            <h1 className="text-3xl font-bold mb-8 border-l-4 border-red-500 pl-3">
-              Overview
-            </h1>
-
-            {/* About Company */}
-            <div className="bg-white rounded-xl p-6 mb-8 shadow-lg flex gap-8">
-              <img
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                alt="Company"
-                className="w-1/3 rounded-lg"
-              />
-              <div className="space-y-4">
-                <p>
-                  Unacademy is India’s largest learning platform that aims to
-                  democratize education by making high-quality learning
-                  accessible to all. Founded in 2015, Unacademy has grown
-                  rapidly with a network of top educators and offers courses for
-                  competitive exams, skill development, and more.
-                </p>
-                <p>
-                  We enable clients in more than 56 countries to navigate their
-                  digital transformation. With over four decades of experience
-                  in managing the systems and workings of global enterprises, we
-                  expertly steer clients, as they navigate their digital
-                  transformation powered by cloud and AI.
-                </p>
-                <p>
-                  <b>Why Hire from Unacademy? </b> Unacademy learners are equipped with
-                  practical knowledge, strong analytical skills, and
-                  problem-solving abilities. Many of their students undergo
-                  rigorous training from experienced educators, ensuring they
-                  are industry-ready. Partnering with Unacademy for hiring can
-                  help you access a talent pool enriched with valuable skills
-                  and knowledge.
-                </p>
-              </div>
-            </div>
-
             {/* HR Details */}
             <div className="bg-white rounded-xl p-6 mb-8 shadow-lg">
               <h2 className="text-2xl font-bold mb-4">HR Details</h2>
@@ -105,35 +66,18 @@ const CompanyProfile = () => {
               </div>
             </div>
 
-            {/* More Information */}
+            {/* Subscription Plan */}
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h2 className="text-2xl font-bold mb-4">More Information</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <p className="mb-2">
-                    <strong>Type:</strong> Public
-                  </p>
-                  <p className="mb-2">
-                    <strong>Company Size:</strong> 10000+
-                  </p>
-                  <p>
-                    <strong>Website:</strong>
-                    <a
-                      href="https://www.infosys.com/"
-                      className="text-blue-600 hover:underline ml-1"
-                    >
-                      infosys.com
-                    </a>
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2">
-                    <strong>Founded:</strong> 1981
-                  </p>
-                  <p>
-                    <strong>Headquarters:</strong> Bengaluru
-                  </p>
-                </div>
+              <h2 className="text-2xl font-bold mb-4">Subscription Details</h2>
+              <div className="bg-blue-50 p-4 rounded-lg shadow-md border border-blue-300">
+                <p className="text-gray-500 text-sm mb-4">Unlock features by upgrade now.</p>
+                <p className="text-gray-700 text-sm">📅 Registration Date: 01 Jan 2025</p>
+                <p className="text-gray-700 text-sm">🛒 Purchase Date: 15 Jan 2025</p>
+                <p className="text-gray-700 text-sm">⏳ Expiry Date: 15 Jan 2026</p>
+                <p className="text-gray-700 text-sm">🧑‍💻 Additional Interviews: 5</p>
+                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 mt-4">
+                  Upgrade Now
+                </button>
               </div>
             </div>
           </div>
