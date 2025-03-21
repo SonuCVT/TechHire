@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
 import {
   FaAndroid,
   FaPython,
@@ -12,10 +14,12 @@ import {
 
 import UserDashboardHeader from "./UserDashboardHeader";
 import useFetchJobs from "../hooks/useFetchJobs";
+
 const JobOpening = () => {
   useFetchJobs();
   const jobs = useSelector((state) => state.addpostjob.jobs);
   const darkMode = useSelector((state) => state.theme.darkMode);
+  const {name,email,resumeUrl,address,phoneNumber} = useSelector((state) => state.updateuser); // Candidate details
 
   const [filters, setFilters] = useState({
     category: "",
@@ -63,6 +67,47 @@ const JobOpening = () => {
         job.location?.toLowerCase().includes(filters.location.toLowerCase()))
     );
   });
+
+  // Apply Job Function
+  const applyjobs = (selectedJobId,appliedFor) => {
+    console.log(selectedJobId)
+    // const selectedJob = jobs.find((job) => job.jobId === selectedJobId);
+
+    // if (!selectedJob) {
+    //   toast.error("Job not found!");
+    //   return;
+   // }
+
+    const jobId = selectedJobId;
+    const candidateId = "67cabdc4c51cf2795d0e0213";
+
+    if (!candidateId) {
+      toast.error("Please log in to apply for jobs!");
+      return;
+    }
+
+    const applicationData = {
+      jobId,
+      candidateId,
+      appliedFor,
+      name,
+      email,
+      phoneNumber,
+      resumeUrl,
+      address,
+    };
+
+    axios
+      .post(`/api/job_applied/${jobId}/${candidateId}`, applicationData)
+      .then((response) => {
+        //toast.success("Job application submitted successfully!");
+        alert("Job application submitted successfully!")
+      })
+      .catch((error) => {
+        console.error("Error applying for job:", error);
+        toast.error("Failed to apply. Please try again.");
+      });
+  };
 
   return (
     <>
@@ -176,36 +221,23 @@ const JobOpening = () => {
 
           <div className="w-3/4 p-4 h-[40vh] overflow-y-scroll">
             {filteredJobs.length > 0 ? (
-              filteredJobs.map((job, index) => (
+              filteredJobs.map((job) => (
                 <div
-                  key={index}
+                  key={job._id}
                   className={`p-4 border rounded-lg shadow-md mb-4 flex justify-between items-end ${
                     darkMode ? "bg-gray-800" : "bg-white"
                   }`}
                 >
-                  <div className="">
+                  <div>
                     <h3 className="text-xl font-semibold">{job.title}</h3>
-                    <p>
-                      <strong>Company:</strong> {job.company}
-                    </p>
-                    <p>
-                      <strong>Location:</strong> {job.location}
-                    </p>
-                    <p>
-                      <strong>Description:</strong> {job.description}
-                    </p>
-                    <p>
-                      <strong>Experience:</strong> {job.experienceLevel} years
-                    </p>
-                    <p>
-                      <strong>Salary:</strong> {job.salary} CTC
-                    </p>
+                    <p><strong>Company:</strong> {job.company}</p>
+                    <p><strong>Location:</strong> {job.location}</p>
+                    <p><strong>Experience:</strong> {job.experienceLevel} years</p>
+                    <p><strong>Salary:</strong> {job.salary} CTC</p>
                   </div>
-                  <div className="flex justify-end space-x-2 mt-2">
-                    <button className="px-4 py-2 bg-[#48596f] text-white cursor-pointer rounded">
-                      Apply
-                    </button>
-                  </div>
+                  <button className="px-4 py-2 bg-[#48596f] text-white cursor-pointer rounded" onClick={() => applyjobs(job.jobId,job.title)}>
+                    Apply
+                  </button>
                 </div>
               ))
             ) : (
