@@ -11,8 +11,8 @@ const AssignToDropdown = ({ formData, setFormData }) => {
 
   return (
     <div className="relative">
-      <label className="block font-medium text-gray-700">Assigned To:</label>
-      
+      <label className="block font-medium text-gray-700">Test Type :</label>
+
       {/* Select Box (Fake) */}
       <div
         className="w-full p-2 border border-gray-300 rounded-lg bg-white cursor-pointer focus:ring-2 focus:ring-blue-500"

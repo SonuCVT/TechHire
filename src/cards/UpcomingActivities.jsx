@@ -40,7 +40,7 @@ const UpcomingActivities = () => {
   const activities = [...upcomingInterviews, ...upcomingAssignments];
 
   return (
-    <div className="p-6">
+    <div className="py-6">
       <h2 className="text-2xl font-semibold mb-4">Upcoming Activities</h2>
       <div className="flex gap-6 overflow-x-auto">
         {activities.map((activity) => (
@@ -57,23 +57,41 @@ const UpcomingActivities = () => {
             </h3>
             <div>
               <p className="font-semibold mt-2">{activity.title}</p>
-              <p className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>
+              <p
+                className={`text-sm ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
                 {activity.description}
               </p>
               {activity.date && (
-                <p className={`mt-2 text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                <p
+                  className={`mt-2 text-sm ${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  }`}
+                >
                   Date: {activity.date}
                 </p>
               )}
               {activity.deadline && (
-                <p className={`mt-2 text-sm ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
+                <p
+                  className={`mt-2 text-sm ${
+                    darkMode ? "text-gray-300" : "text-gray-600"
+                  }`}
+                >
                   Deadline: {activity.deadline}
                 </p>
               )}
               <p className="mt-2 text-sm">
-                <span className={darkMode ? "text-gray-300" : "text-gray-600"}>Status: </span>
+                <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
+                  Status:{" "}
+                </span>
                 <span
-                  className={activity.status === "Pending" ? "text-red-500" : "text-green-500"}
+                  className={
+                    activity.status === "Pending"
+                      ? "text-red-500"
+                      : "text-green-500"
+                  }
                 >
                   {activity.status}
                 </span>
@@ -90,7 +108,9 @@ const UpcomingActivities = () => {
                 }`}
                 disabled={activity.status === "Completed"}
               >
-                {activity.type === "Interview" ? "Join Interview" : "Take Assessment"}
+                {activity.type === "Interview"
+                  ? "Join Interview"
+                  : "Take Assessment"}
               </button>
             </div>
           </div>

@@ -165,7 +165,7 @@ const AddnewAssessments = () => {
               </div>
 
               {/* Attachment */}
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-end">
                 <div className="w-3/4">
                   <label className="block font-medium text-gray-700">
                     Attachments:

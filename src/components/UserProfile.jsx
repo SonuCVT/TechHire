@@ -66,7 +66,7 @@ const CandidateProfile = () => {
               <div className="flex flex-row md:flex-col">
                 {/* Left side - Profile info */}
                 <div className="flex-1">
-                  <div className="flex items-start space-x-4 mb-6">
+                  <div className="flex items-center space-x-4 mb-6">
                     <div className="w-24 h-24 rounded-full overflow-hidden">
                       <img
                         src={userImage}
