@@ -235,7 +235,7 @@ const JobOpening = () => {
                     <p><strong>Experience:</strong> {job.experienceLevel} years</p>
                     <p><strong>Salary:</strong> {job.salary} CTC</p>
                   </div>
-                  <button className="px-4 py-2 bg-[#48596f] text-white cursor-pointer rounded" onClick={() => applyjobs(job.jobId,job.title)}>
+                  <button className="px-4 py-2 bg-[#48596f] text-white cursor-pointer rounded" onClick={() => applyjobs(job.id,job.title)}>
                     Apply
                   </button>
                 </div>

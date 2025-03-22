@@ -10,7 +10,7 @@ const useFetchJobs = () => {
           throw new Error("Failed to fetch jobs");
         }
         const jobsData = await response.json();
-        //console.log(jobsData)
+        console.log(jobsData)
         dispatch(postJob(jobsData));
       } catch (error) {
         console.error("Error fetching jobs:", error);
