@@ -13,10 +13,11 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import useFectTeam from "../hooks/useFetchTeamMember";
 
 const Sidebar = () => {
   const location = useLocation();
-
+  useFectTeam();
   const sidebarItems = [
     {
       icon: <LayoutDashboard size={18} />,

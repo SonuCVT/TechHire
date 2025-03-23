@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { useDispatch } from "react-redux";
-import { addTeamMember } from "../utils/addTeammemberSlice";
 import { useNavigate } from "react-router-dom";
 
 const AddTeamMember = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    mobile: "",
+    phoneNumber: "",
     designation: "",
   });
 
@@ -19,21 +16,36 @@ const AddTeamMember = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(addTeamMember(formData));
-    navigate("/hr-dashboard");
-    console.log("Member Added:", formData);
+
+    try {
+      const response = await fetch("/api/addMembers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add team member");
+      }
+      
+      navigate("/hr-dashboard"); // Navigate to HR dashboard
+
+      console.log("Member Added:", data);
+    } catch (error) {
+      console.error("Error adding member:", error);
+    }
   };
 
   return (
     <>
       <Header />
       <div className="flex bg-gray-100 h-[calc(100vh-64px)]">
-        {/* Sidebar */}
         <Sidebar />
 
-        {/* Main Content */}
         <div className="flex-grow flex justify-center items-start pt-8">
           <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-lg">
             <h2 className="text-2xl font-semibold text-center mb-6 text-gray-900">
@@ -51,6 +63,7 @@ const AddTeamMember = () => {
                   onChange={handleChange}
                   className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
                   placeholder="Enter a name"
+                  required
                 />
               </div>
               <div>
@@ -64,6 +77,7 @@ const AddTeamMember = () => {
                   onChange={handleChange}
                   className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
                   placeholder="Enter Email"
+                  required
                 />
               </div>
               <div>
@@ -72,11 +86,12 @@ const AddTeamMember = () => {
                 </label>
                 <input
                   type="text"
-                  name="mobile"
-                  value={formData.mobile}
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
                   onChange={handleChange}
                   className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
                   placeholder="Enter Mobile no."
+                  required
                 />
               </div>
               <div>
@@ -90,6 +105,7 @@ const AddTeamMember = () => {
                   onChange={handleChange}
                   className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
                   placeholder="Enter designation"
+                  required
                 />
               </div>
               <div className="flex justify-center mt-4">

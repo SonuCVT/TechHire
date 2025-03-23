@@ -9,7 +9,7 @@ const teamMemberSlice = createSlice({
   initialState,
   reducers: {
     addTeamMember: (state, action) => {
-      state.member.push(action.payload);
+      state.member=action.payload;
     },
 
   },
