@@ -70,7 +70,7 @@ const JobOpening = () => {
   });
 
   // Apply Job Function
-  const applyjobs = (selectedJobId, appliedFor) => {
+  const applyjobs = (selectedJobId, appliedFor,salary,company,location) => {
     if (appliedJobs.has(selectedJobId)) {
       toast.info("You have already applied for this job.");
       return;
@@ -92,6 +92,9 @@ const JobOpening = () => {
       phoneNumber,
       resumeUrl,
       address,
+      salary,
+      company,
+      location
     };
 
     axios
@@ -165,7 +168,8 @@ const JobOpening = () => {
                     <p><strong>Experience:</strong> {job.experienceLevel} years</p>
                     <p><strong>Salary:</strong> {job.salary} CTC</p>
                   </div>
-                  <button className={`px-4 py-2 rounded ${appliedJobs.has(job.id) ? "bg-gray-500 cursor-not-allowed" : "bg-[#48596f] text-white cursor-pointer"}`} onClick={() => applyjobs(job.id, job.title)} disabled={appliedJobs.has(job.id)}>
+                  <button className={`px-4 py-2 rounded ${appliedJobs.has(job.id) ? "bg-gray-500 cursor-not-allowed" : "bg-[#48596f] text-white cursor-pointer"}`} 
+                      onClick={() => applyjobs(job.id, job.title,job.salary,job.company,job.location)} disabled={appliedJobs.has(job.id)}>
                     {appliedJobs.has(job.id) ? "Already Applied" : "Apply"}
                   </button>
                 </div>
