@@ -1,21 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   jobs: [],
 };
 
 const jobSlice = createSlice({
-  name: 'addpostjob',
+  name: "addpostjob",
   initialState,
   reducers: {
     postJob: (state, action) => {
-      state.jobs = action.payload
+      state.jobs = action.payload;
     },
     deleteJob: (state, action) => {
-      state.jobs = state.jobs.filter(job => job.id !== action.payload);
+      state.jobs = state.jobs.filter((job) => job.id !== action.payload);
+    },
+    updateJob: (state, action) => {
+      state.jobs = state.jobs.map((job) =>
+        job.id === action.payload.id ? { ...job, ...action.payload } : job
+      );
     },
   },
 });
 
-export const { postJob, deleteJob } = jobSlice.actions;
+export const { postJob, deleteJob, updateJob } = jobSlice.actions;
 export default jobSlice.reducer;

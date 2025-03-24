@@ -1,33 +1,52 @@
-import React, { useState } from "react";
-import Header from "./Header";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { postJob } from "../utils/addPostjobSlice";
-import Sidebar from "./Sidebar"; // Import Sidebar component
+import { useLocation, useNavigate } from "react-router-dom";
+import { updateJob } from "../utils/addPostjobSlice"; // Redux action
+import axios from "axios";
+import Header from "./Header";
+import Sidebar from "./Sidebar"; 
 
-const PostJobs = () => {
-  const dispatch = useDispatch();
+const UpdateJobs = () => {
+  const location = useLocation();
+  const job = location.state?.job || {}; // Get existing job details
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    jobTitle: "",
-    location: "",
-    experienceLevel: "",
-    jobType: "",
-    salaryRange: "",
-    jobDescription: "",
-    skills: "",
-    deadline: "",
-  });
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState(job); // Pre-fill with existing data
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(postJob(formData));
-    navigate("/jobopening");
+  
+    // Create a new object, keeping only non-empty fields
+    const updatedJobData = { ...job }; // Start with previous job data
+  
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== "" && formData[key] !== undefined) {
+        updatedJobData[key] = formData[key]; // Only update changed fields
+      }
+    });
+  
+    console.log("Final data sent to backend:", updatedJobData);
+  
+    try {
+      const response = await axios.put(`/api/jobs_posting/${job.id}`, updatedJobData);
+      dispatch(updateJob(response.data)); // Update Redux store
+      alert("Job updated successfully!");
+      navigate("/jobs-management");
+    } catch (error) {
+      console.error("Error updating job:", error);
+      alert("Failed to update job!");
+    }
   };
+  
+  
+  
+  
+
 
   return (
     <>
@@ -36,7 +55,7 @@ const PostJobs = () => {
         {/* Sidebar */}
         <Sidebar />
 
-        {/* Main Content - Increased Width */}
+        {/* Main Content */}
         <div className="flex-1 p-10 -m-3">
           <div className="bg-white rounded-xl shadow-md w-full max-w-5xl mx-auto p-8">
             <h2 className="text-3xl font-semibold text-gray-700 mb-6 text-center">
@@ -49,12 +68,11 @@ const PostJobs = () => {
                 </label>
                 <input
                   type="text"
-                  name="jobTitle"
-                  value={formData.jobTitle}
+                  name="title"
+                  value={formData.title}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                  className="w-full p-3 border border-gray-300 rounded-md"
                   placeholder="Enter Job Title"
-                  required
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -67,9 +85,9 @@ const PostJobs = () => {
                     name="location"
                     value={formData.location}
                     onChange={handleChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                    className="w-full p-3 border border-gray-300 rounded-md"
                     placeholder="Enter Job Location"
-                    required
+                    
                   />
                 </div>
                 <div>
@@ -81,9 +99,9 @@ const PostJobs = () => {
                     name="experienceLevel"
                     value={formData.experienceLevel}
                     onChange={handleChange}
-                    className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                    className="w-full p-3 border border-gray-300 rounded-md"
                     placeholder="Enter Experience Level"
-                    required
+                    
                   />
                 </div>
               </div>
@@ -118,9 +136,9 @@ const PostJobs = () => {
                   name="salaryRange"
                   value={formData.salaryRange}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                  className="w-full p-3 border border-gray-300 rounded-md"
                   placeholder="Enter Salary Range"
-                  required
+                  
                 />
               </div>
               <div>
@@ -131,10 +149,10 @@ const PostJobs = () => {
                   name="jobDescription"
                   value={formData.jobDescription}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                  className="w-full p-3 border border-gray-300 rounded-md"
                   placeholder="Enter Job Description"
                   rows="4"
-                  required
+                  
                 ></textarea>
               </div>
               <div>
@@ -146,9 +164,9 @@ const PostJobs = () => {
                   name="skills"
                   value={formData.skills}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
+                  className="w-full p-3 border border-gray-300 rounded-md"
                   placeholder="Enter Required Skills"
-                  required
+                 
                 />
               </div>
               <div>
@@ -160,8 +178,8 @@ const PostJobs = () => {
                   name="deadline"
                   value={formData.deadline}
                   onChange={handleChange}
-                  className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-200"
-                  required
+                  className="w-full p-3 border border-gray-300 rounded-md"
+                  
                 />
               </div>
               <button
@@ -178,4 +196,4 @@ const PostJobs = () => {
   );
 };
 
-export default PostJobs;
+export default UpdateJobs;

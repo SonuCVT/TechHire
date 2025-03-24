@@ -143,7 +143,7 @@ function App() {
       ),
     },
     {
-      path: "/update-job",
+      path: "/update-job/:id",
       element: (
         <AuthGuard>
           <UpdateJob />
