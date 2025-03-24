@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
-const AssignToDropdown = ({ formData, setFormData }) => {
+const CustomSelectBoxForTestType = ({ formData, setFormData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const options = ["OA Test", "Coding Test"];
+  const options = [
+    { label: "OA Test", value: "OA Test" },
+    { label: "Coding Test", value: "Coding Test" },
+  ];
 
   const handleSelect = (option) => {
-    setFormData({ ...formData, assignTo: option });
+    setFormData({ ...formData, type_of_test: option.value });
     setIsOpen(false);
   };
 
@@ -13,12 +16,13 @@ const AssignToDropdown = ({ formData, setFormData }) => {
     <div className="relative">
       <label className="block font-medium text-gray-700">Test Type :</label>
 
-      {/* Select Box (Fake) */}
+      {/* Custom Select Box */}
       <div
         className="w-full p-2 border border-gray-300 rounded-lg bg-white cursor-pointer focus:ring-2 focus:ring-blue-500"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {formData.assignTo || "Select Assignment Type"}
+        {options.find((opt) => opt.value === formData.type_of_test)?.label ||
+          "Select Test Type"}
       </div>
 
       {/* Dropdown List */}
@@ -30,7 +34,7 @@ const AssignToDropdown = ({ formData, setFormData }) => {
               className="p-2 hover:bg-blue-100 cursor-pointer"
               onClick={() => handleSelect(option)}
             >
-              {option}
+              {option.label}
             </li>
           ))}
         </ul>
@@ -39,4 +43,4 @@ const AssignToDropdown = ({ formData, setFormData }) => {
   );
 };
 
-export default AssignToDropdown;
+export default CustomSelectBoxForTestType;

@@ -31,7 +31,7 @@ const AddTeamMember = () => {
       if (!response.ok) {
         throw new Error("Failed to add team member");
       }
-      
+
       navigate("/hr-dashboard"); // Navigate to HR dashboard
 
       console.log("Member Added:", data);
@@ -111,9 +111,9 @@ const AddTeamMember = () => {
               <div className="flex justify-center mt-4">
                 <button
                   type="submit"
-                  className="bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition shadow-md"
+                  className="bg-gray-800 text-white px-3 py-2 rounded-lg hover:bg-gray-900 transition shadow-md cursor-pointer"
                 >
-                  Add
+                  Add Member
                 </button>
               </div>
             </form>

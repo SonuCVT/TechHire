@@ -6,15 +6,87 @@ const CandidateStatus = () => {
   const [shortlistedFilter, setShortlistedFilter] = useState(""); // New state for filtering "Shortlisted"
 
   const candidates = [
-    { id: 1, status: "in progress", round: "Shortlisted", name: "Candidate Name", position: "Full Stack", appliedDate: "Mar 3, 2020", completed: false },
-    { id: 2, status: "completed", round: "OA Round", name: "Candidate Name", position: "React Developer", appliedDate: "Mar 3, 2020", completed: true },
-    { id: 3, status: "in progress", round: "Shortlisted", name: "Candidate Name", position: "SDE", appliedDate: "Mar 3, 2020", completed: false },
-    { id: 4, status: "completed", round: "Coding Round", name: "Candidate Name", position: "Position Applied", appliedDate: "Mar 3, 2020", completed: true },
-    { id: 5, status: "in progress", round: "Shortlisted", name: "Candidate Name", position: "Backend", appliedDate: "Mar 3, 2020", completed: false },
-    { id: 6, status: "completed", round: "OA Round", name: "Candidate Name", position: "Position Applied", appliedDate: "Mar 3, 2020", completed: true },
-    { id: 7, status: "in progress", round: "Shortlisted", name: "Candidate Name", position: "Frontend", appliedDate: "Mar 3, 2020", completed: false },
-    { id: 8, status: "in progress", round: "Shortlisted", name: "Candidate Name", position: "Data Analytics", appliedDate: "Mar 3, 2020", completed: false },
-    { id: 9, status: "in progress", round: "Shortlisted", name: "Candidate Name", position: "Full Stack", appliedDate: "Mar 3, 2020", completed: false },
+    {
+      id: 1,
+      status: "in progress",
+      round: "Shortlisted",
+      name: "Candidate Name",
+      position: "Full Stack",
+      appliedDate: "Mar 3, 2020",
+      completed: false,
+    },
+    {
+      id: 2,
+      status: "completed",
+      round: "OA Round",
+      name: "Candidate Name",
+      position: "React Developer",
+      appliedDate: "Mar 3, 2020",
+      completed: true,
+    },
+    {
+      id: 3,
+      status: "in progress",
+      round: "Shortlisted",
+      name: "Candidate Name",
+      position: "SDE",
+      appliedDate: "Mar 3, 2020",
+      completed: false,
+    },
+    {
+      id: 4,
+      status: "completed",
+      round: "Coding Round",
+      name: "Candidate Name",
+      position: "Position Applied",
+      appliedDate: "Mar 3, 2020",
+      completed: true,
+    },
+    {
+      id: 5,
+      status: "in progress",
+      round: "Shortlisted",
+      name: "Candidate Name",
+      position: "Backend",
+      appliedDate: "Mar 3, 2020",
+      completed: false,
+    },
+    {
+      id: 6,
+      status: "completed",
+      round: "OA Round",
+      name: "Candidate Name",
+      position: "Position Applied",
+      appliedDate: "Mar 3, 2020",
+      completed: true,
+    },
+    {
+      id: 7,
+      status: "in progress",
+      round: "Shortlisted",
+      name: "Candidate Name",
+      position: "Frontend",
+      appliedDate: "Mar 3, 2020",
+      completed: false,
+    },
+    {
+      id: 8,
+      status: "in progress",
+      round: "Shortlisted",
+      name: "Candidate Name",
+      position: "Data Analytics",
+      appliedDate: "Mar 3, 2020",
+      completed: false,
+    },
+    {
+      id: 9,
+      status: "in progress",
+      round: "Shortlisted",
+      name: "Candidate Name",
+      position: "Full Stack",
+      appliedDate: "Mar 3, 2020",
+      completed: false,
+    },
   ];
 
   return (
@@ -28,7 +100,7 @@ const CandidateStatus = () => {
             {["Shortlisted", "OA Round", "Coding Round"].map((round) => (
               <div
                 key={round}
-                className="bg-white p-6 rounded-xl shadow-md h-screen"
+                className="bg-white p-6 rounded-xl shadow-md h-[80vh] overflow-y-scroll"
               >
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold">{round}</h3>
@@ -53,7 +125,7 @@ const CandidateStatus = () => {
                   )}
                 </div>
 
-                <div className="max-h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <div className="">
                   {candidates
                     .filter((c) => c.round === round)
                     .filter((c) =>
@@ -78,7 +150,9 @@ const CandidateStatus = () => {
                           {candidate.status}
                         </span>
                         <p className="mt-2 font-medium">{candidate.name}</p>
-                        <p className="text-sm text-gray-600">{candidate.position}</p>
+                        <p className="text-sm text-gray-600">
+                          {candidate.position}
+                        </p>
                         <p className="text-xs text-gray-500">
                           Applied: {candidate.appliedDate}
                         </p>

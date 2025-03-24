@@ -3,6 +3,7 @@ import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import DateFormatter from "./DateFormatter";
 import useFetchAssessment from "../hooks/useFetchAssessment";
 
 const Assessments = () => {
@@ -35,39 +36,39 @@ const Assessments = () => {
               {assessments.map((assessment, index) => (
                 <div
                   key={index}
-                  className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
+                  className="bg-white p-5 rounded-lg shadow-md border border-gray-200"
                 >
-                  <h2 className="text-xl font-semibold text-gray-900">
+                  <h2 className="text-xl pb-2 font-semibold text-gray-900">
                     {assessment.title}
                   </h2>
                   <p className="text-gray-600">
-                    <strong>Created By:</strong> {assessment.createdBy}
+                    <strong>Created By : </strong> {assessment.createdBy}
                   </p>
                   <p className="text-gray-600">
-                    <strong>Created On:</strong> {assessment.creationDate}
+                    <strong>Created On : </strong>{" "}
+                    <DateFormatter timestamp={assessment.creationDate} />
                   </p>
                   <p className="text-gray-600">
-                    <strong>Due Date:</strong> {assessment.deadline}
+                    <strong>Deadline : </strong>{" "}
+                    <DateFormatter timestamp={assessment.deadline} />
                   </p>
                   <p className="text-gray-600">
-                    <strong>Assigned To:</strong> {assessment.assignTo}
+                    <strong>Type of Test:</strong> {assessment.type_of_test}
                   </p>
                   <p className="text-gray-600">
                     <strong>Status:</strong> {assessment.status}
                   </p>
-                  {assessment.attachment && (
-                    <p className="text-blue-500">
-                      <strong>Attachment:</strong>
-                      <a
-                        href={assessment.attachment}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline ml-1"
-                      >
-                        View File
-                      </a>
-                    </p>
-                  )}
+                  <p className="text-gray-600">
+                    <strong>Test Link : </strong>
+                    <a
+                      href={assessment.attachments}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600"
+                    >
+                      {assessment.attachments}
+                    </a>
+                  </p>
                 </div>
               ))}
             </div>

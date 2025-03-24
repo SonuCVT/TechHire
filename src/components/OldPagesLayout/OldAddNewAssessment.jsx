@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addAssessment } from "../utils/addAssessmentSlice";
 import { Link, useNavigate } from "react-router-dom";
-import CustomDatePicker from "./CustomDatePicker";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import SelectBox from "./CustomSelectBox";
 
 const AddnewAssessments = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -42,7 +41,7 @@ const AddnewAssessments = () => {
         throw new Error("Failed to save assessment");
       }
 
-      // const data = await response.json();
+      const data = await response.json();
 
       // Navigate to assessments page
       navigate("/assessments");
@@ -115,24 +114,24 @@ const AddnewAssessments = () => {
                 <label className="block font-medium text-gray-700">
                   Creation Date:
                 </label>
-
-                <CustomDatePicker
+                <input
+                  type="date"
                   name="creationDate"
-                  selectedDate={formData.creationDate}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onChange={handleChange}
                   required
                 />
               </div>
 
-              {/* Deadline Date */}
+              {/* Due Date */}
               <div>
                 <label className="block font-medium text-gray-700">
                   Deadline:
                 </label>
-
-                <CustomDatePicker
+                <input
+                  type="date"
                   name="deadline"
-                  selectedDate={formData.deadline}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   onChange={handleChange}
                   required
                 />
