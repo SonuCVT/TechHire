@@ -5,6 +5,7 @@ import addPostjobReducer from "./addPostjobSlice";
 import addTeamMemberReducer from "./addTeammemberSlice";
 import userReducer from "./userSlice";
 import themeReducer from "./themeSlice";
+import hrThemeReducer from "./hrThemeSlice";
 import updateUserReducer from "./updateUserSlice";
 
 const appstore = configureStore({
@@ -15,6 +16,7 @@ const appstore = configureStore({
     addmember: addTeamMemberReducer,
     user: userReducer,
     theme: themeReducer,
+    hrTheme: hrThemeReducer,
     updateuser: updateUserReducer,
   },
 });

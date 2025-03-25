@@ -10,12 +10,14 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Header from "./Header";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleDarkMode } from "../utils/hrThemeSlice";
 
 const CompanySetting = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  const [pushNotifications, setPushNotifications] = useState(true);
+  const dispatch = useDispatch();
+  const darkMode = useSelector((state) => state.hrTheme.darkMode); // Get state from Redux
 
-  // Modal States
+  const [pushNotifications, setPushNotifications] = useState(true);
   const [modalContent, setModalContent] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,23 +34,19 @@ const CompanySetting = () => {
       }`}
     >
       <Header />
-      {/* Main Content */}
       <div className="flex">
         <Sidebar />
         <div className="flex-1 flex flex-col">
-          {/* Content */}
           <div
             className={`flex-1 rounded-lg shadow-sm p-8 ${
               darkMode ? "bg-gray-800" : "bg-white"
             }`}
           >
-            {/* Title */}
             <div className="flex items-center space-x-4 mb-8">
               <Settings size={28} />
               <h1 className="text-2xl font-semibold">Settings</h1>
             </div>
 
-            {/* Profile Section */}
             <div className="flex items-center space-x-4 mb-8">
               <img
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -58,7 +56,6 @@ const CompanySetting = () => {
               <h2 className="text-xl font-semibold">Yennefer Doe</h2>
             </div>
 
-            {/* Settings Sections */}
             <div className="space-y-6">
               <h3 className="text-gray-500 dark:text-gray-400">
                 Account Settings
@@ -75,16 +72,15 @@ const CompanySetting = () => {
                 text="Dark Mode"
                 toggle
                 value={darkMode}
-                onChange={() => setDarkMode(!darkMode)}
+                onChange={() => dispatch(toggleDarkMode())} // Dispatch Redux action
               />
 
-              {/* More Section */}
               <h3 className="text-gray-500 dark:text-gray-400 pt-4">More</h3>
               <SettingsRow
                 text="About Us"
                 onClick={() =>
                   openModal(
-                    "About Us: Our website provides no warranties or guarantees. Nothing in this website, therefore, shall be considered legal advice and no attorney-client relationship is established. Please note that in some cases, depending on your legislation, further actions may be required to make your business compliant with the law.."
+                    "About Us: Our website provides no warranties or guarantees..."
                   )
                 }
               />
@@ -92,16 +88,14 @@ const CompanySetting = () => {
                 text="Privacy Policy"
                 onClick={() =>
                   openModal(
-                    "Privacy Policy: This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects you. We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy."
+                    "Privacy Policy: This Privacy Policy describes Our policies..."
                   )
                 }
               />
               <SettingsRow
                 text="Terms and Conditions"
                 onClick={() =>
-                  openModal(
-                    "Terms and Conditions: By using this app, you agree to follow our policies and guidelines."
-                  )
+                  openModal("Terms and Conditions: By using this app...")
                 }
               />
             </div>
@@ -109,7 +103,6 @@ const CompanySetting = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-96 text-center">
@@ -142,7 +135,7 @@ function SettingsRow({ text, toggle = false, value, onChange, onClick }) {
       {toggle ? (
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Prevents modal opening when toggling
+            e.stopPropagation();
             onChange();
           }}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all ${

@@ -17,7 +17,10 @@ import useFectTeam from "../hooks/useFetchTeamMember";
 
 const Sidebar = () => {
   const location = useLocation();
+  const darkMode = useSelector((state) => state.hrTheme.darkMode);
+
   useFectTeam();
+
   const sidebarItems = [
     {
       icon: <LayoutDashboard size={18} />,
@@ -66,7 +69,13 @@ const Sidebar = () => {
   const teamMembers = useSelector((state) => state.addmember.member);
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 min-h-screen p-4 ml-4 mt-5">
+    <div
+      className={`w-64 min-h-screen p-4 border-r transition-all ${
+        darkMode
+          ? "bg-gray-800 border-gray-700 text-white"
+          : "bg-white border-gray-200 text-gray-900"
+      }`}
+    >
       {/* Company Logo and Name */}
       <div className="flex items-center space-x-3 mb-8 p-2">
         <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
@@ -84,7 +93,11 @@ const Sidebar = () => {
                 to={item.link}
                 className={`flex items-center space-x-3 p-2 rounded-md ${
                   location.pathname === item.link
-                    ? "bg-blue-50 text-blue-600"
+                    ? darkMode
+                      ? "bg-gray-700 text-violet-400"
+                      : "bg-blue-50 text-blue-600"
+                    : darkMode
+                    ? "text-gray-300 hover:bg-gray-700"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
@@ -104,10 +117,6 @@ const Sidebar = () => {
 
       {/* Team Members */}
       <div>
-        {/* <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-          Team Members
-          <PlusCircle size={20} className='text-gray-600 hover:text-indigo-800'/>
-        </h3> */}
         <Link to="/addteammember">
           <li className="flex items-center justify-between p-2 rounded-md text-gray-700 hover:bg-gray-100 cursor-pointer">
             <div className="flex items-center gap-4">

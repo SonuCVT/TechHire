@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserDashboardHeader from "./UserDashboardHeader";
 import UserDashboardSidebar from "./UserDashboardSidebar";
-import SocialAccount from "../cards/SocialAccount";
-import UserDescription from "../cards/UserDescription";
 import UpcomingActivities from "../cards/UpcomingActivities";
 
 const UserDashboard = () => {
@@ -100,7 +98,6 @@ const UserDashboard = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                
                 <h3 className="text-xl font-bold">{userData.name}</h3>
 
                 <div className="flex w-full justify-evenly mb-6">

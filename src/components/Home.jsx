@@ -1,15 +1,12 @@
-import React from 'react'
-import Header from './Header'
-import CompanyDashboard from './CompanyDashboard'
-import CompanyProfile from './CompanyProfile'
+import React from "react";
+import CompanyDashboard from "./CompanyDashboard";
 
 const Home = () => {
   return (
-   <>
-     <Header/>
-     <CompanyDashboard/>
-   </>
-  )
-}
+    <>
+      <CompanyDashboard />
+    </>
+  );
+};
 
-export default Home
+export default Home;
