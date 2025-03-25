@@ -106,12 +106,20 @@ const CompanySetting = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-96 text-center">
-            <h2 className="text-xl font-bold mb-4">
+            <h2
+              className={`text-xl font-bold mb-4 ${
+                darkMode ? "text-blue-900" : "text-black"
+              }`}
+            >
               {modalContent.split(":")[0]}
             </h2>
-            <p className="text-sm">{modalContent.split(":")[1]}</p>
+            <p
+              className={`text-sm ${darkMode ? "text-blue-900" : "text-black"}`}
+            >
+              {modalContent.split(":")[1]}
+            </p>
             <button
-              className="mt-4 px-4 py-2 bg-violet-600 text-white rounded-lg"
+              className="mt-4 px-4 py-2 bg-violet-600 text-white rounded-lg cursor-pointer"
               onClick={() => setIsModalOpen(false)}
             >
               Close
@@ -127,11 +135,11 @@ function SettingsRow({ text, toggle = false, value, onChange, onClick }) {
   return (
     <div
       className={`flex items-center justify-between py-2 cursor-pointer ${
-        onClick ? "hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md" : ""
+        onClick ? "rounded-md" : ""
       }`}
       onClick={onClick}
     >
-      <span className="dark:text-white">{text}</span>
+      <span className="">{text}</span>
       {toggle ? (
         <button
           onClick={(e) => {

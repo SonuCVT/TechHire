@@ -1,12 +1,25 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 
 const AnalyticsChart = () => {
+  const darkMode = useSelector((state) => state.hrTheme.darkMode);
+
   const data = {
     labels: [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December",
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ],
     datasets: [
       {
@@ -30,8 +43,18 @@ const AnalyticsChart = () => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 mb-4">
-      <h2 className="text-xl font-bold mb-4">Recruitment Analytics</h2>
+    <div
+      className={`shadow-md rounded-lg p-4 mb-4 ${
+        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      <h2
+        className={`text-xl font-bold mb-4 ${
+          darkMode ? "text-white" : "text-gray-800"
+        }`}
+      >
+        Recruitment Analytics
+      </h2>
       <div className="w-full h-96">
         <Line data={data} options={options} />
       </div>

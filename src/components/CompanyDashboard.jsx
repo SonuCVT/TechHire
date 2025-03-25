@@ -43,10 +43,18 @@ const CompanyDashboard = () => {
         <Sidebar />
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main
+          className={`flex-1 p-6 ${
+            darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-gray-800"
+          }`}
+        >
           <div className="container mx-auto">
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-              <h1 className="text-2xl font-bold">Company Dashboard</h1>
+            <div
+              className={`rounded-lg mb-6 ${
+                darkMode ? "text-white" : "text-gray-800"
+              }`}
+            >
+              <h1 className="text-2xl font-bold mb-5">Welcome to Dashboard</h1>
 
               {/* Pass statsData as props */}
               <Stats stats={statsData} />

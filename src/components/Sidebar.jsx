@@ -118,21 +118,34 @@ const Sidebar = () => {
       {/* Team Members */}
       <div>
         <Link to="/addteammember">
-          <li className="flex items-center justify-between p-2 rounded-md text-gray-700 hover:bg-gray-100 cursor-pointer">
-            <div className="flex items-center gap-4">
-              <User size={20} className="text-gray-500" />
+          <li className="flex items-center justify-between p-2 rounded-md text-gray-700 hover:bg-gray-700 cursor-pointer">
+            <div
+              className={`flex items-center gap-4 ${
+                darkMode ? "text-gray-400" : "text-gray-500"
+              }`}
+            >
+              <User
+                size={20}
+                className={`${darkMode ? "text-gray-400" : "text-gray-500"}`}
+              />
               Team Members
             </div>
-            <PlusCircle size={20} className="hover:text-indigo-600" />
+            <PlusCircle
+              size={20}
+              className={`hover:text-indigo-600 ${
+                darkMode ? "text-gray-400" : "text-gray-500"
+              }`}
+            />
           </li>
         </Link>
-        <ul className="space-y-3">
+
+        <ul className="py-2">
           {teamMembers.map((member, index) => (
-            <li key={index} className="flex items-center space-x-3">
+            <li key={index} className="flex items-center py-2 gap-2">
               <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
                 <UserCircle size={20} className="text-gray-500" />
               </div>
-              <div className="hover:text-blue-800">
+              <div className="hover:text-blue-200">
                 <p className="text-sm font-medium">{member.name}</p>
                 <p className="text-xs text-gray-500">{member.role}</p>
               </div>
