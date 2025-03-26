@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   LayoutDashboard,
   BellRing,
@@ -7,13 +7,15 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { useKeycloak } from '@react-keycloak/web';
 const Sidebar = () => {
   const location = useLocation();
-  const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
-
+  const navigate = useNavigate();
+  const { keycloak } = useKeycloak();
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const sidebarItems = [
     {
       icon: <LayoutDashboard size={18} />,
@@ -35,9 +37,39 @@ const Sidebar = () => {
       label: "Schedule",
       link: "/user-interview",
     },
-    { icon: <Settings size={18} />, label: "Settings", link: "/user-setting" },
+    {
+      icon: <Settings size={18} />,
+      label: "Settings",
+      link: "/user-setting"
+    },
   ];
-
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      // Clear all client-side storage
+      localStorage.clear();
+      sessionStorage.clear();
+      // Clear all cookies
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+      });
+      // Clear Keycloak tokens
+      await keycloak.clearToken();
+      // Perform Keycloak logout with redirect
+      await keycloak.logout({
+        redirectUri: window.location.origin + '/login'
+      });
+      // Fallback navigation if Keycloak logout doesn't redirect
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      navigate('/login');
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
   return (
     <div
       className={`w-64 min-h-screen p-4 border-r transition-all ${
@@ -53,7 +85,6 @@ const Sidebar = () => {
         </div>
         <span className="font-medium">User</span>
       </div>
-
       {/* Sidebar Menu */}
       <nav className="mb-8">
         <ul className="space-y-2">
@@ -78,18 +109,24 @@ const Sidebar = () => {
           ))}
         </ul>
       </nav>
-
       {/* Logout Button */}
-      <button className="flex items-center space-x-2 p-2 text-red-500 hover:text-red-600 transition cursor-pointer">
+      <button
+        onClick={handleLogout}
+        disabled={isLoggingOut}
+        className={`flex items-center space-x-2 p-2 w-full rounded-lg ${
+          isLoggingOut
+            ? "text-gray-500 cursor-not-allowed"
+            : "text-red-500 hover:bg-red-50 dark:hover:bg-gray-700"
+        } transition`}
+      >
         <LogOut size={18} />
-        <span>Logout</span>
+        <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
       </button>
-
       {/* Profile Completion */}
       <div className="mt-6 border-t pt-4">
         <Link
           to="/update-profile"
-          className="text-md text-violet-600 dark:text-violet-400"
+          className="text-md text-violet-600 dark:text-violet-400 hover:underline"
         >
           Complete your profile now
         </Link>
@@ -97,5 +134,8 @@ const Sidebar = () => {
     </div>
   );
 };
-
 export default Sidebar;
+
+
+
+

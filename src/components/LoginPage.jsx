@@ -1,171 +1,104 @@
-import React from "react";
+import { useKeycloak } from '@react-keycloak/web';
+import { Link, useNavigate } from "react-router-dom";
 import googleLogo from "../assets/images/google_G.png";
 import microsoftLogo from "../assets/images/microsoft_logo.jpg";
-import { useState } from "react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { Link } from "react-router-dom";
-
+import { useEffect, useState } from 'react';
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-
-  const validateEmail = (email) => {
-    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return re.test(email);
+  const { keycloak } = useKeycloak();
+  const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = useState('CANDIDATE');
+  const handleKeycloakLogin = () => {
+    // For Keycloak direct login
+    keycloak.login({
+      redirectUri: window.location.origin
+    });
   };
-
-  const validatePassword = (password) => {
-    const re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}/;
-    return re.test(password);
+  const handleSocialLogin = (provider) => {
+    // For social login
+    keycloak.login({
+      idpHint: provider,
+      redirectUri: window.location.origin
+    });
   };
-
-  const handleLogin = (event) => {
-    event.preventDefault(); // Prevent page refresh
-    let isValid = true;
-
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address");
-      isValid = false;
-    } else {
-      setEmailError("");
+  useEffect(() => {
+    if (keycloak.authenticated) {
+      const userRoles = keycloak.tokenParsed?.realm_access?.roles || [];
+      if (userRoles.includes('HR')) {
+        navigate('/hr-dashboard');
+      } else if (userRoles.includes('CANDIDATE')) {
+        navigate('/user-dashboard');
+      }
     }
-
-    if (!validatePassword(password)) {
-      setPasswordError("Please enter a valid password");
-      isValid = false;
-    } else {
-      setPasswordError("");
-    }
-
-    if (isValid) {
-      console.log("Email:", email);
-      console.log("Password:", password);
-    }
-  };
-
+  }, [keycloak.authenticated, navigate, keycloak.tokenParsed]);
   return (
     <div className="flex h-screen items-center justify-center bg-[url('/public/login_page_bg.jpg')] bg-cover bg-center">
-      {/* <div className="flex h-screen items-center justify-center bg-linear-to-r/oklab from-indigo-500 to-teal-400"> */}
-      {/* <div className="flex h-screen items-center justify-center bg-linear-to-r from-cyan-500 to-blue-500"> */}
       <div className="flex shadow-lg rounded-lg overflow-hidden w-full max-w-xl bg-[#ffffff99] backdrop-blur-xs">
         <div className="w-full p-8 flex flex-col justify-center">
           <h2 className="text-3xl font-semibold mb-6 text-center uppercase tracking-[1px]">
             Log In
           </h2>
-          <form>
-            <div className="mb-4">
-              <label className="block text-gray-600 font-medium mb-1">
-                Enter Your Email :
-              </label>
-              <input
-                type="email"
-                placeholder="Please enter your email address"
-                className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                  emailError ? "border-red-500" : "focus:ring-blue-500"
-                }`}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={() => {
-                  if (!validateEmail(email)) {
-                    setEmailError("Please enter a valid email address");
-                  } else {
-                    setEmailError("");
-                  }
-                }}
-              />
-              {emailError && (
-                <p className="text-red-500 text-sm mt-1">{emailError}</p>
-              )}
-            </div>
-
-            <div className="mb-4">
-              <div className="relative">
-                <label className="block text-gray-600 font-medium mb-1">
-                  Enter Your Password :
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Please enter your password"
-                    className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                      passwordError ? "border-red-500" : "focus:ring-blue-500"
-                    }`}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onBlur={() => {
-                      if (!validatePassword(password)) {
-                        setPasswordError(
-                          "Password must be at least 8 characters long"
-                        );
-                      } else {
-                        setPasswordError("");
-                      }
-                    }}
-                  />
-                  <button
-                    type="button"
-                    c
-                    className="absolute top-[10px] right-[10px] flex items-center text-gray-600 hover:text-gray-900 focus:outline-none"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOffIcon size={20} />
-                    ) : (
-                      <EyeIcon size={20} />
-                    )}
-                  </button>
-                </div>
-              </div>
-              {passwordError && (
-                <p className="text-red-500 text-sm mt-1">{passwordError}</p>
-              )}
-            </div>
-
-            <div className="flex justify-between items-center mb-4">
+          {/* Role Selection */}
+          {/* <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">I want to login as:</label>
+            <div className="flex space-x-4">
               <button
-                className="bg-[#48596f] cursor-pointer text-white px-4 py-2 rounded-md w-full"
-                onClick={handleLogin}
+                type="button"
+                onClick={() => setSelectedRole('CANDIDATE')}
+                className={`flex-1 py-2 rounded-md border ${
+                  selectedRole === 'CANDIDATE'
+                    ? 'bg-[#48596F] text-white border-[#48596F]'
+                    : 'bg-white text-gray-700 border-gray-300'
+                }`}
               >
-                Log In
+                Candidate
+              </button>
+              <button
+                type="button"
+                onClick={() => setSelectedRole('HR')}
+                className={`flex-1 py-2 rounded-md border ${
+                  selectedRole === 'HR'
+                    ? 'bg-[#48596F] text-white border-[#48596F]'
+                    : 'bg-white text-gray-700 border-gray-300'
+                }`}
+              >
+                HR
               </button>
             </div>
-            <div className="text-right mb-4">
-              <a href="#" className="text-[#48596f] text-sm">
-                Forgot password?
-              </a>
-            </div>
-          </form>
-
-          <div className="flex items-center my-4">
+          </div> */}
+          {/* Keycloak Login Button */}
+          <button
+            onClick={handleKeycloakLogin}
+            className="w-full bg-[#48596F] text-white py-2 rounded-md hover:bg-[#3A4A5F] transition mb-4"
+          >
+            Login with Keycloak
+          </button>
+          <div className="flex items-center my-6">
             <div className="flex-grow border-t border-gray-300"></div>
             <span className="mx-3 text-gray-500">or</span>
             <div className="flex-grow border-t border-gray-300"></div>
           </div>
-
-          <div className="flex gap-4">
-            <a
-              className="flex-1 border px-4 py-2 rounded-md flex items-center justify-center gap-2"
-              href="#"
+          {/* Social Login Buttons */}
+          <div className="flex gap-4 mb-6">
+            <button
+              type="button"
+              className="flex-1 border px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-gray-50 transition"
+              onClick={() => handleSocialLogin('google')}
             >
               <img src={googleLogo} alt="Google" className="w-5 h-5" />
               Google
-            </a>
-
-            <a
-              className="flex-1 border px-4 py-2 rounded-md flex items-center justify-center gap-2"
-              href="#"
+            </button>
+            <button
+              type="button"
+              className="flex-1 border px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:bg-gray-50 transition"
+              onClick={() => handleSocialLogin('microsoft')}
             >
               <img src={microsoftLogo} alt="Microsoft" className="w-5 h-5" />
               Microsoft
-            </a>
+            </button>
           </div>
-
-          <p className="text-sm mt-4 text-center">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-[#48596f]">
+          <p className="text-sm text-center">
+            Don't have an account?{' '}
+            <Link to="/signup" className="text-[#48596F] font-medium hover:underline">
               Sign Up
             </Link>
           </p>
@@ -174,5 +107,4 @@ const LoginPage = () => {
     </div>
   );
 };
-
 export default LoginPage;
