@@ -8,8 +8,8 @@ const AddTeamMember = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phoneNumber: "",
     designation: "",
+    mobileNo: "",
   });
 
   const handleChange = (e) => {
@@ -34,7 +34,7 @@ const AddTeamMember = () => {
 
       navigate("/hr-dashboard"); // Navigate to HR dashboard
 
-      console.log("Member Added:", data);
+      // console.log("Member Added:", data);
     } catch (error) {
       console.error("Error adding member:", error);
     }
@@ -86,8 +86,8 @@ const AddTeamMember = () => {
                 </label>
                 <input
                   type="text"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
+                  name="mobileNo"
+                  value={formData.mobileNo}
                   onChange={handleChange}
                   className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
                   placeholder="Enter Mobile no."

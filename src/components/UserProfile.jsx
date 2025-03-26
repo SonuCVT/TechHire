@@ -32,11 +32,8 @@ const CandidateProfile = () => {
     skills: updateUser?.skills || [],
     education: "" || updateUser?.education,
     experience: "" || updateUser?.experience,
-    documents: [
-      { name: "Resume", verified: true },
-      { name: "Cover Letter", verified: false },
-      { name: "Attachments", verified: false },
-    ],
+    resumeUrl: "" || updateUser?.resumeUrl,
+    coverLetter: "" || updateUser?.coverLetter,
   };
 
   return (
@@ -160,35 +157,29 @@ const CandidateProfile = () => {
                       </div>
 
                       <div className="flex items-center gap-[10px]">
-                        {candidateData.documents.map((doc, index) => (
-                          <button
-                            key={index}
-                            className={`w-full py-2 px-4 border rounded-md text-center transition-all ${
-                              darkMode
-                                ? "border-gray-600 bg-gray-700 text-white hover:bg-gray-600"
-                                : "border-gray-200 bg-white hover:bg-gray-50"
-                            }`}
-                          >
-                            {doc.name}
-                          </button>
-                        ))}
-                      </div>
+                        <a
+                          href={candidateData.resumeUrl}
+                          target="_blank"
+                          className={`w-full py-2 px-4 border rounded-md text-center transition-all ${
+                            darkMode
+                              ? "border-gray-600 bg-gray-700 text-white hover:bg-gray-600"
+                              : "border-gray-200 bg-white hover:bg-gray-50"
+                          }`}
+                        >
+                          Resume
+                        </a>
 
-                      <div className="flex items-center mt-4 justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center">
-                            <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
-                            <span className="text-sm">Verified</span>
-                          </div>
-                          <div className="flex items-center">
-                            <div className="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
-                            <span className="text-sm">Unverified</span>
-                          </div>
-                        </div>
-                        <button className="text-blue-500 text-sm flex items-center">
-                          <Download size={14} className="mr-1" />
-                          Download All
-                        </button>
+                        <a
+                          href={candidateData.coverLetter}
+                          target="_blank"
+                          className={`w-full py-2 px-4 border rounded-md text-center transition-all ${
+                            darkMode
+                              ? "border-gray-600 bg-gray-700 text-white hover:bg-gray-600"
+                              : "border-gray-200 bg-white hover:bg-gray-50"
+                          }`}
+                        >
+                          Cover Letter
+                        </a>
                       </div>
                     </div>
                   </div>

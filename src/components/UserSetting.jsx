@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import UserDashboardSidebar from "./UserDashboardSidebar";
 import UserDashboardHeader from "./UserDashboardHeader";
 import { Settings, ChevronRight } from "lucide-react";
+import userImage from "../assets/images/user.svg";
 import { toggleDarkMode } from "../utils/themeSlice";
 
 const UserSetting = () => {
   const dispatch = useDispatch();
-  const darkMode = useSelector((state) => state.theme.darkMode); // Get state from Redux
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const user = useSelector((state) => state.user);
 
   const [pushNotifications, setPushNotifications] = useState(true);
   const [modalContent, setModalContent] = useState("");
@@ -41,11 +43,11 @@ const UserSetting = () => {
 
             <div className="flex items-center space-x-4 mb-8">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="Yennefer Doe"
+                src={userImage}
+                alt={user.name}
                 className="w-16 h-16 rounded-full object-cover"
               />
-              <h2 className="text-xl font-semibold">Yennefer Doe</h2>
+              <h2 className="text-xl font-semibold">{user.name}</h2>
             </div>
 
             <div className="space-y-6">
@@ -118,9 +120,7 @@ const UserSetting = () => {
 function SettingsRow({ text, toggle = false, value, onChange, onClick }) {
   return (
     <div
-      className={`flex items-center justify-between py-2 cursor-pointer ${
-        onClick ? "hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md" : ""
-      }`}
+      className={`flex items-center justify-between py-2 cursor-pointer rounded-md`}
       onClick={onClick}
     >
       <span className="dark:text-white">{text}</span>

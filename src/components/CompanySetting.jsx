@@ -9,12 +9,14 @@ import {
   Settings,
   ChevronRight,
 } from "lucide-react";
+import userImage from "../assets/images/user.svg";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleDarkMode } from "../utils/hrThemeSlice";
 
 const CompanySetting = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const darkMode = useSelector((state) => state.hrTheme.darkMode); // Get state from Redux
 
   const [pushNotifications, setPushNotifications] = useState(true);
@@ -49,11 +51,11 @@ const CompanySetting = () => {
 
             <div className="flex items-center space-x-4 mb-8">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="Yennefer Doe"
+                src={userImage}
+                alt={user.name}
                 className="w-16 h-16 rounded-full object-cover"
               />
-              <h2 className="text-xl font-semibold">Yennefer Doe</h2>
+              <h2 className="text-xl font-semibold">{user.name}</h2>
             </div>
 
             <div className="space-y-6">
