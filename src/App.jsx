@@ -1,4 +1,8 @@
-import { BrowserRouter, createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Home from "./components/Home";
 import PostJobs from "./components/PostJobs";
 import Applications from "./components/Applications";
@@ -28,11 +32,9 @@ import HelpSupport from "./components/HelpSupport";
 import UserSetting from "./components/UserSetting";
 import UpdateProfile from "./components/UpdateProfile";
 import keycloak from "./auth/keycloak";
-import { ReactKeycloakProvider } from '@react-keycloak/web';
+import { ReactKeycloakProvider } from "@react-keycloak/web";
 import RegistrationSuccess from "./components/RegistrationSuccess";
-
 function App() {
-  
   const router = createBrowserRouter([
     {
       path: "/",
@@ -44,16 +46,16 @@ function App() {
     },
     {
       path: "/signup",
-      element: <Signup/>,
+      element: <Signup />,
     },
     {
       path: "/registration-success",
-      element:<RegistrationSuccess/>
+      element: <RegistrationSuccess />,
     },
     {
       path: "/hr-dashboard",
       element: (
-        <AuthGaurd allowedRoles={['HR']}>
+        <AuthGaurd allowedRoles={["HR"]}>
           <Home />
         </AuthGaurd>
       ),
@@ -61,135 +63,212 @@ function App() {
     {
       path: "/user-dashboard",
       element: (
-        <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
           <UserDashboard />
         </AuthGaurd>
       ),
     },
     {
       path: "/jobopening",
-      element:(
-       <AuthGaurd allowedRoles={['CANDIDATE']}>
-        <JobOpening/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <JobOpening />
+        </AuthGaurd>
       ),
     },
     {
       path: "/update-profile",
-      element:(
-       <AuthGaurd allowedRoles={['CANDIDATE']}>
-        <UpdateProfile/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <UpdateProfile />
+        </AuthGaurd>
       ),
     },
     {
       path: "/jobposting",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <PostJobs/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <PostJobs />
+        </AuthGaurd>
       ),
     },
     {
       path: "/applications",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <Applications/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <Applications />
+        </AuthGaurd>
       ),
     },
     {
       path: "/assessments",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <Assessments/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <Assessments />
+        </AuthGaurd>
       ),
     },
     {
       path: "/interviews",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <Interview/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <Interview />
+        </AuthGaurd>
       ),
     },
     {
       path: "/addinterview",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <AddInterview/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <AddInterview />
+        </AuthGaurd>
       ),
     },
     {
       path: "/addassessment",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <AddnewAssessments/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <AddnewAssessments />
+        </AuthGaurd>
       ),
     },
     {
       path: "/user-profile",
-      element:(
-       <AuthGaurd allowedRoles={['CANDIDATE']}>
-        <UserProfile/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <UserProfile />
+        </AuthGaurd>
       ),
     },
     {
       path: "/companies",
-      element:(
-       <AuthGaurd allowedRoles={['CANDIDATE']}>
-        <Companies/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <Companies />
+        </AuthGaurd>
       ),
     },
     {
       path: "/company-card-profile",
-      element:(
-       <AuthGaurd allowedRoles={['CANDIDATE']}>
-        <CompanyCardProfile/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <CompanyCardProfile />
+        </AuthGaurd>
       ),
     },
     {
       path: "/jobs-management",
-      element:(
-       <AuthGaurd allowedRoles={['HR']}>
-        <JobsManagement/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <JobsManagement />
+        </AuthGaurd>
       ),
     },
     {
       path: "/update-job/:id",
-      element:(
-       <AuthGaurd allowedRoles={['CANDIDATE']}>
-        <UpdateJob/>
-       </AuthGaurd>
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <UpdateJob />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/addteammember",
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <AddTeamMember />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/company-setting",
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <CompanySetting />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/company-notifications",
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <CompanyNotifications />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/user-setting",
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <UserSetting />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/user-notifications",
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <UserNotifications />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/jobs-applied",
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <Jobs />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/help-support",
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <HelpSupport />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/company-profile",
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <CompanyProfile />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/candidates",
+      element: (
+        <AuthGaurd allowedRoles={["HR"]}>
+          <CandidateStatus />
+        </AuthGaurd>
+      ),
+    },
+    {
+      path: "/user-interview",
+      element: (
+        <AuthGaurd allowedRoles={["CANDIDATE"]}>
+          <UserInterviewSection />
+        </AuthGaurd>
       ),
     },
     // ... other protected routes
     {
       path: "/unauthorized",
       element: <div>You don't have permission to access this page</div>,
-    }
+    },
   ]);
-    
-    
-
   return (
     <ReactKeycloakProvider
       authClient={keycloak}
       initOptions={{
-        onLoad: 'check-sso',
-        pkceMethod: 'S256',
-        checkLoginIframe: false
+        onLoad: "check-sso",
+        pkceMethod: "S256",
+        checkLoginIframe: false,
       }}
       onEvent={(event, error) => {
-        if (event === 'onAuthError') {
-          console.error('Keycloak error:', error);
+        if (event === "onAuthError") {
+          console.error("Keycloak error:", error);
         }
       }}
     >
@@ -197,5 +276,4 @@ function App() {
     </ReactKeycloakProvider>
   );
 }
-
 export default App;

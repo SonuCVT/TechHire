@@ -12,8 +12,8 @@ const UserDashboard = () => {
   const updateUser = useSelector((state) => state.updateuser);
 
   const userData = {
-    name:"sonu"|| user.name,
-    email: "sonu@gmail.com" || user.email,
+    name: "User" || user.name,
+    email: "user@gmail.com" || user.email,
     linkedin: "" || updateUser?.linkedin,
     github: "" || updateUser?.github,
     codingProfile: "" || updateUser?.codingProfile,
