@@ -18,11 +18,11 @@ const JobOpening = () => {
   useFetchJobs();
   const jobs = useSelector((state) => state.addpostjob.jobs);
   const darkMode = useSelector((state) => state.theme.darkMode);
-  const { name, email, resumeUrl, address, phoneNumber } = useSelector(
-    (state) => state.updateuser
+  const {id, name, email, resumeUrl, address, phoneNumber } = useSelector(
+    (state) => state.user
   );
 
-  const candidateId = "67cabdc4c51cf2795d0e0213"; // Replace with actual candidate ID
+  const candidateId = id; // Replace with actual candidate ID
 
   const [appliedJobs, setAppliedJobs] = useState(new Set());
 

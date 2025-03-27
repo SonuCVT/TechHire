@@ -30,6 +30,8 @@ import UpdateProfile from "./components/UpdateProfile";
 import keycloak from "./auth/keycloak";
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import RegistrationSuccess from "./components/RegistrationSuccess";
+import ShimmerLoader from "./components/ShimmerLoader";
+import AuthLoading from "./components/AuthLoading";
 
 function App() {
   
@@ -167,6 +169,94 @@ function App() {
       element:(
        <AuthGaurd allowedRoles={['CANDIDATE']}>
         <UpdateJob/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/addteammember",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <AddTeamMember/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/company-setting",
+      element:(
+       <AuthGaurd allowedRoles={['HR']}>
+        <CompanySetting/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/company-notifications",
+      element:(
+       <AuthGaurd allowedRoles={['HR']}>
+        <CompanyNotifications/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/user-setting",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <UserSetting/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/user-notifications",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <UserNotifications/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/jobs-applied",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <Jobs/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/help-support",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <HelpSupport/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/company-profile",
+      element:(
+       <AuthGaurd allowedRoles={['HR']}>
+        <CompanyProfile/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/candidates",
+      element:(
+       <AuthGaurd allowedRoles={['HR']}>
+        <CandidateStatus/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/user-interview",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE']}>
+        <UserInterviewSection/>
+       </AuthGaurd>
+      ),
+    },
+    {
+      path: "/auth-loading",
+      element:(
+       <AuthGaurd allowedRoles={['CANDIDATE','HR']}>
+        <AuthLoading/>
        </AuthGaurd>
       ),
     },

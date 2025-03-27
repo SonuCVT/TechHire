@@ -9,7 +9,10 @@ const jobsPerPage = 9;
 
 const JobsManagement = () => {
   const darkTheme = useSelector((state) => state.theme.darkMode);
-  const candidateId = "67cabdc4c51cf2795d0e0213";
+  const {id} = useSelector(
+      (state) => state.user
+    );
+  const candidateId = id;
   const [currentPage, setCurrentPage] = useState(1);
   const [jobs, setJobs] = useState([]);
   const [filters, setFilters] = useState({
