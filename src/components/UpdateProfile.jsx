@@ -3,23 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../utils/updateUserSlice";
+import { addUser } from "../utils/userSlice";
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
 const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
 
 const UpdateProfile = () => {
-  // Get user data from Redux
+  
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Form State
   const [formData, setFormData] = useState({
     name:  "",
     email:  "",
     phoneNumber: "",
     address: "",
-    skills: [], // Ensuring it's always an array to prevent `.join()` error
+    skills: [], 
     education: "",
     experience: "",
     linkedin: "",
@@ -106,7 +106,7 @@ const UpdateProfile = () => {
       //const savedJob = await response.json();
       //dispatch(postJob(savedJob)); // Save job in Redux after backend confirms it
   
-      dispatch(updateUser(formData));
+      dispatch(addUser(formData));
       alert("Profile Updated Successfully!");
       navigate("/user-dashboard");
     } catch (error) {

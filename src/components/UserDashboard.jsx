@@ -1,23 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserDashboardHeader from "./UserDashboardHeader";
 import UserDashboardSidebar from "./UserDashboardSidebar";
 import UpcomingActivities from "../cards/UpcomingActivities";
+import { useKeycloak } from "@react-keycloak/web";
 
 const UserDashboard = () => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
-
+  
   const user = useSelector((state) => state.user);
-  const updateUser = useSelector((state) => state.updateuser);
+  //const updateUser = useSelector((state) => state.updateuser);
 
   const userData = {
+<<<<<<< HEAD
     name: "User" || user.name,
     email: "user@gmail.com" || user.email,
     linkedin: "" || updateUser?.linkedin,
     github: "" || updateUser?.github,
     codingProfile: "" || updateUser?.codingProfile,
+=======
+    name: user.name,
+    email:  user.email,
+    linkedin:  user.linkedin,
+    github: user.github,
+    codingProfile: user.codingProfile,
+>>>>>>> 437614e98f08164f9e8a479110f0b77b110c9152
   };
+  // const { keycloak } = useKeycloak();
+
+  // useEffect(() => {
+  //   if (keycloak.authenticated) {
+  //     const email = keycloak.tokenParsed?.email;
+  //     console.log("User's email:", email);
+      
+  //     // Or using the async method:
+  //     keycloak.loadUserInfo().then(userInfo => {
+  //       console.log("Full user info:", userInfo);
+  //     });
+  //   }
+  // }, [keycloak.authenticated]);
 
   return (
     <div
@@ -203,7 +225,7 @@ const UserDashboard = () => {
                       </div>
                     </div>
 
-                    <div
+                    {/* <div
                       className={`border rounded-lg p-4 transition-all ${
                         darkMode
                           ? "border-gray-700 bg-gray-800 text-gray-300"
@@ -234,7 +256,7 @@ const UserDashboard = () => {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
