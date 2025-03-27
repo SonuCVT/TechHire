@@ -22,7 +22,7 @@ const JobOpening = () => {
     (state) => state.updateuser
   );
 
-  const candidateId = "67cabdc4c51cf2795d0e0213"; // Replace with actual candidate ID
+  const candidateId = "67e3effc4b48f14e36148a2e"; // Replace with actual candidate ID
 
   const [appliedJobs, setAppliedJobs] = useState(new Set());
 
