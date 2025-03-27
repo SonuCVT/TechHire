@@ -15,8 +15,8 @@ const UpdateProfile = () => {
 
   // Form State
   const [formData, setFormData] = useState({
-    name: user.name || "",
-    email: user.email || "",
+    name:  "",
+    email:  "",
     phoneNumber: "",
     address: "",
     skills: [], // Ensuring it's always an array to prevent `.join()` error
@@ -26,8 +26,6 @@ const UpdateProfile = () => {
     github: "",
     codingProfile: "",
     resumeUrl: "", // Stores Cloudinary URL
-    coverLetter: null,
-    attachments: [],
   });
 
   const [uploading, setUploading] = useState(false);
@@ -90,13 +88,31 @@ const UpdateProfile = () => {
   };
 
   // Handle Form Submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // console.log("Profile Data:", formData);
-
-    dispatch(updateUser(formData));
-    alert("Profile Updated Successfully!");
-    navigate("/user-dashboard");
+    try {
+      const response = await fetch("/api/candidates", { // No need for full URL
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to post job");
+      }
+  
+      //const savedJob = await response.json();
+      //dispatch(postJob(savedJob)); // Save job in Redux after backend confirms it
+  
+      dispatch(updateUser(formData));
+      alert("Profile Updated Successfully!");
+      navigate("/user-dashboard");
+    } catch (error) {
+      console.error("Error posting job:", error);
+    }
+    
   };
 
   return (
@@ -277,16 +293,6 @@ const UpdateProfile = () => {
               </a>
             </p>
           )}
-        </div>
-
-        {/* Cover Letter Upload */}
-        <div>
-          <label className="block font-medium">Upload Cover Letter (PDF)</label>
-          <input
-            type="file"
-            accept=".pdf"
-            className="w-full p-2 border rounded-md"
-          />
         </div>
 
         {/* Submit Button */}

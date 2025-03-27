@@ -14,7 +14,7 @@ export default defineConfig({
         target: 'http://localhost:8081', // Backend URL
         changeOrigin: true,
         secure: false,
-      },
+      }
     },
   },
 })
