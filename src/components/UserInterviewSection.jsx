@@ -1,105 +1,108 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import UserDashboardHeader from "./UserDashboardHeader";
 import UserDashboardSidebar from "./UserDashboardSidebar";
-
-const MeetingCard = [
-  {
-    companyName: "CVT",
-    date: "10-March-2025",
-    time: "10:00 a.m to 12:00 p.m",
-    type: "Technical",
-    interviewer: "Jane Smith",
-    status: "Scheduled",
-  },
-  {
-    companyName: "Infosys",
-    date: "22-March-2025",
-    time: "10:00 a.m to 12:00 p.m",
-    type: "HR",
-    interviewer: "Jacob Smith",
-    status: "Scheduled",
-  },
-  {
-    companyName: "Google",
-    date: "22-April-2025",
-    time: "10:00 a.m to 12:00 p.m",
-    type: "Technical",
-    interviewer: "Smith",
-    status: "Schedule",
-  },
-];
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const UserInterviewSection = () => {
-  const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const [mergedData, setMergedData] = useState([]);
+  const { id } = useSelector((state) => state.user);
+  const candidateId = id;
+
+  const fetchInterviewSchedule = async () => {
+    try {
+      const response = await fetch(`/api/addInterviews/candidate/${candidateId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch assessments");
+      }
+      const interviews = await response.json();
+      console.log("Interviews:", interviews);
+      
+      if (interviews.length > 0) {
+        fetchJobs(interviews);
+      } else {
+        setMergedData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching assessments:", error);
+    }
+  };
+
+  const fetchJobs = async (interviews) => {
+    const jobIds = [...new Set(interviews.map((item) => item.jobId))];
+    console.log("Job IDs:", jobIds);
+
+    try {
+      const response = await axios.get(`/api/job_applied/${jobIds}/${candidateId}`);
+      const jobs = Array.isArray(response.data) ? response.data : [response.data];
+      console.log("Jobs:", jobs);
+      mergeData(interviews, jobs);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
+
+  const mergeData = (interviews, jobs) => {
+    const merged = interviews.map((interview) => {
+      const jobDetails = jobs.find((job) => job.jobId === interview.jobId) || {};
+      return {
+        ...interview,
+        companyName: jobDetails.company || "Unknown Company",
+      };
+    });
+
+    console.log("Merged Data:", merged);
+    setMergedData(merged);
+  };
+
+  useEffect(() => {
+    fetchInterviewSchedule();
+  }, []);
 
   return (
-    <div
-      className={`min-h-screen transition-all ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
-      }`}
-    >
+    <div className={`min-h-screen transition-all ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
       <UserDashboardHeader />
       <div className="flex">
         <UserDashboardSidebar />
-        <div
-          className={`flex-1 p-6 mx-6 rounded-lg shadow-lg transition-all ${
-            darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-          }`}
-        >
-          <table
-            className={`table-auto w-full shadow-lg rounded-lg border ${
-              darkMode
-                ? "bg-gray-700 border-gray-600"
-                : "bg-blue-50 border-gray-300"
-            } text-center`}
-          >
-            <thead>
-              <tr
-                className={`${
-                  darkMode ? "bg-gray-600 text-white" : "bg-blue-200 text-black"
-                }`}
-              >
-                <th className="py-2 px-4">Company Name</th>
-                <th className="py-2 px-4">Date</th>
-                <th className="py-2 px-4">Time</th>
-                <th className="py-2 px-4">Type</th>
-                <th className="py-2 px-4">Interviewer</th>
-                <th className="py-2 px-4">Status</th>
-                <th className="py-2 px-4">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {MeetingCard.map((item, index) => (
-                <tr
-                  key={index}
-                  className={`border-t ${
-                    darkMode
-                      ? "border-gray-600 text-white"
-                      : "border-gray-300 text-black"
-                  }`}
-                >
-                  <td className="py-2 px-4">{item.companyName}</td>
-                  <td className="py-2 px-4">{item.date}</td>
-                  <td className="py-2 px-4">{item.time}</td>
-                  <td className="py-2 px-4">{item.type}</td>
-                  <td className="py-2 px-4">{item.interviewer}</td>
-                  <td className="py-2 px-4">{item.status}</td>
-                  <td className="py-2 px-4">
-                    <button
-                      className={`px-4 py-2 rounded-md transition ${
-                        darkMode
-                          ? "bg-gray-700 hover:bg-gray-600 text-white"
-                          : "bg-blue-500 hover:bg-blue-600 text-white"
-                      }`}
-                    >
-                      Join Meeting
-                    </button>
-                  </td>
+        <div className={`flex-1 p-6 mx-6 rounded-lg shadow-lg transition-all ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+          {mergedData.length > 0 ? (
+            <table className={`table-auto w-full shadow-lg rounded-lg border ${darkMode ? "bg-gray-700 border-gray-600" : "bg-blue-50 border-gray-300"} text-center`}>
+              <thead>
+                <tr className={`${darkMode ? "bg-gray-600 text-white" : "bg-blue-200 text-black"}`}>
+                  <th className="py-2 px-4">Company Name</th>
+                  <th className="py-2 px-4">Date</th>
+                  <th className="py-2 px-4">Time</th>
+                  <th className="py-2 px-4">Type</th>
+                  <th className="py-2 px-4">Interviewer</th>
+                  <th className="py-2 px-4">Status</th>
+                  <th className="py-2 px-4">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {mergedData.map((item, index) => (
+                  <tr key={index} className={`border-t ${darkMode ? "border-gray-600 text-white" : "border-gray-300 text-black"}`}>
+                    <td className="py-2 px-4">{item.companyName}</td>
+                    <td className="py-2 px-4">{item.dateInterview}</td>
+                    <td className="py-2 px-4">{item.timeInterview}</td>
+                    <td className="py-2 px-4">{item.interviewMode}</td>
+                    <td className="py-2 px-4">{item.interviewPanelMembers}</td>
+                    <td className="py-2 px-4">{item.status}</td>
+                    <td className="py-2 px-4">
+                      <Link to={item.meetingLink} target="_blank" className={`px-4 py-2 rounded-md transition ${darkMode ? "bg-gray-700 hover:bg-gray-600 text-white" : "bg-blue-500 hover:bg-blue-600 text-white"}`}>
+                        Join Meeting
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className={`text-center py-8 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+              No interviews scheduled
+            </div>
+          )}
         </div>
       </div>
     </div>

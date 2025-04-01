@@ -34,12 +34,9 @@ import UpdateProfile from "./components/UpdateProfile";
 import keycloak from "./auth/keycloak";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import RegistrationSuccess from "./components/RegistrationSuccess";
-<<<<<<< HEAD
-=======
 import ShimmerLoader from "./components/ShimmerLoader";
 import AuthLoading from "./components/AuthLoading";
 
->>>>>>> 437614e98f08164f9e8a479110f0b77b110c9152
 function App() {
   const router = createBrowserRouter([
     {

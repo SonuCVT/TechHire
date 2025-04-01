@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Phone,
@@ -15,25 +15,77 @@ import Header from "./UserDashboardHeader.jsx";
 import Sidebar from "./UserDashboardSidebar.jsx";
 import userImage from "../assets/images/user.svg";
 import InterviewCard from "../cards/InterviewCard.jsx";
+import axios from "axios";
 
 const CandidateProfile = () => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
-
+  const [mergedData, setMergedData] = useState([]);
   const user = useSelector((state) => state.user);
-  const updateUser = useSelector((state) => state.updateuser);
-  console.log(user);
-  console.log(updateUser);
+
+  const { id } = useSelector((state) => state.user);
+  const candidateId = id;
+
+  const fetchInterviewSchedule = async () => {
+    try {
+      const response = await fetch(`/api/addInterviews/candidate/${candidateId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch assessments");
+      }
+      const interviews = await response.json();
+      //console.log("Interviews:", interviews);
+      
+      if (interviews.length > 0) {
+        fetchJobs(interviews);
+      } else {
+        setMergedData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching assessments:", error);
+    }
+  };
+
+  const fetchJobs = async (interviews) => {
+    const jobIds = [...new Set(interviews.map((item) => item.jobId))];
+    //console.log("Job IDs:", jobIds);
+
+    try {
+      const response = await axios.get(`/api/job_applied/${jobIds}/${candidateId}`);
+      const jobs = Array.isArray(response.data) ? response.data : [response.data];
+     // console.log("Jobs:", jobs);
+      mergeData(interviews, jobs);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
+
+  const mergeData = (interviews, jobs) => {
+    const merged = interviews.map((interview) => {
+      const jobDetails = jobs.find((job) => job.jobId === interview.jobId) || {};
+      return {
+        ...interview,
+        companyName: jobDetails.company || "Unknown Company",
+      };
+    });
+
+   // console.log("Merged Data:", merged);
+    setMergedData(merged);
+  }
+
+    useEffect(() => {
+        fetchInterviewSchedule();
+        
+      }, []);
+  
 
   const candidateData = {
     name: user.name,
     email: user.email,
-    phone: "" || updateUser?.phoneNumber,
-    address: "" || updateUser?.address,
-    skills: updateUser?.skills || [],
-    education: "" || updateUser?.education,
-    experience: "" || updateUser?.experience,
-    resumeUrl: "" || updateUser?.resumeUrl,
-    coverLetter: "" || updateUser?.coverLetter,
+    phone: user.phoneNumber,
+    address: user.address,
+    skills: user.skills || [],
+    education: user.education,
+    experience: user.experience,
+    resumeUrl: user.resumeUrl,
   };
 
   return (
@@ -169,7 +221,7 @@ const CandidateProfile = () => {
                           Resume
                         </a>
 
-                        <a
+                        {/* <a
                           href={candidateData.coverLetter}
                           target="_blank"
                           className={`w-full py-2 px-4 border rounded-md text-center transition-all ${
@@ -179,7 +231,7 @@ const CandidateProfile = () => {
                           }`}
                         >
                           Cover Letter
-                        </a>
+                        </a> */}
                       </div>
                     </div>
                   </div>
@@ -188,7 +240,79 @@ const CandidateProfile = () => {
             </div>
 
             {/* Interviews Section */}
-            <InterviewCard />
+            <div className="space-y-6 w-3/5">
+              {mergedData.map((interview, index) => (
+                <div
+                  key={index}
+                  className={`rounded-lg shadow-md overflow-hidden ${
+                  darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+                  }`}
+                >
+                  <div className={`p-4 border-b flex justify-between items-center ${
+                      darkMode ? "border-gray-700" : "border-gray-200"
+                    }`}>
+                    <h2 className="text-lg font-medium">Interviews</h2>
+                    <span className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>{interview.assignedManager}</span>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex flex-col md:flex-row justify-between">
+                      <div className="mb-4 md:mb-0">
+                        <h3 className="text-lg font-medium">{interview.companyName}</h3>
+                        <div className="flex items-center mt-2">
+                          <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded">
+                            {interview.interviewMode}
+                          </span>
+                          <span className={`ml-4 text-sm ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+                            {interview.dateInterview},{interview.timeInterview}
+                          </span>
+                        </div>
+                        <div className="mt-2">
+                          <span className={`text-sm ${darkMode ? "text-gray-400" : "text-gray-500"}`}>Meet Link - </span>
+                          <a
+                            href={interview.meetingLink}
+                            className="text-sm text-blue-500"
+                          >
+                            {interview.meetingLink}
+                          </a>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-8">
+                        <div>
+                          <p className={`mb-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Interview Panel Members</p>
+                          <div className="flex gap-2">
+                            {interview.interviewPanelMembers.map((avatar, i) => (
+                              <div
+                                key={i}
+                                className=""
+                              >
+                                <span>{avatar}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        {/* <div>
+                          <p className={`mb-2 ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Interiew Panel</p>
+                          <div className="flex -space-x-2">
+                            {interview.interviewPanel.map((avatar, i) => (
+                              <div
+                                key={i}
+                                className="w-8 h-8 rounded-full border-2 border-white overflow-hidden"
+                              >
+                                <img
+                                  src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=50&q=80"
+                                  alt="Avatar"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div> */}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </main>
       </div>

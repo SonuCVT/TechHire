@@ -12,7 +12,7 @@ const useFetchAssessment = () => {
         throw new Error("Failed to fetch assessments");
       }
       const assessmentsData = await response.json();
-      console.log("Fetched Assessments:", assessmentsData);
+      //console.log("Fetched Assessments:", assessmentsData);
 
       dispatch(addAssessment(assessmentsData));
     } catch (error) {

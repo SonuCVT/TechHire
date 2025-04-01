@@ -1,31 +1,107 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserDashboardHeader from "./UserDashboardHeader";
 import UserDashboardSidebar from "./UserDashboardSidebar";
 import UpcomingActivities from "../cards/UpcomingActivities";
 import { useKeycloak } from "@react-keycloak/web";
+import axios from "axios";
 
 const UserDashboard = () => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
-  
+  const [resumeShorlited,setResumeShorlisted]=useState([])
+  const [mergedData, setMergedData] = useState([]);
+  const [jobs, setJobs] = useState([]);
   const user = useSelector((state) => state.user);
-  //const updateUser = useSelector((state) => state.updateuser);
+  const { id } = useSelector((state) => state.user);
+  const candidateId = id;
+
+  const fetchResumeShorlted = async () => {
+      try {
+        const response = await fetch(`/api/shortlist/candidate/${candidateId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch assessments");
+        }
+        const data = await response.json();
+        console.log(data)
+        setResumeShorlisted(data)
+      } catch (error) {
+        console.error("Error fetching assessments:", error);
+      }
+    };
+
+    const fetchInterviewSchedule = async () => {
+      try {
+        const response = await fetch(`/api/addInterviews/candidate/${candidateId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch assessments");
+        }
+        const interviews = await response.json();
+        console.log("Interviews:", interviews);
+        
+        if (interviews.length > 0) {
+          fetchJob(interviews);
+        } else {
+          setMergedData([]);
+        }
+      } catch (error) {
+        console.error("Error fetching assessments:", error);
+      }
+    };
+  
+    const fetchJob = async (interviews) => {
+      const jobIds = [...new Set(interviews.map((item) => item.jobId))];
+      console.log("Job IDs:", jobIds);
+  
+      try {
+        const response = await axios.get(`/api/job_applied/${jobIds}/${candidateId}`);
+        const jobs = Array.isArray(response.data) ? response.data : [response.data];
+        console.log("Jobs:", jobs);
+        mergeData(interviews, jobs);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+  
+    const mergeData = (interviews, jobs) => {
+      const merged = interviews.map((interview) => {
+        const jobDetails = jobs.find((job) => job.jobId === interview.jobId) || {};
+        return {
+          ...interview,
+          companyName: jobDetails.company || "Unknown Company",
+        };
+      });
+  
+      console.log("Merged Data:", merged);
+      setMergedData(merged);
+    };
+
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(
+          `/api/job_applied/candidate/${candidateId}`
+        );
+       // console.log(response.data);
+        setJobs(response.data);
+      } catch (error) {
+        console.error("Error fetching jobs: ", error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchResumeShorlted();
+      fetchInterviewSchedule();
+      fetchJobs()
+    }, []);
+
+    const selectedRank = Math.floor((resumeShorlited.length * 100) / jobs.length);
 
   const userData = {
-<<<<<<< HEAD
-    name: "User" || user.name,
-    email: "user@gmail.com" || user.email,
-    linkedin: "" || updateUser?.linkedin,
-    github: "" || updateUser?.github,
-    codingProfile: "" || updateUser?.codingProfile,
-=======
     name: user.name,
     email:  user.email,
     linkedin:  user.linkedin,
     github: user.github,
     codingProfile: user.codingProfile,
->>>>>>> 437614e98f08164f9e8a479110f0b77b110c9152
   };
   // const { keycloak } = useKeycloak();
 
@@ -139,12 +215,12 @@ const UserDashboard = () => {
                         fill="none"
                         stroke="#6366f1"
                         strokeWidth="3"
-                        strokeDasharray="50, 100"
+                        strokeDasharray={`${selectedRank}, 100`}
                       />
                     </svg>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
                       <span className="text-lg font-bold text-indigo-400">
-                        50%
+                        {selectedRank}%
                       </span>
                     </div>
                     <p className="text-center text-sm mt-2">Selection</p>
@@ -181,14 +257,14 @@ const UserDashboard = () => {
                 <div className="w-full">
                   <div className="flex justify-between items-center mb-4">
                     <h4 className="font-bold">Last Activities</h4>
-                    <a
-                      href="#"
+                    <Link
+                      to="/jobs-applied"
                       className={`text-sm transition ${
                         darkMode ? "text-violet-400" : "text-indigo-600"
                       }`}
                     >
                       See All
-                    </a>
+                    </Link>
                   </div>
 
                   <div className="space-y-4">
@@ -219,7 +295,7 @@ const UserDashboard = () => {
                               darkMode ? "text-gray-400" : "text-gray-500"
                             }`}
                           >
-                            3 Companies
+                            {resumeShorlited.length} Companies
                           </p>
                         </div>
                       </div>
@@ -264,9 +340,9 @@ const UserDashboard = () => {
               {/* Stats Section */}
               <div className="w-1/5 grid grid-cols-1 gap-3">
                 {[
-                  { label: "Application Sent", count: 56 },
-                  { label: "Interview Schedule", count: 10 },
-                  { label: "Profile Visited", count: 150 },
+                  { label: "Application Sent", count: jobs.length },
+                  { label: "Interview Schedule", count: mergedData.length },
+                  { label: "Resume Shortlisted", count: resumeShorlited.length },
                 ].map((item, index) => (
                   <div
                     key={index}

@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
+import { removeCandidateId } from "../utils/addInterviewSlice";
 
 const Interview = () => {
-  const interviews = useSelector((state) => state.addinterview.interview);
+  //const interviews = useSelector((state) => state.addinterview.interview);
+  const dispatch =useDispatch()
+ const [interviews,setInterviews]=useState([])
+  const fetchInterviews = async () => {
+      try {
+        const response = await fetch("/api/addInterviews");
+        if (!response.ok) {
+          throw new Error("Failed to fetch assessments");
+        }
+        const data = await response.json();
+        setInterviews(data)
+      } catch (error) {
+        console.error("Error fetching assessments:", error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchInterviews();
+       dispatch(removeCandidateId())
+    }, []);
 
   return (
     <>

@@ -16,7 +16,7 @@ import { toggleDarkMode } from "../utils/hrThemeSlice";
 
 const CompanySetting = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  //const user = useSelector((state) => state.user);
   const darkMode = useSelector((state) => state.hrTheme.darkMode); // Get state from Redux
 
   const [pushNotifications, setPushNotifications] = useState(true);
@@ -52,10 +52,10 @@ const CompanySetting = () => {
             <div className="flex items-center space-x-4 mb-8">
               <img
                 src={userImage}
-                alt={user.name}
+                alt="HR"
                 className="w-16 h-16 rounded-full object-cover"
               />
-              <h2 className="text-xl font-semibold">{user.name}</h2>
+              <h2 className="text-xl font-semibold">"HR"</h2>
             </div>
 
             <div className="space-y-6">

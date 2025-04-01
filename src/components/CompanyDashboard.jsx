@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -8,26 +8,75 @@ import CandidatePipeline from "../cards/CandidatePipeline";
 
 const CompanyDashboard = () => {
   const darkMode = useSelector((state) => state.hrTheme.darkMode); // Get dark mode state
-
+  const totalActiveJob =useSelector((state)=>state.addpostjob.jobs)
+  const [totalApplication,setTotalApplication]=useState(0);
+  const [totalInterview,setTotalInterview]=useState(0);
+  const [shortlistedCandidates,setShortlistedCandidates]=useState(0);
+  const activeJobs=[...totalActiveJob].length;
+  const fetchAllAplication = async () => {
+        try {
+          const response = await fetch("/api/job_applied");
+          if (!response.ok) {
+            throw new Error("Failed to fetch jobs");
+          }
+          const jobsData = await response.json();
+          setTotalApplication([...jobsData].length);
+          
+        } catch (error) {
+          console.error("Error fetching jobs:", error);
+        }
+  };
+  const fetchAllInterview=async()=>{
+    try {
+      const response = await fetch("/api/addInterviews");
+      if (!response.ok) {
+        throw new Error("Failed to fetch jobs");
+      }
+      const jobsData = await response.json();
+      setTotalInterview([...jobsData].length);
+      
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  }
+  const fetchAllShortlistedCandidates=async()=>{
+    try {
+      const response = await fetch("/api/shortlist");
+      if (!response.ok) {
+        throw new Error("Failed to fetch jobs");
+      }
+      const jobsData = await response.json();
+      setShortlistedCandidates([...jobsData].length);
+      
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  }
+   useEffect(() => {
+        fetchAllAplication()
+        fetchAllInterview()
+        fetchAllShortlistedCandidates()
+      }, []);
+      console.log(totalApplication)
   const statsData = [
     {
       title: "Active Jobs",
-      value: "24",
+      value: activeJobs,
       color: "text-purple-600",
     },
     {
       title: "Total Applications",
-      value: "842",
+      value: totalApplication,
       color: "text-blue-600",
     },
     {
       title: "Interviews Scheduled",
-      value: "38",
+      value: totalInterview,
       color: "text-green-600",
     },
     {
       title: "Shortlisted Candidates",
-      value: "20",
+      value: shortlistedCandidates,
       color: "text-orange-500",
     },
   ];
