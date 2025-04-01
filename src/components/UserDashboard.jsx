@@ -12,8 +12,20 @@ const UserDashboard = () => {
   const [resumeShorlited,setResumeShorlisted]=useState([])
   const [mergedData, setMergedData] = useState([]);
   const [jobs, setJobs] = useState([]);
-  const user = useSelector((state) => state.user);
-  const { id } = useSelector((state) => state.user);
+  const [user,setUser]=useState([])
+  const { keycloak } = useKeycloak();
+  const fetchUserData =async()=>{
+    
+    const email =await keycloak.tokenParsed?.email;
+    console.log("User's email:", email);
+    const response = await fetch(`/api/candidates/email/${email}`);
+    const data=await response.json();
+   // console.log(data)
+    setUser(data)
+  }
+  
+  const id  = user.id;
+  //console.log(id);
   const candidateId = id;
 
   const fetchResumeShorlted = async () => {
@@ -23,7 +35,7 @@ const UserDashboard = () => {
           throw new Error("Failed to fetch assessments");
         }
         const data = await response.json();
-        console.log(data)
+        //console.log(data)
         setResumeShorlisted(data)
       } catch (error) {
         console.error("Error fetching assessments:", error);
@@ -37,7 +49,7 @@ const UserDashboard = () => {
           throw new Error("Failed to fetch assessments");
         }
         const interviews = await response.json();
-        console.log("Interviews:", interviews);
+        //console.log("Interviews:", interviews);
         
         if (interviews.length > 0) {
           fetchJob(interviews);
@@ -51,12 +63,12 @@ const UserDashboard = () => {
   
     const fetchJob = async (interviews) => {
       const jobIds = [...new Set(interviews.map((item) => item.jobId))];
-      console.log("Job IDs:", jobIds);
+      //console.log("Job IDs:", jobIds);
   
       try {
         const response = await axios.get(`/api/job_applied/${jobIds}/${candidateId}`);
         const jobs = Array.isArray(response.data) ? response.data : [response.data];
-        console.log("Jobs:", jobs);
+       // console.log("Jobs:", jobs);
         mergeData(interviews, jobs);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -72,7 +84,7 @@ const UserDashboard = () => {
         };
       });
   
-      console.log("Merged Data:", merged);
+     // console.log("Merged Data:", merged);
       setMergedData(merged);
     };
 
@@ -89,12 +101,19 @@ const UserDashboard = () => {
     };
   
     useEffect(() => {
+      fetchUserData()
       fetchResumeShorlted();
       fetchInterviewSchedule();
       fetchJobs()
-    }, []);
-
-    const selectedRank = Math.floor((resumeShorlited.length * 100) / jobs.length);
+    }, [candidateId]);
+    let selectedRank;
+    if(jobs.length===0){
+      selectedRank=0;
+    }else{
+      selectedRank=Math.floor((resumeShorlited.length * 100) / jobs.length);
+    }
+     
+    
 
   const userData = {
     name: user.name,
@@ -301,38 +320,7 @@ const UserDashboard = () => {
                       </div>
                     </div>
 
-                    {/* <div
-                      className={`border rounded-lg p-4 transition-all ${
-                        darkMode
-                          ? "border-gray-700 bg-gray-800 text-gray-300"
-                          : "border-gray-200 bg-white text-gray-900"
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div
-                          className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            darkMode
-                              ? "bg-gray-700 text-orange-400"
-                              : "bg-orange-100 text-orange-500"
-                          }`}
-                        >
-                          ✓
-                        </div>
-                        <div>
-                          <p>
-                            Your Resume has{" "}
-                            <span className="font-bold">viewed</span>
-                          </p>
-                          <p
-                            className={`text-sm ${
-                              darkMode ? "text-gray-400" : "text-gray-500"
-                            }`}
-                          >
-                            3 Companies
-                          </p>
-                        </div>
-                      </div>
-                    </div> */}
+                    
                   </div>
                 </div>
               </div>
@@ -360,7 +348,7 @@ const UserDashboard = () => {
             </div>
           </div>
 
-          <UpcomingActivities />
+          {id && <UpcomingActivities id={id} />}
         </main>
       </div>
     </div>

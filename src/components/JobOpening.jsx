@@ -13,23 +13,40 @@ import {
 } from "react-icons/fa";
 import UserDashboardHeader from "./UserDashboardHeader";
 import useFetchJobs from "../hooks/useFetchJobs";
+import { useKeycloak } from "@react-keycloak/web";
 
 const JobOpening = () => {
   useFetchJobs();
   const jobs = useSelector((state) => state.addpostjob.jobs);
   const darkMode = useSelector((state) => state.theme.darkMode);
-  const {id, name, email, resumeUrl, address, phoneNumber } = useSelector(
-    (state) => state.user
-  );
+  // const {id, name, email, resumeUrl, address, phoneNumber } = useSelector(
+  //   (state) => state.user
+  // );
+   
+  const [user,setUser]=useState([])
+   const { keycloak } = useKeycloak();
+  const fetchUserData =async()=>{
+       
+       const email =await keycloak.tokenParsed?.email;
+       //console.log("User's email:", email);
+       const response = await fetch(`/api/candidates/email/${email}`);
+       const data=await response.json();
+       //console.log(data)
+       setUser(data)
+  }
 
-  const candidateId = id; // Replace with actual candidate ID
+  const candidateId = user.id; // Replace with actual candidate ID
+  //console.log(candidateId)
+  const name=user.name;
+  const email=user.email;
+  const resumeUrl=user.resumeUrl;
+  const address=user.address;
+  const phoneNumber=user.phoneNumber
 
   const [appliedJobs, setAppliedJobs] = useState(new Set());
 
   // Fetch applied jobs for the candidate
-  useEffect(() => {
-    if (!candidateId) return;
-
+  const fetchedAppliedJob =()=>{
     axios
       .get(`/api/job_applied/candidate/${candidateId}`)
       .then((response) => {
@@ -39,6 +56,11 @@ const JobOpening = () => {
       .catch((error) => {
         console.error("Error fetching applied jobs:", error);
       });
+  }
+
+  useEffect(() => {
+    fetchUserData()
+     fetchedAppliedJob()    
   }, [candidateId]);
 
   const [filters, setFilters] = useState({

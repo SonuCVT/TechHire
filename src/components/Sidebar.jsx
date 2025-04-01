@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   LayoutDashboard,
   BellRing,
@@ -10,14 +10,46 @@ import {
   UserCircle,
   PlusCircle,
   User,
+  LogOut,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useFectTeam from "../hooks/useFetchTeamMember";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Sidebar = () => {
   const location = useLocation();
   const darkMode = useSelector((state) => state.hrTheme.darkMode);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const navigate = useNavigate();
+  const { keycloak } = useKeycloak();
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      // Clear all client-side storage
+      localStorage.clear();
+      sessionStorage.clear();
+      // Clear all cookies
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+      });
+      // Clear Keycloak tokens
+      await keycloak.clearToken();
+      // Perform Keycloak logout with redirect
+      await keycloak.logout({
+        redirectUri: window.location.origin + '/login'
+      });
+      // Fallback navigation if Keycloak logout doesn't redirect
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      navigate('/login');
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   useFectTeam();
 
@@ -114,6 +146,18 @@ const Sidebar = () => {
           ))}
         </ul>
       </nav>
+      <button
+        onClick={handleLogout}
+        disabled={isLoggingOut}
+        className={`flex items-center space-x-2 p-2 w-full rounded-lg ${
+          isLoggingOut
+            ? "text-gray-500 cursor-not-allowed"
+            : "text-red-500 hover:bg-red-50 dark:hover:bg-gray-700"
+        } transition`}
+      >
+        <LogOut size={18} />
+        <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
+      </button>
 
       {/* Team Members */}
       <div>

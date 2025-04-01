@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const UpcomingActivities = () => {
+const UpcomingActivities = ({id}) => {
   const darkMode = useSelector((state) => state.theme.darkMode); // Get dark mode state
   const [mergedData, setMergedData] = useState([]);
   const [upcomingShortlist,setUpcomingShortlist]=useState([])
   const [coding,setCoding]=useState([])
   // Hardcoded Upcoming Interviews
 
-  const { id } = useSelector((state) => state.user);
+  //const { id } = useSelector((state) => state.user);
+  //.log(id)
   const candidateId = id;
 
   const fetchInterviewSchedule = async () => {
@@ -55,7 +56,7 @@ const UpcomingActivities = () => {
       };
     });
 
-   // console.log("Merged Data:", merged);
+    //console.log("Merged Data:", merged);
     setMergedData(merged[merged.length-1]);
   };
 
@@ -88,19 +89,16 @@ const UpcomingActivities = () => {
   }
 
   useEffect(() => {
-    fetchInterviewSchedule();
-    fetchUpcomingResumeShortlisted();
-    fetchUpcomingTest()
-  }, []);
-
+    if (candidateId) {  // Only fetch if id exists
+      fetchInterviewSchedule();
+      fetchUpcomingResumeShortlisted();
+      fetchUpcomingTest();
+    }
+  }, [candidateId]);
 
   const upcomingInterviews = mergedData
-  console.log(upcomingInterviews)
-
-  
-  const upcomingresumeShortlist = upcomingShortlist
-  const upcomingtest=coding
- console.log(upcomingtest)
+   const upcomingtest = coding;
+//onsole.log(upcomingtest)
   // Merge all activities into one array for uniform rendering
   //const activities = [...upcomingInterviews, ...upcomingAssignments];
 
@@ -111,144 +109,162 @@ const UpcomingActivities = () => {
           <div
             className="flex flex-row gap-5"
           >
-            <div className={`w-96 p-4 rounded-lg shadow-md border flex flex-col justify-between h-60 transition-all ${
-              darkMode
-                ? "bg-gray-800 text-white border-gray-700"
-                : "bg-white text-gray-900 border-gray-200"
-            }`}>
-            <h3 className="text-lg font-medium border-b pb-2">
-              Interview
-            </h3>
-            <div>
-              <p className="font-semibold mt-2">{upcomingInterviews.companyName}</p>
-              <p
-                className={`text-sm ${
-                  darkMode ? "text-gray-400" : "text-gray-500"
-                }`}
-              >
-                {upcomingInterviews.interviewMode}
-              </p>
-              {upcomingInterviews.timeInterview && (
+           {
+            upcomingInterviews ? (
+              <div className={`w-96 p-4 rounded-lg shadow-md border flex flex-col justify-between h-60 transition-all ${
+                darkMode
+                  ? "bg-gray-800 text-white border-gray-700"
+                  : "bg-white text-gray-900 border-gray-200"
+              }`}>
+              <h3 className="text-lg font-medium border-b pb-2">
+                Interview
+              </h3>
+              <div>
+                <p className="font-semibold mt-2">{upcomingInterviews.companyName}</p>
                 <p
-                  className={`mt-2 text-sm ${
-                    darkMode ? "text-gray-300" : "text-gray-600"
+                  className={`text-sm ${
+                    darkMode ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
-                  Timing: {upcomingInterviews.timeInterview}
+                  {upcomingInterviews.interviewMode}
                 </p>
-              )}
-              {upcomingInterviews.dateInterview && (
+                {upcomingInterviews.timeInterview && (
+                  <p
+                    className={`mt-2 text-sm ${
+                      darkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Timing: {upcomingInterviews.timeInterview}
+                  </p>
+                )}
+                {upcomingInterviews.dateInterview && (
+                  <p
+                    className={`mt-2 text-sm ${
+                      darkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Deadline: {upcomingInterviews.dateInterview}
+                  </p>
+                )}
+                <p className="mt-2 text-sm">
+                  <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
+                    Status:{" "}
+                  </span>
+                  <span
+                    className={
+                      upcomingInterviews.status === "Pending"
+                        ? "text-red-500"
+                        : "text-green-500"
+                    }
+                  >
+                    {upcomingInterviews.status}
+                  </span>
+                </p>
+              </div>
+              <div className="flex justify-end items-center mt-auto">
+                <Link
+                  to={upcomingInterviews.meetingLink}
+                  target="_blank"
+                  className={`px-4 py-2 rounded-md shadow-md transition duration-300 ${
+                    upcomingInterviews.status === "Completed"
+                      ? "bg-gray-500 text-white cursor-not-allowed"
+                      : darkMode
+                      ? "bg-violet-600 text-white hover:bg-violet-700"
+                      : "bg-blue-600 text-white hover:bg-blue-700"
+                  }`}
+                  disabled={upcomingInterviews.status === "Completed"}
+                >
+                  {upcomingInterviews.type === "Interview"
+                    ? "Join Interview"
+                    : "Take Assessment"}
+                </Link>
+              </div>
+              </div>
+            ) :(
+              <div className="w-96 p-4 rounded-lg shadow-md border text-center">
+                  <h3 className="text-lg font-medium border-b pb-2">Interview</h3>
+                  <p className="text-gray-500">You haven't applied for any interviews.</p>
+                </div>
+            )
+           }
+          {
+            upcomingtest ? (
+              <div className={`w-96 p-4 rounded-lg shadow-md border flex flex-col justify-between h-60 transition-all ${
+                darkMode
+                  ? "bg-gray-800 text-white border-gray-700"
+                  : "bg-white text-gray-900 border-gray-200"
+              }`}>
+              <h3 className="text-lg font-medium border-b pb-2">
+                Assessment
+              </h3>
+              <div>
+                <p className="font-semibold mt-2">{upcomingtest?.appliedFor}</p>
                 <p
-                  className={`mt-2 text-sm ${
-                    darkMode ? "text-gray-300" : "text-gray-600"
+                  className={`text-sm ${
+                    darkMode ? "text-gray-400" : "text-gray-500"
                   }`}
                 >
-                  Deadline: {upcomingInterviews.dateInterview}
+                  Score : {upcomingtest?.score}
                 </p>
-              )}
-              <p className="mt-2 text-sm">
-                <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
-                  Status:{" "}
-                </span>
-                <span
-                  className={
-                    upcomingInterviews.status === "Pending"
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }
-                >
-                  {upcomingInterviews.status}
-                </span>
-              </p>
-            </div>
-            <div className="flex justify-end items-center mt-auto">
-              <Link
-                to={upcomingInterviews.meetingLink}
-                target="_blank"
-                className={`px-4 py-2 rounded-md shadow-md transition duration-300 ${
-                  upcomingInterviews.status === "Completed"
-                    ? "bg-gray-500 text-white cursor-not-allowed"
-                    : darkMode
-                    ? "bg-violet-600 text-white hover:bg-violet-700"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
-                disabled={upcomingInterviews.status === "Completed"}
-              >
-                {upcomingInterviews.type === "Interview"
-                  ? "Join Interview"
-                  : "Take Assessment"}
-              </Link>
-            </div>
-            </div>
-            <div className={`w-96 p-4 rounded-lg shadow-md border flex flex-col justify-between h-60 transition-all ${
-              darkMode
-                ? "bg-gray-800 text-white border-gray-700"
-                : "bg-white text-gray-900 border-gray-200"
-            }`}>
-            <h3 className="text-lg font-medium border-b pb-2">
-              Assessment
-            </h3>
-            <div>
-              <p className="font-semibold mt-2">{upcomingtest.appliedFor}</p>
-              <p
-                className={`text-sm ${
-                  darkMode ? "text-gray-400" : "text-gray-500"
-                }`}
-              >
-                Score : {upcomingtest.score}
-              </p>
-              {upcomingtest.codingTestStartTime && (
-                <p
-                  className={`mt-2 text-sm ${
-                    darkMode ? "text-gray-300" : "text-gray-600"
+                {upcomingtest.codingTestStartTime && (
+                  <p
+                    className={`mt-2 text-sm ${
+                      darkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Timing: {upcomingtest.codingTestStartTime}
+                  </p>
+                )}
+                {upcomingtest.codingTestDate && (
+                  <p
+                    className={`mt-2 text-sm ${
+                      darkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    Deadline: {upcomingtest.codingTestDate}
+                  </p>
+                )}
+                <p className="mt-2 text-sm">
+                  <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
+                    Status:{" "}
+                  </span>
+                  <span
+                    className={
+                      upcomingtest.status === "Pending"
+                        ? "text-red-500"
+                        : "text-green-500"
+                    }
+                  >
+                    {upcomingtest.status}
+                  </span>
+                </p>
+              </div>
+              <div className="flex justify-end items-center mt-auto">
+                <Link
+                  to={upcomingtest.codingPlatformUrl}
+                  target="_blank"
+                  className={`px-4 py-2 rounded-md shadow-md transition duration-300 ${
+                    upcomingtest.status === "Completed"
+                      ? "bg-gray-500 text-white cursor-not-allowed"
+                      : darkMode
+                      ? "bg-violet-600 text-white hover:bg-violet-700"
+                      : "bg-blue-600 text-white hover:bg-blue-700"
                   }`}
+                  disabled={upcomingtest.status === "Completed"}
                 >
-                  Timing: {upcomingtest.codingTestStartTime}
-                </p>
-              )}
-              {upcomingtest.codingTestDate && (
-                <p
-                  className={`mt-2 text-sm ${
-                    darkMode ? "text-gray-300" : "text-gray-600"
-                  }`}
-                >
-                  Deadline: {upcomingtest.codingTestDate}
-                </p>
-              )}
-              <p className="mt-2 text-sm">
-                <span className={darkMode ? "text-gray-300" : "text-gray-600"}>
-                  Status:{" "}
-                </span>
-                <span
-                  className={
-                    upcomingtest.status === "Pending"
-                      ? "text-red-500"
-                      : "text-green-500"
-                  }
-                >
-                  {upcomingtest.status}
-                </span>
-              </p>
+                  {upcomingtest.status !== "Completed"
+                    ? "Join Interview"
+                    : "Take Assessment"}
+                </Link>
+              </div>
+              </div>
+            ) :(
+              <div className="w-96 p-4 rounded-lg shadow-md border text-center">
+              <h3 className="text-lg font-medium border-b pb-2">Assessment</h3>
+              <p className="text-gray-500">No upcoming assessments.</p>
             </div>
-            <div className="flex justify-end items-center mt-auto">
-              <Link
-                to={upcomingtest.codingPlatformUrl}
-                target="_blank"
-                className={`px-4 py-2 rounded-md shadow-md transition duration-300 ${
-                  upcomingtest.status === "Completed"
-                    ? "bg-gray-500 text-white cursor-not-allowed"
-                    : darkMode
-                    ? "bg-violet-600 text-white hover:bg-violet-700"
-                    : "bg-blue-600 text-white hover:bg-blue-700"
-                }`}
-                disabled={upcomingtest.status === "Completed"}
-              >
-                {upcomingtest.status !== "Completed"
-                  ? "Join Interview"
-                  : "Take Assessment"}
-              </Link>
-            </div>
-            </div>
+            )
+          }
           </div>
         
       

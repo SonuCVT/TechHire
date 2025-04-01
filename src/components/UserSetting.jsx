@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserDashboardSidebar from "./UserDashboardSidebar";
 import UserDashboardHeader from "./UserDashboardHeader";
 import { Settings, ChevronRight } from "lucide-react";
 import userImage from "../assets/images/user.svg";
 import { toggleDarkMode } from "../utils/themeSlice";
+import { useKeycloak } from "@react-keycloak/web";
 
 const UserSetting = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
-  const user = useSelector((state) => state.user);
+   const [user,setUser]=useState([])
+      const { keycloak } = useKeycloak();
+      const fetchUserData =async()=>{
+        
+        const email =await keycloak.tokenParsed?.email;
+        console.log("User's email:", email);
+        const response = await fetch(`/api/candidates/email/${email}`);
+        const data=await response.json();
+        //console.log(data)
+        setUser(data)
+      }
+
+      useEffect(()=>{
+       fetchUserData()
+      },[])
 
   const [pushNotifications, setPushNotifications] = useState(true);
   const [modalContent, setModalContent] = useState("");

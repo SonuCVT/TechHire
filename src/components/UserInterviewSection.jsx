@@ -4,12 +4,25 @@ import UserDashboardHeader from "./UserDashboardHeader";
 import UserDashboardSidebar from "./UserDashboardSidebar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useKeycloak } from "@react-keycloak/web";
 
 const UserInterviewSection = () => {
   const darkMode = useSelector((state) => state.theme.darkMode);
   const [mergedData, setMergedData] = useState([]);
-  const { id } = useSelector((state) => state.user);
-  const candidateId = id;
+
+   const [user,setUser]=useState([])
+      const { keycloak } = useKeycloak();
+      const fetchUserData =async()=>{
+        
+        const email =await keycloak.tokenParsed?.email;
+        console.log("User's email:", email);
+        const response = await fetch(`/api/candidates/email/${email}`);
+        const data=await response.json();
+        console.log(data)
+        setUser(data)
+      }
+
+  const candidateId = user.id;
 
   const fetchInterviewSchedule = async () => {
     try {
@@ -58,8 +71,11 @@ const UserInterviewSection = () => {
   };
 
   useEffect(() => {
-    fetchInterviewSchedule();
-  }, []);
+    fetchUserData()
+    if(candidateId){
+      fetchInterviewSchedule()
+    }
+  }, [candidateId]);
 
   return (
     <div className={`min-h-screen transition-all ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>

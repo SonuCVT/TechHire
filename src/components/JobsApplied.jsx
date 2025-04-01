@@ -4,26 +4,25 @@ import Header from "./UserDashboardHeader";
 import Sidebar from "./UserDashboardSidebar";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useKeycloak } from "@react-keycloak/web";
 
 const jobsPerPage = 9;
 
 const JobsManagement = () => {
   const darkTheme = useSelector((state) => state.theme.darkMode);
-  const {id} = useSelector(
-      (state) => state.user
-    );
-  const candidateId = id;
-  const [currentPage, setCurrentPage] = useState(1);
-  const [jobs, setJobs] = useState([]);
-  const [filters, setFilters] = useState({
-    title: "",
-    company: "",
-    location: "",
-    status: "",
-    salaryRange: null,
-  });
-
-  useEffect(() => {
+  const [user,setUser]=useState([])
+     const { keycloak } = useKeycloak();
+    const fetchUserData =async()=>{
+         
+         const email =await keycloak.tokenParsed?.email;
+         //console.log("User's email:", email);
+         const response = await fetch(`/api/candidates/email/${email}`);
+         const data=await response.json();
+         //console.log(data)
+         setUser(data)
+    }
+    const candidateId = user.id;
+    console.log(candidateId)
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
@@ -35,6 +34,20 @@ const JobsManagement = () => {
         console.error("Error fetching jobs: ", error);
       }
     };
+
+ 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobs, setJobs] = useState([]);
+  const [filters, setFilters] = useState({
+    title: "",
+    company: "",
+    location: "",
+    status: "",
+    salaryRange: null,
+  });
+
+  useEffect(() => {
+    fetchUserData()
     fetchJobs();
   }, [candidateId]);
 
